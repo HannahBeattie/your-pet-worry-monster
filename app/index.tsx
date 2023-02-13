@@ -1,4 +1,7 @@
-import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
+import { Button, StyleSheet, Text, View } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
+import { monsterNameSelector, setName } from '~features/monster/monsterSlice'
 
 type Worry = {
 	timestamp: number
@@ -7,14 +10,26 @@ type Worry = {
 }
 
 export default function Page() {
+	const dispatch = useDispatch()
+	const monsterName = useSelector(monsterNameSelector)
+
 	const worry: Worry = {
 		timestamp: +new Date(),
-		some: 'hi',
-		other: 'hello',
+		some: 'Hello',
+		other: 'Mr Worried',
 	}
+
 	return (
 		<View style={styles.container}>
 			<View style={styles.main}>
+				<Text style={styles.title}>{monsterName}</Text>
+				<Button
+					onPress={() => {
+						console.log('Trying to set name...', setName('Gregory'))
+						dispatch(setName('Gregory'))
+					}}
+					title='New name!'
+				/>
 				<Text style={styles.title}>{worry.some}</Text>
 				<Text style={styles.subtitle}>{worry.other}</Text>
 			</View>
