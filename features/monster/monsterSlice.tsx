@@ -8,7 +8,7 @@ interface MonsterState {
 	name: string
 }
 
-const initialState = { name: '...' } as MonsterState
+const initialState = { name: 'Name' } as MonsterState
 
 const monsterSlice = createSlice({
 	name: 'monster',

@@ -6,6 +6,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo/vector-icons": "^13.0.0",
     "@reduxjs/toolkit": "^1.9.2",
     "expo": "~47.0.3",
     "expo-constants": "~14.0.2",

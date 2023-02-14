@@ -1,46 +1,65 @@
-import { InputRightElement } from '@chakra-ui/react'
-import { Box, Button, Heading, Input, InputGroup, VStack } from 'native-base'
-import React, { useState } from 'react'
+import { Box, Button, Heading, HStack, Image, Input, Spacer, Text, VStack } from 'native-base'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { monsterNameSelector, setName } from '~features/monster/monsterSlice'
 
 function InputName() {
 	const [value, setValue] = React.useState('')
-	const handleChange = (text) => setValue(text)
+	const handleChange = (value: string) => setValue(value)
 	const dispatch = useDispatch()
-	const monsterName = useSelector(monsterNameSelector)
+
 	return (
-		<VStack space={8} flex={1}>
+		<VStack justifyContent={'space-between'} flex={1} alignItems={'stretch'} space={8}>
 			<Heading color={'white'}>Hmm... What should I call myself?</Heading>
 
 			<Box alignItems='center'>
 				<Input
-					color={'white'}
-					placeholderTextColor={'blue'}
 					fontSize={'lg'}
-					w='100%'
-					py='0'
+					w='full'
+					variant='outline'
 					onChangeText={handleChange}
 					value={value}
+					placeholder='my name is'
+					color={'black'}
+					bg={'warmGray.200'}
+					fontWeight={'800'}
 					InputRightElement={
 						<Button
-							size='md'
-							rounded='none'
-							w='1/3'
 							h='full'
+							bgColor={'gray.900'}
+							rounded='none'
 							onPress={() => {
-								console.log('Trying to set name...', setName(value))
-								dispatch(setName('Gregory'))
+								// console.log('Trying to set name...', setName(value))
+								dispatch(setName(value))
 							}}
 						>
-							save
+							<HStack>
+								<Text color={'white'} fontWeight={'800'}>
+									SAVE NAME
+								</Text>
+							</HStack>
 						</Button>
 					}
-					placeholder='my name is'
 				/>
 			</Box>
-
-			<Heading color={'white'}>My name is {monsterName}</Heading>
+			<Spacer />
+			<Image
+				alt={'blue the monster'}
+				source={require('../../app/assets/blue.png')}
+				height={400}
+			/>
+			<Spacer />
+			<HStack justifyContent={'flex-end'} alignItems={'stretch'}>
+				<Button
+					variant={'ghost'}
+					rounded='md'
+					onPress={() => {
+						dispatch(setName('No-name'))
+					}}
+				>
+					SKIP
+				</Button>
+			</HStack>
 		</VStack>
 	)
 }
