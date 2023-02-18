@@ -12,7 +12,18 @@ export default function YouHaveWorried() {
 			<Heading fontSize={'xl'} color={'white'}>
 				You Have Worried that :
 			</Heading>
-			<Text color={'white'}></Text>
+			{worryData.map((worry, idx) => (
+				<Text
+					key={`worry-${idx}`}
+					color={'white'}
+					fontFamily='mono'
+					bg='gray.700'
+					p='4'
+					my='2'
+				>
+					{JSON.stringify(worry, null, '    ')}
+				</Text>
+			))}
 		</VStack>
 	)
 }
