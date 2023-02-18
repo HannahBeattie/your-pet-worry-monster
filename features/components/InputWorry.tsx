@@ -13,7 +13,7 @@ function InputWorry() {
 	const handleSeccond = (seccond: string) => setSeccond(seccond)
 	const dispatch = useDispatch()
 	const worryValue = {
-		id: new Date().toString(),
+		id: +new Date(),
 		description: first,
 		extraNote: seccond,
 		isActive: true,

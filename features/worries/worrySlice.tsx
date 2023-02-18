@@ -4,7 +4,7 @@ import { RootState } from '~features/store'
 export const worrySliceName = 'worries'
 
 type Worry = {
-	id: string
+	id: number
 	description: string
 	extraNote: string
 	isActive: boolean
@@ -24,11 +24,12 @@ const worrySlice = createSlice({
 	reducers: {
 		addWorry: worriesAdapter.addOne,
 		deleteWorry: worriesAdapter.removeOne,
+		deleteAllWorries: worriesAdapter.removeAll,
 		updateWorry: worriesAdapter.updateOne,
 	},
 })
 
-export const { addWorry, deleteWorry, updateWorry } = worrySlice.actions
+export const { addWorry, deleteWorry, updateWorry, deleteAllWorries } = worrySlice.actions
 export default worrySlice.reducer
 
 export const selectWorrySlice = (rootState: RootState): WorriesState => rootState[worrySliceName]
