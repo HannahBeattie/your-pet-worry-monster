@@ -15,9 +15,9 @@ export default function Page() {
 			color={'white'}
 			space={4}
 		>
-			{/* <InputName /> */}
-			{/* <InputWorry /> */}
 			<YouHaveWorried />
+			{/* <InputName /> */}
+			<InputWorry />
 		</VStack>
 	)
 }
