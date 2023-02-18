@@ -1,20 +1,10 @@
-import {
-	Box,
-	Button,
-	Heading,
-	HStack,
-	Icon,
-	Input,
-	Spacer,
-	Text,
-	TextArea,
-	VStack,
-} from 'native-base'
-import React from 'react'
-import { useDispatch } from 'react-redux'
 import Entypo from '@expo/vector-icons/Entypo'
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
+import { Button, Heading, HStack, Text, TextArea, VStack } from 'native-base'
+import React from 'react'
 import { Keyboard } from 'react-native'
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
+import { useDispatch, useSelector } from 'react-redux'
+import { addWorry, worriesSelectors } from '~features/worries/worrySlice'
 
 function InputWorry() {
 	const [first, setValue] = React.useState('')
@@ -22,9 +12,23 @@ function InputWorry() {
 	const handleFirst = (first: string) => setValue(first)
 	const handleSeccond = (seccond: string) => setSeccond(seccond)
 	const dispatch = useDispatch()
+	const worryValue = {
+		id: new Date().toString(),
+		description: first,
+		extraNote: seccond,
+		isActive: true,
+	}
 
-	const handleWorrySubmit = () => console.log('toDo! handle submit')
+	const handleWorrySubmit = () => {
+		console.log('trying to add new worry!', worryValue)
+		dispatch(addWorry(worryValue))
+		setValue('')
+		setSeccond('')
+	}
+	// const data = worrySelector(worryState)
+	const data = useSelector(worriesSelectors.selectAll)
 
+	console.log('data is', data)
 	return (
 		<VStack space={8}>
 			<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -80,4 +84,5 @@ function InputWorry() {
 	)
 }
 
+// export default InputWorry
 export default InputWorry
