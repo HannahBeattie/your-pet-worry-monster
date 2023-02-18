@@ -2,6 +2,7 @@ import { VStack } from 'native-base'
 import React from 'react'
 import InputName from '~features/components/InputName'
 import InputWorry from '~features/components/InputWorry'
+import YouHaveWorried from '~features/components/YouHaveWorried'
 
 export default function Page() {
 	return (
@@ -15,7 +16,8 @@ export default function Page() {
 			space={4}
 		>
 			{/* <InputName /> */}
-			<InputWorry />
+			{/* <InputWorry /> */}
+			<YouHaveWorried />
 		</VStack>
 	)
 }
