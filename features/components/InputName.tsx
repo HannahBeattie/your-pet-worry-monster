@@ -1,7 +1,8 @@
 import { Box, Button, Heading, HStack, Image, Input, Spacer, Text, VStack } from 'native-base'
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { monsterNameSelector, setName } from '~features/monster/monsterSlice'
+import { useDispatch } from 'react-redux'
+import { setName } from '~features/monster/monsterSlice'
+import { store } from '~features/store'
 
 function InputName() {
 	const [value, setValue] = React.useState('')

@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
 import monsterSliceReducer, { monsterSliceName } from './monster/monsterSlice'
-import worrySliceReducer from './worries/worrySlice'
+import worrySliceReducer, { worrySliceName } from './worries/worrySlice'
 
 export const store = configureStore({
 	reducer: {
-		worries: worrySliceReducer,
+		[worrySliceName]: worrySliceReducer,
 		[monsterSliceName]: monsterSliceReducer,
 	},
 })

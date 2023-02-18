@@ -1,20 +1,60 @@
-import {
-	Box,
-	Button,
-	Heading,
-	HStack,
-	Icon,
-	Input,
-	Spacer,
-	Text,
-	TextArea,
-	VStack,
-} from 'native-base'
-import React from 'react'
-import { useDispatch } from 'react-redux'
 import Entypo from '@expo/vector-icons/Entypo'
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
+import { Button, Heading, HStack, Input, IInputProps, Text, TextArea, VStack } from 'native-base'
+import React from 'react'
+import { useCallback } from 'react'
+import { useState } from 'react'
 import { Keyboard } from 'react-native'
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
+import { useDispatch, useSelector } from 'react-redux'
+import worrySlice, { addWorry, worriesSelectors } from '~features/worries/worrySlice'
+
+type MyInputChangeHandler = (args: { name: string; value: string }) => void
+
+function MyInput({
+	name,
+	onChangeTextWithName,
+	...rest
+}: IInputProps & {
+	name: string
+	onChangeTextWithName: MyInputChangeHandler
+}) {
+	return <Input {...rest} onChangeText={(value) => onChangeTextWithName({ name, value })} />
+}
+
+type FormHandleyState = {
+	title: string
+	proudestMoment: string
+}
+
+function FormHandley() {
+	const [formVal, setFormVal] = useState({
+		title: 'Morky',
+		proudestMoment: 'Stretch',
+	} as FormHandleyState)
+	console.log('FormVal is:', formVal)
+
+	const handleChange: MyInputChangeHandler = useCallback(
+		({ name, value }) => {
+			console.log('Something changed:', name, value)
+			setFormVal({
+				...formVal,
+				[name]: value,
+			} as FormHandleyState)
+		},
+		[setFormVal]
+	)
+
+	return (
+		<VStack alignSelf='stretch' alignItems='stretch'>
+			<MyInput name='title' value={formVal.title} onChangeTextWithName={handleChange} />
+			<MyInput
+				name='proudestMoment'
+				value={formVal.proudestMoment}
+				onChangeTextWithName={handleChange}
+			/>
+		</VStack>
+	)
+}
 
 function InputWorry() {
 	const [first, setValue] = React.useState('')
@@ -22,9 +62,23 @@ function InputWorry() {
 	const handleFirst = (first: string) => setValue(first)
 	const handleSeccond = (seccond: string) => setSeccond(seccond)
 	const dispatch = useDispatch()
+	const worryValue = {
+		id: new Date().toString(),
+		description: first,
+		extraNote: seccond,
+		isActive: true,
+	}
 
-	const handleWorrySubmit = () => console.log('toDo! handle submit')
+	const handleWorrySubmit = () => {
+		console.log('trying to add new worry!', worryValue)
+		dispatch(addWorry(worryValue))
+		setValue('')
+		setSeccond('')
+	}
+	// const data = worrySelector(worryState)
+	const data = useSelector(worriesSelectors.selectAll)
 
+	console.log('data is', data)
 	return (
 		<VStack space={8}>
 			<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -80,4 +134,5 @@ function InputWorry() {
 	)
 }
 
-export default InputWorry
+// export default InputWorry
+export default FormHandley

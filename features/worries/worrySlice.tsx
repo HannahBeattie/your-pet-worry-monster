@@ -1,4 +1,7 @@
-import { createEntityAdapter, createSlice } from '@reduxjs/toolkit'
+import { createEntityAdapter, createSelector, createSlice } from '@reduxjs/toolkit'
+import { RootState } from '~features/store'
+
+export const worrySliceName = 'worries'
 
 type Worry = {
 	id: string
@@ -7,21 +10,28 @@ type Worry = {
 	isActive: boolean
 }
 
-const worryAdapter = createEntityAdapter<Worry>({
-	// selectId: (worry) => worry.id,
-	// Keep the "all IDs" array sorted based on id timestamp
-	sortComparer: (a, b) => a.id.localeCompare(b.id),
+const worriesAdapter = createEntityAdapter<Worry>({
+	selectId: (worry) => worry.id,
 })
+
+const initialWorriesState = worriesAdapter.getInitialState()
+
+export type WorriesState = typeof initialWorriesState
 
 const worrySlice = createSlice({
 	name: 'worries',
-	initialState: worryAdapter.getInitialState(),
+	initialState: initialWorriesState,
 	reducers: {
-		worryAdded: worryAdapter.addOne,
-		worryDeleted: worryAdapter.removeOne,
-		worryFinished: worryAdapter.updateOne,
+		addWorry: worriesAdapter.addOne,
+		deleteWorry: worriesAdapter.removeOne,
+		updateWorry: worriesAdapter.updateOne,
 	},
 })
 
-export const { worryAdded, worryDeleted, worryFinished } = worrySlice.actions
+export const { addWorry, deleteWorry, updateWorry } = worrySlice.actions
 export default worrySlice.reducer
+
+export const selectWorrySlice = (rootState: RootState): WorriesState => rootState[worrySliceName]
+export const worriesSelectors = worriesAdapter.getSelectors<RootState>(selectWorrySlice)
+
+// export const worrySelector = createSelector([selectWorrySlice], (state) => state.id)
