@@ -28,7 +28,6 @@ export default function YouHaveWorried() {
 			</Heading>
 			<VStack flex={1}>
 				<Timeline
-					flex={1}
 					data={formatData}
 					innerCircle={'dot'}
 					circleSize={0}
