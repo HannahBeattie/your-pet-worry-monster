@@ -2,6 +2,7 @@ import { Heading, Image, Spacer, Text, VStack } from 'native-base'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { monsterNameSelector } from '~features/monster/monsterSlice'
+import Menu from './Menu'
 
 function Gregory() {
 	let name = useSelector(monsterNameSelector)

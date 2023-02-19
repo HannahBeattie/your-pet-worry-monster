@@ -22,33 +22,35 @@ export default function YouHaveWorried() {
 	})
 
 	return (
-		<VStack flex={1} justifyItems={'stretch'} justifyContent={'space-evenly'} space={8}>
+		<VStack
+			flex={1}
+			justifyItems={'stretch'}
+			justifyContent={'space-evenly'}
+			space={8}
+			padding={8}
+			backgroundColor={'gray.800'}
+		>
 			<Heading fontSize={'xl'} textAlign={'center'} color={'white'}>
 				You Have Worried because
 			</Heading>
-			<VStack flex={1}>
-				<Timeline
-					data={formatData}
-					innerCircle={'dot'}
-					circleSize={0}
-					circleColor='#9187e7'
-					renderFullLine
-					timeContainerStyle={{}}
-					eventContainerStyle={{
-						paddingVertical: 30,
-					}}
-					titleStyle={{ color: 'white' }}
-					timeStyle={{
-						backgroundColor: '#b381ffdf',
-						color: 'white',
-						padding: 5,
-						paddingVertical: 8,
-						borderRadius: 10,
-					}}
-					descriptionStyle={{ color: 'white', marginTop: 10 }}
-					columnFormat='single-column-left'
-				/>
-			</VStack>
+
+			<Timeline
+				data={formatData}
+				innerCircle={'dot'}
+				circleColor='#9187e7'
+				renderFullLine
+				timeContainerStyle={{}}
+				eventContainerStyle={{}}
+				titleStyle={{ color: 'white' }}
+				timeStyle={{
+					width: 130,
+					backgroundColor: '#b381ffdf',
+					color: 'white',
+					padding: 5,
+				}}
+				descriptionStyle={{ color: 'white' }}
+				columnFormat='single-column-left'
+			/>
 		</VStack>
 	)
 }

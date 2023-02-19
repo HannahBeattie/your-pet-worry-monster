@@ -1,27 +1,13 @@
-import { VStack } from 'native-base'
+import { DrawerBody } from '@chakra-ui/react'
 import React from 'react'
-import DangerousDelete from '~features/components/DangerousDelete'
-import Gregory from '~features/components/Gregory'
-import InputName from '~features/components/InputName'
-import InputWorry from '~features/components/InputWorry'
-import YouHaveWorried from '~features/components/YouHaveWorried'
+import 'react-native-gesture-handler'
+import Menu from '~features/components/Menu'
+import MenuDraw from '~features/components/MenuDraw'
 
 export default function Page() {
 	return (
-		<VStack
-			backgroundColor={'coolGray.900'}
-			flex={1}
-			alignItems={'stretch'}
-			py={90}
-			px={8}
-			color={'white'}
-			space={4}
-		>
-			{/* <YouHaveWorried /> */}
-			<Gregory />
-			{/* <InputName /> */}
-			{/* <InputWorry /> */}
-			{/* <DangerousDelete /> */}
-		</VStack>
+		<>
+			<MenuDraw />
+		</>
 	)
 }
