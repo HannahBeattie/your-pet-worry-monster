@@ -10,8 +10,9 @@ function toRelativeString(date: number) {
 }
 
 export default function YouHaveWorried() {
-	let worryData = useSelector(worriesSelectors.selectAll)
+	let worryData = useSelector(worriesSelectors.selectAll).reverse()
 	console.log('worryData', worryData)
+
 	let formatData = worryData.map(function (value) {
 		return {
 			time: toRelativeString(value.id),
@@ -27,31 +28,26 @@ export default function YouHaveWorried() {
 			</Heading>
 			<VStack flex={1}>
 				<Timeline
+					flex={1}
 					data={formatData}
 					innerCircle={'dot'}
-					circleSize={10}
+					circleSize={0}
 					circleColor='#9187e7'
-					lineColor='#ff024a'
 					renderFullLine
 					timeContainerStyle={{}}
 					eventContainerStyle={{
-						paddingHorizontal: 8,
-						paddingVertical: 40,
+						paddingVertical: 30,
 					}}
 					titleStyle={{ color: 'white' }}
 					timeStyle={{
-						textAlign: 'center',
 						backgroundColor: '#b381ffdf',
 						color: 'white',
-						padding: 10,
-						fontWeight: '600',
-						borderRadius: 13,
+						padding: 5,
+						paddingVertical: 8,
+						borderRadius: 10,
 					}}
 					descriptionStyle={{ color: 'white', marginTop: 10 }}
-					options={{
-						style: { paddingTop: 5 },
-					}}
-					isUsingFlatlist={true}
+					columnFormat='single-column-left'
 				/>
 			</VStack>
 		</VStack>
