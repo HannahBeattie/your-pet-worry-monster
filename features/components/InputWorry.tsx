@@ -30,11 +30,10 @@ function InputWorry() {
 
 	console.log('data is', data)
 	return (
-		<VStack space={8}>
+		<VStack flex={1} alignItems={'stretch'} justifyContent={'space-evenly'}>
 			<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
 				<VStack space={8}>
 					<Heading color={'white'}>What are you worried about?</Heading>
-
 					<TextArea
 						autoCompleteType
 						bgColor={'white'}
@@ -43,9 +42,8 @@ function InputWorry() {
 						placeholder='I am worries about...'
 						onChangeText={handleFirst}
 						value={first}
-						maxW='300'
-						minH={160}
 						maxLength={400}
+						minH={100}
 					/>
 
 					<Heading color={'white'}>What is the scariest bit of that worry?</Heading>
@@ -59,22 +57,23 @@ function InputWorry() {
 						onChangeText={handleSeccond}
 						value={seccond}
 						maxLength={400}
-						minH={160}
+						minH={100}
 					/>
 				</VStack>
 			</TouchableWithoutFeedback>
-
-			<Button
-				bgColor={'blue.200'}
-				rounded='none'
-				onPress={() => {
-					handleWorrySubmit()
-				}}
-			>
-				<Text color={'black'} fontWeight={'800'}>
-					Add Worry
-				</Text>
-			</Button>
+			<VStack paddingY={8} marginTop={10}>
+				<Button
+					bgColor={'blue.200'}
+					rounded='none'
+					onPress={() => {
+						handleWorrySubmit()
+					}}
+				>
+					<Text color={'black'} fontWeight={'800'}>
+						Add Worry
+					</Text>
+				</Button>
+			</VStack>
 			<HStack alignItems={'center'}>
 				<Button variant={'ghost'} p={0}>
 					<Entypo name='chevron-small-left' size={32} color='white' />

@@ -1,4 +1,4 @@
-import { Heading, Text, VStack } from 'native-base'
+import { Center, Heading, Text, VStack } from 'native-base'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { worriesSelectors } from '~features/worries/worrySlice'
@@ -21,36 +21,39 @@ export default function YouHaveWorried() {
 	})
 
 	return (
-		<>
-			<Heading fontSize={'xl'} pb={8} textAlign={'center'} color={'red'}>
+		<VStack flex={1} justifyItems={'stretch'} justifyContent={'space-evenly'} space={8}>
+			<Heading fontSize={'xl'} textAlign={'center'} color={'white'}>
 				You Have Worried because
 			</Heading>
-			<VStack flex={1} alignItems={'stretch'} p={4} color={'white'}>
+			<VStack flex={1}>
 				<Timeline
-					flex={1}
 					data={formatData}
 					innerCircle={'dot'}
 					circleSize={10}
-					circleColor='#ff0000'
-					lineColor='#ff0000'
+					circleColor='#9187e7'
+					lineColor='#ff024a'
 					renderFullLine
 					timeContainerStyle={{}}
-					titleStyle={{ color: 'red' }}
+					eventContainerStyle={{
+						paddingHorizontal: 8,
+						paddingVertical: 40,
+					}}
+					titleStyle={{ color: 'white' }}
 					timeStyle={{
 						textAlign: 'center',
-						backgroundColor: '#ff0000',
+						backgroundColor: '#b381ffdf',
 						color: 'white',
 						padding: 10,
 						fontWeight: '600',
 						borderRadius: 13,
 					}}
-					descriptionStyle={{ color: 'pink', marginTop: 2 }}
+					descriptionStyle={{ color: 'white', marginTop: 10 }}
 					options={{
 						style: { paddingTop: 5 },
 					}}
 					isUsingFlatlist={true}
 				/>
 			</VStack>
-		</>
+		</VStack>
 	)
 }
