@@ -7,6 +7,7 @@ function InputName() {
 	const [value, setValue] = React.useState('')
 	const handleChange = (value: string) => setValue(value)
 	const dispatch = useDispatch()
+	const gregoryBlue = require('../../assets/blue.png')
 
 	return (
 		<VStack justifyContent={'space-between'} flex={1} alignItems={'stretch'} space={8}>
@@ -43,11 +44,7 @@ function InputName() {
 				/>
 			</Box>
 			<Spacer />
-			<Image
-				alt={'blue the monster'}
-				source={require('../../app/assets/blue.png')}
-				height={400}
-			/>
+			<Image alt={'blue the monster'} source={gregoryBlue} flex={1} resizeMode='contain' />
 			<Spacer />
 			<HStack justifyContent={'flex-end'} alignItems={'stretch'}>
 				<Button

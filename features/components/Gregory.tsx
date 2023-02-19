@@ -3,20 +3,16 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { monsterNameSelector } from '~features/monster/monsterSlice'
 
+const gregoryBlue = require('../../assets/blue.png')
+
 function Gregory() {
-	let name = useSelector(monsterNameSelector)
+	const name = useSelector(monsterNameSelector)
 	return (
-		<VStack alignItems={'stretch'} flex={'1'}>
-			<Spacer />
-			<Image
-				alt={'blue the monster'}
-				source={require('../../app/assets/blue.png')}
-				height={400}
-			/>
+		<VStack alignItems={'stretch'} justifyContent='center' flex={'1'}>
+			<Image alt={'blue the monster'} source={gregoryBlue} flex={1} resizeMode='contain' />
 			<Text color={'blue.300'} textAlign={'center'} pt={4}>
 				{name}
 			</Text>
-			<Spacer />
 		</VStack>
 	)
 }

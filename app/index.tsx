@@ -9,7 +9,7 @@ import YouHaveWorried from '~features/components/YouHaveWorried'
 export default function Page() {
 	return (
 		<VStack
-			backgroundColor={'coolGray.900'}
+			// backgroundColor={'coolGray.900'}
 			flex={1}
 			alignItems={'stretch'}
 			py={90}
@@ -17,11 +17,7 @@ export default function Page() {
 			color={'white'}
 			space={4}
 		>
-			{/* <YouHaveWorried /> */}
 			<Gregory />
-			{/* <InputName /> */}
-			{/* <InputWorry /> */}
-			{/* <DangerousDelete /> */}
 		</VStack>
 	)
 }
