@@ -7,7 +7,7 @@ import Options from '~features/monster/Options'
 export default function Home() {
 	return (
 		<Page>
-			<Options />
+			<Gregory />
 		</Page>
 	)
 }
