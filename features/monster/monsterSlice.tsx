@@ -15,7 +15,6 @@ const monsterSlice = createSlice({
 	initialState,
 	reducers: {
 		setName(state, action: PayloadAction<string>) {
-			// console.log('Setting a new monster name!', action.payload)
 			state.name = action.payload
 		},
 	},

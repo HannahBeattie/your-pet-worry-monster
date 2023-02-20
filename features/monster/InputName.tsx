@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router'
 import { Box, Button, Heading, HStack, Image, Input, Spacer, Text, VStack } from 'native-base'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,6 +9,7 @@ function InputName() {
 	const handleChange = (value: string) => setValue(value)
 	const dispatch = useDispatch()
 	const gregoryBlue = require('../../assets/blue.png')
+	const router = useRouter()
 
 	return (
 		<VStack flex={1} space={8} pt={8}>
@@ -29,7 +31,7 @@ function InputName() {
 							rounded='none'
 							onPress={() => {
 								// console.log('Trying to set name...', setName(value))
-								dispatch(setName(value))
+								dispatch(setName(value), router.push('/confirmName'))
 							}}
 						>
 							<HStack>
