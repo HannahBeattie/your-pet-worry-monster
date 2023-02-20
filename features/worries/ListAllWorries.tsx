@@ -1,10 +1,12 @@
 import { Heading, Text, VStack } from 'native-base'
 import React from 'react'
-import { useSelector } from 'react-redux'
-import { worriesSelectors } from '~features/worries/worrySlice'
+import { TouchableOpacity } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateWorry, worriesSelectors } from '~features/worries/worrySlice'
 
 export default function ListAllWorries() {
-	let worryData = useSelector(worriesSelectors.selectAll)
+	const dispatch = useDispatch()
+	const worryData = useSelector(worriesSelectors.selectAll)
 	console.log('worryData', worryData)
 
 	return (
@@ -13,14 +15,23 @@ export default function ListAllWorries() {
 				You Have Worried because:
 			</Heading>
 			{worryData.map((worry, idx) => (
-				<VStack>
-					<Text key={`worry-${idx}`} color={'white'}>
-						{worry.description}
-					</Text>
-					<Text key={`worry-${idx}`} color={'gray.500'}>
-						{worry.extraNote}
-					</Text>
-				</VStack>
+				<TouchableOpacity
+					key={`worry-${idx}`}
+					onPress={() => {
+						dispatch(
+							updateWorry({
+								id: worry.id,
+								changes: { isActive: !worry.isActive },
+							})
+						)
+					}}
+				>
+					<VStack p='4' bg='gray.700' my='2'>
+						<Text color={'white'}>{worry.description}</Text>
+						<Text color={'gray.500'}>{worry.extraNote}</Text>
+						<Text color={'white'}>{worry.isActive ? 'Active' : 'Inactive'}</Text>
+					</VStack>
+				</TouchableOpacity>
 			))}
 		</VStack>
 	)

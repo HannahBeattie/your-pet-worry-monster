@@ -10,10 +10,11 @@ function Gregory() {
 	const name = useSelector(monsterNameSelector)
 	return (
 		<VStack alignItems={'stretch'} flex={'1'}>
-			<Image alt={'blue the monster'} source={gregoryBlue} flex={1} resizeMode='contain' />
-			<Heading color={'blue.300'} textAlign={'center'} pb={4}>
+			<Heading color={'blue.300'} textAlign={'center'} pt={8}>
 				{name}
 			</Heading>
+			<Image alt={'blue the monster'} source={gregoryBlue} flex={1} resizeMode='contain' />
+
 			<FloatingButton />
 		</VStack>
 	)

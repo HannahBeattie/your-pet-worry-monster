@@ -22,11 +22,11 @@ export default function DangerousDelete() {
 			>
 				Danger! Deleting all worry data!!
 			</Button>
-			{worryData.map((worry, idx) => (
+			{/* {worryData.map((worry, idx) => (
 				<Text key={idx} color={'white'}>
 					{JSON.stringify(worry, null, '    ')}
 				</Text>
-			))}
+			))} */}
 		</VStack>
 	)
 }
