@@ -10,9 +10,8 @@ function InputName() {
 	const gregoryBlue = require('../../assets/blue.png')
 
 	return (
-		<VStack justifyContent={'space-between'} flex={1} alignItems={'stretch'} space={8}>
+		<VStack flex={1} space={8} pt={8}>
 			<Heading color={'white'}>Hmm... What should I call myself?</Heading>
-
 			<Box alignItems='center'>
 				<Input
 					fontSize={'lg'}
@@ -21,9 +20,8 @@ function InputName() {
 					onChangeText={handleChange}
 					value={value}
 					placeholder='my name is'
-					color={'black'}
-					bg={'warmGray.200'}
 					fontWeight={'800'}
+					color={'white'}
 					InputRightElement={
 						<Button
 							h='full'
@@ -43,20 +41,7 @@ function InputName() {
 					}
 				/>
 			</Box>
-			<Spacer />
 			<Image alt={'blue the monster'} source={gregoryBlue} flex={1} resizeMode='contain' />
-			<Spacer />
-			<HStack justifyContent={'flex-end'} alignItems={'stretch'}>
-				<Button
-					variant={'ghost'}
-					rounded='md'
-					onPress={() => {
-						dispatch(setName('No-name'))
-					}}
-				>
-					SKIP
-				</Button>
-			</HStack>
 		</VStack>
 	)
 }
