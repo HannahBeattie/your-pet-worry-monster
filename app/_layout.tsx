@@ -1,9 +1,8 @@
 import { Drawer } from 'expo-router/drawer'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
+import { persistor, store } from '~features/store'
 import { StyleProvider } from '~features/theme/StyleProvider'
-
-import { persistor, store } from '../features/store'
 
 export default function Layout() {
 	return (
