@@ -14,10 +14,11 @@ export const theme = extendTheme({
 			variants: {
 				page: {
 					_light: {
-						backgroundColor: 'gray.100',
+						backgroundColor: 'gray.300',
 					},
 					_dark: {
-						backgroundColor: 'gray.800',
+						color: 'white',
+						backgroundColor: 'gray.900',
 					},
 					flex: 1,
 					justifyContent: 'center',

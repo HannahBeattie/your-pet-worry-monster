@@ -1,6 +1,6 @@
 import { VStack } from 'native-base'
-import DangerousDelete from '~features/components/DangerousDelete'
-import Gregory from '~features/components/Gregory'
+import DangerousDelete from '~features/worries/DangerousDelete'
+import Gregory from '~features/monster/Gregory'
 import { Drawer } from 'expo-router/drawer'
 
 export default function DebugPage() {

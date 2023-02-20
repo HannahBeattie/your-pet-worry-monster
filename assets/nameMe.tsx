@@ -1,5 +1,5 @@
 import React from 'react'
-import InputName from '~features/components/InputName'
+import InputName from '~features/monster/InputName'
 
 function nameMe() {
 	return <InputName />

@@ -1,6 +1,6 @@
 import { FC, PropsWithChildren } from 'react'
 import { NativeBaseProvider } from 'native-base'
-import { theme } from 'theme'
+import { theme } from './theme'
 
 export type StyleProviderProps = {}
 
