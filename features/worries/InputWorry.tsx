@@ -28,6 +28,7 @@ function InputWorry() {
 		dispatch(addWorry(worryValue))
 		setValue('')
 		setSeccond('')
+		router.push('/savingWorry')
 	}
 	// const data = worrySelector(worryState)
 	const data = useSelector(worriesSelectors.selectAll)

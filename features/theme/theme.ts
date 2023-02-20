@@ -72,13 +72,17 @@ export const theme = extendTheme({
 			},
 		},
 
-		// Text: {
-		// 	variants: {
-		// 		btn: {
-		// 			textDecorationLine: 'none',
-		// 			color: 'white',
-		// 		},
-		// 	},
-		// },
+		Text: {
+			defaultProps: {
+				color: 'white',
+				fontSize: 'xl',
+			},
+			variants: {
+				btn: {
+					textDecorationLine: 'none',
+					color: 'white',
+				},
+			},
+		},
 	},
 })

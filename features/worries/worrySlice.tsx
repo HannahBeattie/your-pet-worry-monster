@@ -3,7 +3,7 @@ import { RootState } from '~features/store'
 
 export const worrySliceName = 'worries'
 
-type Worry = {
+export type Worry = {
 	id: number
 	description: string
 	extraNote: string
