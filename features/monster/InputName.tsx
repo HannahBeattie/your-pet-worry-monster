@@ -1,4 +1,4 @@
-import { Entypo, Fontisto } from '@expo/vector-icons'
+import { Entypo, Fontisto, AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
 import { Fab, Heading, Icon, IconButton, Image, Input, VStack } from 'native-base'
 import React from 'react'
@@ -7,11 +7,11 @@ import { setName } from '~features/monster/monsterSlice'
 
 function InputName() {
 	const icons = [
-		<Icon as={Fontisto} color={'purple.800'} name='question' />,
-		<Icon as={Entypo} color={'purple.800'} name='check' />,
+		<Icon as={MaterialCommunityIcons} name={'thought-bubble-outline'} color={'purple.800'} />,
+		<Icon as={Entypo} color={'teal.300'} name='check' />,
 	]
 	const [value, setValue] = React.useState('')
-	const [currentIcon, setCurrentIcon] = React.useState(icons[0])
+	const [currentIcon, setCurrentIcon] = React.useState({ icon: icons[0], color: 'teal.300' })
 
 	const dispatch = useDispatch()
 	const gregoryBlue = require('../../assets/blue.png')
@@ -19,8 +19,8 @@ function InputName() {
 
 	const handleChange = (value: string) => {
 		setValue(value)
-		if (value.length > 3) setCurrentIcon(icons[1])
-		if (value.length < 3) setCurrentIcon(icons[0])
+		if (value.length > 3) setCurrentIcon({ icon: icons[1], color: 'purple.600' })
+		if (value.length < 2) setCurrentIcon({ icon: icons[0], color: 'teal.500' })
 	}
 	const placeHolderText = 'my name is...'
 
@@ -38,19 +38,23 @@ function InputName() {
 
 			<Input
 				fontSize={'lg'}
+				borderRadius={'full'}
 				w='full'
+				backgroundColor={'white'}
+				p={4}
 				variant='outline'
 				onChangeText={handleChange}
 				value={value}
 				placeholder={placeHolderText}
 				fontWeight={'800'}
+				color={'purple.500'}
 			/>
 
 			<IconButton
 				alignSelf={'center'}
 				boxSize={'10'}
-				backgroundColor={'teal.500'}
-				icon={currentIcon}
+				backgroundColor={currentIcon.color}
+				icon={currentIcon.icon}
 				borderRadius='full'
 				size={'lg'}
 				onPress={() => {
