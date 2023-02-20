@@ -11,9 +11,9 @@ function Gregory() {
 	return (
 		<VStack alignItems={'stretch'} flex={'1'}>
 			<Image alt={'blue the monster'} source={gregoryBlue} flex={1} resizeMode='contain' />
-			<Text color={'blue.300'} textAlign={'center'} pt={4}>
+			<Heading color={'blue.300'} textAlign={'center'} pb={4}>
 				{name}
-			</Text>
+			</Heading>
 			<FloatingButton />
 		</VStack>
 	)
