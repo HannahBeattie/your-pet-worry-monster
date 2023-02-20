@@ -1,13 +1,12 @@
-import { VStack } from 'native-base'
-import DangerousDelete from '~features/worries/DangerousDelete'
-import Gregory from '~features/monster/Gregory'
 import { Drawer } from 'expo-router/drawer'
+import Page from '~features/layout/Page'
+import DangerousDelete from '~features/worries/DangerousDelete'
 
 export default function DebugPage() {
 	return (
-		<VStack alignItems='stretch' flex={1}>
+		<Page>
 			<Drawer.Screen options={{ title: 'Debug Page', headerShown: true }} />
 			<DangerousDelete />
-		</VStack>
+		</Page>
 	)
 }

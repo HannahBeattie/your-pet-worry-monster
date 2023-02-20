@@ -32,7 +32,7 @@ function InputWorry() {
 	return (
 		<VStack flex={1} alignItems={'stretch'} justifyContent={'space-evenly'}>
 			<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-				<VStack space={8}>
+				<VStack space={8} color={'black'}>
 					<Heading color={'white'}>What are you worried about?</Heading>
 					<TextArea
 						autoCompleteType
@@ -44,6 +44,7 @@ function InputWorry() {
 						value={first}
 						maxLength={400}
 						minH={100}
+						color={'black'}
 					/>
 
 					<Heading color={'white'}>What is the scariest bit of that worry?</Heading>
@@ -54,6 +55,7 @@ function InputWorry() {
 						aria-label='text-area'
 						fontSize={'xl'}
 						placeholder='The scariest bit is...'
+						color={'black'}
 						onChangeText={handleSeccond}
 						value={seccond}
 						maxLength={400}
@@ -74,14 +76,8 @@ function InputWorry() {
 					</Text>
 				</Button>
 			</VStack>
-			<HStack alignItems={'center'}>
-				<Button variant={'ghost'} p={0}>
-					<Entypo name='chevron-small-left' size={32} color='white' />
-				</Button>
-			</HStack>
 		</VStack>
 	)
 }
 
-// export default InputWorry
 export default InputWorry

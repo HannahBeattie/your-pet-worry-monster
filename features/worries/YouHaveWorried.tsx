@@ -22,8 +22,8 @@ export default function YouHaveWorried() {
 	})
 
 	return (
-		<VStack flex={1} justifyItems={'stretch'} justifyContent={'space-evenly'} space={8}>
-			<Heading fontSize={'xl'} textAlign={'center'} color={'white'}>
+		<>
+			<Heading fontSize={'xl'} textAlign={'center'} color={'white'} py={10}>
 				You Have Worried because
 			</Heading>
 			<VStack flex={1}>
@@ -49,6 +49,6 @@ export default function YouHaveWorried() {
 					columnFormat='single-column-left'
 				/>
 			</VStack>
-		</VStack>
+		</>
 	)
 }

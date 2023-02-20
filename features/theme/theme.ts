@@ -17,7 +17,6 @@ export const theme = extendTheme({
 						backgroundColor: 'gray.300',
 					},
 					_dark: {
-						color: 'white',
 						backgroundColor: 'gray.900',
 					},
 					flex: 1,
