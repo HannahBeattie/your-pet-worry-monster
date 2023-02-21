@@ -9,22 +9,22 @@ import { addWorry, worriesSelectors } from '~features/worries/worrySlice'
 
 export default function InputWorry() {
 	const router = useRouter()
+	const dispatch = useDispatch()
+
 	const [first, setValue] = React.useState('')
 	const [third, setThird] = React.useState('')
 	const [seccond, setSeccond] = React.useState('')
 	const handleFirst = (first: string) => setValue(first)
 	const handleSeccond = (seccond: string) => setSeccond(seccond)
 	const handleThird = (third: string) => setThird(third)
-	const dispatch = useDispatch()
+
 	const worryValue = {
 		id: +new Date(),
 		description: first,
 		extraNote: seccond,
 		isActive: true,
 	}
-
 	const handleWorrySubmit = () => {
-		console.log('trying to add new worry!', worryValue)
 		dispatch(addWorry(worryValue))
 		setValue('')
 		setSeccond('')
@@ -34,7 +34,6 @@ export default function InputWorry() {
 
 	const data = useSelector(worriesSelectors.selectAll)
 
-	console.log('data is', data)
 	return (
 		<VStack variant='page'>
 			<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
