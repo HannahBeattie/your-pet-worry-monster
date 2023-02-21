@@ -54,7 +54,7 @@ export default function InputWorry() {
 						color={'black'}
 					/>
 					<Heading textAlign={'start'} color={'white'}>
-						Where in your body do you feel the worry?
+						Where, in your body, do you notice the worry?
 					</Heading>
 					<TextArea
 						value={third}
