@@ -1,7 +1,7 @@
 import { Center, Heading, Text, VStack } from 'native-base'
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { worriesSelectors } from '~features/worries/worrySlice'
+import { selectAllInactive, worriesSelectors } from '~features/worries/worrySlice'
 import Timeline from 'react-native-timeline-flatlist'
 import { formatRelative } from 'date-fns'
 
@@ -10,7 +10,7 @@ function toRelativeString(date: number) {
 }
 
 export default function YouHaveWorried() {
-	let worryData = useSelector(worriesSelectors.selectAll).reverse()
+	let worryData = useSelector(selectAllInactive).reverse()
 	console.log('worryData', worryData)
 
 	let formatData = worryData.map(function (value) {

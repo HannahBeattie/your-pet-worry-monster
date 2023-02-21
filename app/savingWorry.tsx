@@ -1,25 +1,24 @@
 import { useRouter } from 'expo-router'
-import { Box, Fab, Heading, HStack, Text, VStack } from 'native-base'
+import { Box, Heading, HStack, Text, VStack } from 'native-base'
 import React from 'react'
 import { Pressable } from 'react-native'
-import { State } from 'react-native-gesture-handler'
 import { useDispatch, useSelector } from 'react-redux'
 import Blue from '~features/monster/Blue'
-import { selectAllActive, updateWorry, worriesSelectors, Worry } from '~features/worries/worrySlice'
+import { selectAllActive, updateWorry, Worry } from '~features/worries/worrySlice'
 
 export default function SavingWorry() {
 	const router = useRouter()
 	const dispatch = useDispatch()
 	const allActive: Array<Worry> = useSelector(selectAllActive)
-	const length = allActive.length - 1
+	const length = 0 < allActive.length - 1 ? allActive.length - 1 : 0
 	const latestActive = allActive[length]
 	return (
 		<VStack variant={'page'}>
 			<VStack backgroundColor={'violet.800'} p={4} borderRadius={'lg'}>
 				<Text>I am worried that</Text>
-				<Heading>{latestActive.description}</Heading>
+				<Heading>{latestActive?.description}</Heading>
 				<Text>The Scariest bit is</Text>
-				<Heading>{latestActive.extraNote}</Heading>
+				<Heading>{latestActive?.extraNote}</Heading>
 			</VStack>
 			<Blue />
 			<Text>Wouly you like me to hold on to this worry for a bit?</Text>

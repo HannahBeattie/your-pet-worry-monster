@@ -1,4 +1,5 @@
 import { createEntityAdapter, createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { useSelector } from 'react-redux'
 import { RootState } from '~features/store'
 
 export const worrySliceName = 'worries'
@@ -40,3 +41,7 @@ export const selectAllInactive = createSelector([worriesSelectors.selectAll], (a
 
 export const { addWorry, deleteWorry, updateWorry, deleteAllWorries } = worrySlice.actions
 export default worrySlice.reducer
+
+export const selectLastActive = createSelector([worriesSelectors.selectAll], (all) =>
+	all.filter((worry) => worry.isActive).slice(-1)
+)

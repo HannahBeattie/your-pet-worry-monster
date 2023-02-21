@@ -27,6 +27,16 @@ const actions = [
 		textStyle: { fontSize: 14, fontWeight: '600' },
 		textBackground: 'black',
 	},
+	{
+		text: 'Current Worries',
+		icon: <FontAwesome name='exclamation' size={24} color='white' />,
+		name: 'current',
+		position: 2,
+		color: '#d6507d',
+		textColor: 'white',
+		textStyle: { fontSize: 14, fontWeight: '600' },
+		textBackground: 'black',
+	},
 ]
 function MyFab() {
 	const [active, setActive] = useState(false)
