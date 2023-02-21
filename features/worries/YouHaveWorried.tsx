@@ -26,7 +26,7 @@ export default function YouHaveWorried() {
 			<Heading fontSize={'xl'} textAlign={'center'} color={'white'} py={10}>
 				You Have Worried because
 			</Heading>
-			<VStack flex={1}>
+			<VStack flex={1} paddingBottom={10}>
 				<Timeline
 					data={formatData}
 					innerCircle={'dot'}
