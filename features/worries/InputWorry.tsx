@@ -1,15 +1,13 @@
-import Entypo from '@expo/vector-icons/Entypo'
 import { useRouter } from 'expo-router'
-import { Button, Heading, HStack, Spacer, Text, TextArea, VStack } from 'native-base'
+import { Button, Heading, Spacer, TextArea, VStack } from 'native-base'
 import React from 'react'
 import { Keyboard } from 'react-native'
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 import { useDispatch, useSelector } from 'react-redux'
 import HomeButton from '~features/layout/HomeButton'
-import { monsterNameSelector } from '~features/monster/monsterSlice'
 import { addWorry, worriesSelectors } from '~features/worries/worrySlice'
 
-function InputWorry() {
+export default function InputWorry() {
 	const router = useRouter()
 	const [first, setValue] = React.useState('')
 	const [seccond, setSeccond] = React.useState('')
@@ -35,9 +33,9 @@ function InputWorry() {
 
 	console.log('data is', data)
 	return (
-		<VStack flex={1} alignItems={'stretch'}>
+		<VStack flex={1} alignItems={'stretch'} justifyContent={'space-evenly'}>
 			<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-				<VStack space={8} color={'black'}>
+				<VStack color={'black'} space={8}>
 					<Heading color={'white'}>What are you worried about?</Heading>
 					<TextArea
 						autoCompleteType
@@ -48,7 +46,6 @@ function InputWorry() {
 						onChangeText={handleFirst}
 						value={first}
 						maxLength={400}
-						minH={100}
 						color={'black'}
 					/>
 
@@ -64,11 +61,10 @@ function InputWorry() {
 						onChangeText={handleSeccond}
 						value={seccond}
 						maxLength={400}
-						minH={100}
 					/>
 				</VStack>
 			</TouchableWithoutFeedback>
-			<Spacer />
+
 			<Button
 				onPress={() => {
 					handleWorrySubmit()
@@ -76,9 +72,8 @@ function InputWorry() {
 			>
 				<Heading>Add worry</Heading>
 			</Button>
+
 			<HomeButton />
 		</VStack>
 	)
 }
-
-export default InputWorry
