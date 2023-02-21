@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux'
 import { monsterNameSelector } from '~features/monster/monsterSlice'
 
 function HomeButton() {
-	const name = useSelector(monsterNameSelector)
 	const router = useRouter()
 	const gregoryBlue = require('../../assets/blueFace.png')
 	return (

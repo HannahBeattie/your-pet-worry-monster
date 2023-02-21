@@ -6,9 +6,5 @@ import Page from '~features/layout/Page'
 import InputWorry from '~features/worries/InputWorry'
 
 export default function AddWorry() {
-	return (
-		<Page>
-			<InputWorry />
-		</Page>
-	)
+	return <InputWorry />
 }

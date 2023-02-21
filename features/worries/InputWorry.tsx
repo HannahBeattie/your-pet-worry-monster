@@ -28,15 +28,17 @@ export default function InputWorry() {
 		setSeccond('')
 		router.push('/savingWorry')
 	}
-	// const data = worrySelector(worryState)
+
 	const data = useSelector(worriesSelectors.selectAll)
 
 	console.log('data is', data)
 	return (
-		<VStack flex={1} alignItems={'stretch'} justifyContent={'space-evenly'}>
+		<VStack variant='page'>
 			<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-				<VStack color={'black'} space={8}>
-					<Heading color={'white'}>What are you worried about?</Heading>
+				<VStack color={'black'} space={10}>
+					<Heading textAlign={'start'} color={'white'}>
+						What are you worried about?
+					</Heading>
 					<TextArea
 						autoCompleteType
 						bgColor={'white'}
@@ -49,7 +51,9 @@ export default function InputWorry() {
 						color={'black'}
 					/>
 
-					<Heading color={'white'}>What is the scariest bit of that worry?</Heading>
+					<Heading color={'white'} textAlign={'start'}>
+						What is the scariest bit of that worry?
+					</Heading>
 
 					<TextArea
 						autoCompleteType={true}
