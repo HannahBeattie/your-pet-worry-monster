@@ -15,7 +15,7 @@ export default function SavingWorry() {
 	return (
 		<VStack variant={'page'} space={4}>
 			<VStack pt={10} borderRadius={'lg'}>
-				<Text>I am worried because {latestActive?.description}</Text>
+				<Text>I am worried about {latestActive?.description}</Text>
 				<Text>The Scariest bit is {latestActive?.extraNote}</Text>
 			</VStack>
 			<Blue />
