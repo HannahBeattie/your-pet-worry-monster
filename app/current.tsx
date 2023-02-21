@@ -9,6 +9,7 @@ import worrySlice, {
 	updateWorry,
 } from '~features/worries/worrySlice'
 import { Hidden } from 'native-base'
+import HomeButton from '~features/layout/HomeButton'
 
 export default function Current() {
 	const allActive = useSelector(selectAllActive).reverse()
@@ -40,6 +41,7 @@ export default function Current() {
 					</Pressable>
 				</VStack>
 			))}
+			<HomeButton />
 
 			{/* <Text>All Active: {allActive.map((worry) => worry.description).join(', ')}</Text> */}
 		</VStack>

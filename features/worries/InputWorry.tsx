@@ -5,12 +5,12 @@ import React from 'react'
 import { Keyboard } from 'react-native'
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 import { useDispatch, useSelector } from 'react-redux'
+import HomeButton from '~features/layout/HomeButton'
 import { monsterNameSelector } from '~features/monster/monsterSlice'
 import { addWorry, worriesSelectors } from '~features/worries/worrySlice'
 
 function InputWorry() {
 	const router = useRouter()
-	const name = useSelector(monsterNameSelector)
 	const [first, setValue] = React.useState('')
 	const [seccond, setSeccond] = React.useState('')
 	const handleFirst = (first: string) => setValue(first)
@@ -76,14 +76,7 @@ function InputWorry() {
 			>
 				<Heading>Add worry</Heading>
 			</Button>
-
-			<Button
-				onPress={() => {
-					router.push('/monsterMenu')
-				}}
-			>
-				<Heading>Back to {name}</Heading>
-			</Button>
+			<HomeButton />
 		</VStack>
 	)
 }
