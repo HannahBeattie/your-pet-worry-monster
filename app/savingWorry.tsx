@@ -4,14 +4,20 @@ import React from 'react'
 import { Pressable } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import Blue from '~features/monster/Blue'
-import { selectAllActive, updateWorry, Worry } from '~features/worries/worrySlice'
+import {
+	selectAllActive,
+	selectLastActiveItem,
+	updateWorry,
+	Worry,
+} from '~features/worries/worrySlice'
 
 export default function SavingWorry() {
 	const router = useRouter()
 	const dispatch = useDispatch()
 	const allActive: Array<Worry> = useSelector(selectAllActive)
-	const length = 0 < allActive.length - 1 ? allActive.length - 1 : 0
-	const latestActive = allActive[length]
+	const latestActive = useSelector(selectLastActiveItem)
+	console.log('latestActive is:', latestActive)
+
 	return (
 		<VStack variant={'page'} space={4}>
 			<VStack pt={10} borderRadius={'lg'}>

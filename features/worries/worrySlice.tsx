@@ -42,6 +42,7 @@ export const selectAllInactive = createSelector([worriesSelectors.selectAll], (a
 export const { addWorry, deleteWorry, updateWorry, deleteAllWorries } = worrySlice.actions
 export default worrySlice.reducer
 
-export const selectLastActive = createSelector([worriesSelectors.selectAll], (all) =>
-	all.filter((worry) => worry.isActive).slice(-1)
+export const selectLastActiveItem = createSelector(
+	[selectAllActive],
+	(active) => active[active.length - 1]
 )
