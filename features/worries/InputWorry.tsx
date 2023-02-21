@@ -10,9 +10,11 @@ import { addWorry, worriesSelectors } from '~features/worries/worrySlice'
 export default function InputWorry() {
 	const router = useRouter()
 	const [first, setValue] = React.useState('')
+	const [third, setThird] = React.useState('')
 	const [seccond, setSeccond] = React.useState('')
 	const handleFirst = (first: string) => setValue(first)
 	const handleSeccond = (seccond: string) => setSeccond(seccond)
+	const handleThird = (third: string) => setThird(third)
 	const dispatch = useDispatch()
 	const worryValue = {
 		id: +new Date(),
@@ -26,6 +28,7 @@ export default function InputWorry() {
 		dispatch(addWorry(worryValue))
 		setValue('')
 		setSeccond('')
+		setThird('')
 		router.push('/savingWorry')
 	}
 
@@ -35,18 +38,32 @@ export default function InputWorry() {
 	return (
 		<VStack variant='page'>
 			<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-				<VStack color={'black'} space={10}>
+				<VStack color={'black'} space={4}>
 					<Heading textAlign={'start'} color={'white'}>
-						What are you worried about?
+						What are you feeling worried about?
 					</Heading>
 					<TextArea
 						autoCompleteType
 						bgColor={'white'}
 						aria-label='text-area'
 						fontSize={'xl'}
-						placeholder='I am worries about...'
+						placeholder='I am worried about...'
 						onChangeText={handleFirst}
 						value={first}
+						maxLength={400}
+						color={'black'}
+					/>
+					<Heading textAlign={'start'} color={'white'}>
+						Where in your body do you feel the worry?
+					</Heading>
+					<TextArea
+						value={third}
+						onChangeText={handleThird}
+						autoCompleteType
+						bgColor={'white'}
+						aria-label='text-area'
+						fontSize={'xl'}
+						placeholder='I feel it...'
 						maxLength={400}
 						color={'black'}
 					/>
