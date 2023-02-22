@@ -20,10 +20,9 @@ import { useFormatDate } from '~features/worries/useFormatDate'
 import { selectAllInactive } from '~features/worries/worrySlice'
 
 export default function Timeline() {
-	const { height, width } = useWindowDimensions()
 	const [mode, setMode] = useState('Basic')
 	return (
-		<Center h='290px'>
+		<Center flex={1}>
 			<Box bg={'teal.900'} flex='1' safeAreaTop maxW='400px' w='100%'>
 				<ScrollView showsVerticalScrollIndicator={false}>
 					<Basic />
@@ -63,16 +62,8 @@ function Basic() {
 	}
 
 	const renderItem = ({ item, index }: any) => (
-		<Box>
-			<Pressable
-				onPress={() => console.log('You touched me')}
-				_dark={{
-					bg: 'coolGray.800',
-				}}
-				_light={{
-					bg: 'white',
-				}}
-			>
+		<VStack flex={1}>
+			<Pressable onPress={() => console.log('You touched me')} bg={'coolGray.800'}>
 				<Box pl='4' pr='5' py='2'>
 					<HStack alignItems='center' space={3}>
 						<VStack>
@@ -87,7 +78,7 @@ function Basic() {
 							</Text>
 							<Text color='red.600'>{item.description}</Text>
 						</VStack>
-						<Spacer />
+
 						<Text
 							fontSize='xs'
 							color='coolGray.800'
@@ -101,53 +92,35 @@ function Basic() {
 					</HStack>
 				</Box>
 			</Pressable>
-		</Box>
+		</VStack>
 	)
+	const { height, width } = useWindowDimensions()
 
 	const renderHiddenItem = (data: any, rowMap: any) => (
-		<HStack flex='1' pl='2'>
+		<HStack flex={1} alignItems={'stretch'} maxW='400px'>
+			<Spacer />
 			<Pressable
-				w='70'
-				ml='auto'
-				bg='coolGray.200'
-				justifyContent='center'
-				onPress={() => closeRow(rowMap, data.item.key)}
-				_pressed={{
-					opacity: 0.5,
-				}}
-			>
-				<VStack alignItems='center' space={2}>
-					<Icon
-						as={<Entypo name='dots-three-horizontal' />}
-						size='xs'
-						color='coolGray.800'
-					/>
-					<Text fontSize='xs' fontWeight='medium' color='coolGray.800'>
-						More
-					</Text>
-				</VStack>
-			</Pressable>
-			<Pressable
-				w='70'
-				bg='red.500'
-				justifyContent='center'
+				borderRadius={'md'}
+				flex={1}
+				bg='gray.900'
+				alignItems={'stretch'}
 				onPress={() => deleteRow(rowMap, data.item.key)}
 				_pressed={{
 					opacity: 0.5,
 				}}
 			>
-				<VStack alignItems='center' space={2}>
-					<Icon as={<MaterialIcons name='delete' />} color='white' size='xs' />
-					<Text color='white' fontSize='xs' fontWeight='medium'>
+				<Center flex={1} pl={4}>
+					<Icon as={<MaterialIcons name='delete' />} color='red.600' size='8' />
+					<Text fontSize={'sm'} color='white'>
 						Delete
 					</Text>
-				</VStack>
+				</Center>
 			</Pressable>
 		</HStack>
 	)
 
 	return (
-		<Box bg='white' safeArea flex='1'>
+		<VStack minH={height} flex={1} backgroundColor={'red.100'} minHeight={height}>
 			<SwipeListView
 				data={listData}
 				renderItem={renderItem}
@@ -155,10 +128,10 @@ function Basic() {
 				rightOpenValue={-130}
 				previewRowKey={'0'}
 				previewOpenValue={-40}
-				horizontal={true}
 				previewOpenDelay={3000}
+				swipeRowStyle={{ margin: 8 }}
 				onRowDidOpen={onRowDidOpen}
 			/>
-		</Box>
+		</VStack>
 	)
 }
