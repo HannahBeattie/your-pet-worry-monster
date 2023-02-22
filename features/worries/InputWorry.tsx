@@ -4,7 +4,7 @@ import React from 'react'
 import { Dimensions, Keyboard } from 'react-native'
 import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler'
 import { useDispatch, useSelector } from 'react-redux'
-import getWindowSize from '~features/hooks/getScreenSize'
+
 import HomeButton from '~features/layout/HomeButton'
 import Scroll from '~features/layout/Scroll'
 import { addWorry, worriesSelectors } from '~features/worries/worrySlice'
@@ -45,7 +45,6 @@ export default function InputWorry() {
 							What are you feeling worried about?
 						</Heading>
 						<TextArea
-							autoCompleteType
 							bgColor={'white'}
 							aria-label='text-area'
 							fontSize={'xl'}
@@ -61,7 +60,6 @@ export default function InputWorry() {
 						<TextArea
 							value={third}
 							onChangeText={handleThird}
-							autoCompleteType
 							bgColor={'white'}
 							aria-label='text-area'
 							fontSize={'xl'}
@@ -75,7 +73,6 @@ export default function InputWorry() {
 						</Heading>
 
 						<TextArea
-							autoCompleteType={true}
 							bgColor={'white'}
 							aria-label='text-area'
 							fontSize={'xl'}

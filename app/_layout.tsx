@@ -3,6 +3,7 @@ import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { persistor, store } from '~features/store'
 import { StyleProvider } from '~features/theme/StyleProvider'
+import { useFonts } from '@expo-google-fonts/inter'
 
 export default function Layout() {
 	return (
