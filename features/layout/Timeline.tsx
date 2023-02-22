@@ -97,7 +97,7 @@ function Basic() {
 	const { height, width } = useWindowDimensions()
 
 	const renderHiddenItem = (data: any, rowMap: any) => (
-		<HStack flex={1} alignItems={'stretch'} maxW='400px'>
+		<HStack flex={1} alignItems={'stretch'} maxW='360px'>
 			<Spacer />
 			<Pressable
 				borderRadius={'md'}
@@ -109,7 +109,7 @@ function Basic() {
 					opacity: 0.5,
 				}}
 			>
-				<Center flex={1} pl={4}>
+				<Center flex={1} pl={12}>
 					<Icon as={<MaterialIcons name='delete' />} color='red.600' size='8' />
 					<Text fontSize={'sm'} color='white'>
 						Delete
