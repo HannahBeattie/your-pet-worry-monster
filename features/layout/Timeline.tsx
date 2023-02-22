@@ -1,25 +1,29 @@
 import {
 	Box,
+	Center,
 	FlatList,
 	Heading,
+	Hidden,
 	HStack,
 	Image,
 	ScrollView,
-	SectionList,
-	SimpleGrid,
 	Tag,
 	Text,
-	View,
 	VStack,
 } from 'native-base'
-import React from 'react'
-import { ImageBackground, useWindowDimensions } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Pressable, useWindowDimensions } from 'react-native'
+import { setTSpan } from 'react-native-svg/lib/typescript/lib/extract/extractText'
 
 import { useSelector } from 'react-redux'
+import { monsterNameSelector, monsterSliceName } from '~features/monster/monsterSlice'
 import { useFormatDate } from '~features/worries/useFormatDate'
 import { selectAllInactive } from '~features/worries/worrySlice'
+import HomeButton from './HomeButton'
+import MyFab from './MyFab'
 
 const spatter = require('../../assets/spatter01.png')
+const blue = require('../../assets/eaten.png')
 const spatter2 = require('../../assets/spatter02.png')
 const spatter3 = require('../../assets/spatter03.png')
 function Timeline() {
@@ -33,11 +37,33 @@ function Timeline() {
 		}
 	})
 	let dates = entries.forEach((e) => e.time)
+	const name = useSelector(monsterNameSelector)
 
 	return (
-		<ScrollView horizontal={true} backgroundColor={'gray.900'}>
+		<ScrollView
+			showsHorizontalScrollIndicator={false}
+			horizontal={true}
+			backgroundColor={'gray.900'}
+		>
+			<VStack maxW={width} position={'absolute'} p={4} top={10} left={4} zIndex={4}>
+				<Text px={0} fontSize={'xl'} color={'#ffffff91'}>
+					{name}'s food diary
+				</Text>
+			</VStack>
+			<HomeButton />
+
 			<VStack>
 				<HStack space={8}>
+					<VStack maxH={width / 3}>
+						<Image
+							overflow={'visible'}
+							p={4}
+							boxSize={'600'}
+							resizeMode={'contain'}
+							alt='spatter'
+							source={spatter2}
+						/>
+					</VStack>
 					<VStack maxH={width / 2}>
 						<Image
 							overflow={'visible'}
@@ -48,27 +74,7 @@ function Timeline() {
 							source={spatter3}
 						/>
 					</VStack>
-					<VStack maxH={width / 2}>
-						<Image
-							overflow={'visible'}
-							p={4}
-							boxSize={'600'}
-							resizeMode={'contain'}
-							alt='spatter'
-							source={spatter2}
-						/>
-					</VStack>
 
-					<VStack maxH={width / 2}>
-						<Image
-							overflow={'visible'}
-							p={4}
-							boxSize={'600'}
-							resizeMode={'contain'}
-							alt='spatter'
-							source={spatter2}
-						/>
-					</VStack>
 					<VStack maxH={width / 2}>
 						<Image
 							overflow={'visible'}
@@ -80,23 +86,53 @@ function Timeline() {
 						/>
 					</VStack>
 				</HStack>
+
 				<VStack>
-					<Heading px={8}>Blue's food diary</Heading>
 					<FlatList
 						px={4}
-						maxWidth={'container'}
-						showsHorizontalScrollIndicator={false}
+						scrollEnabled={false}
 						pt={100}
 						horizontal={true}
+						disableScrollViewPanResponder
 						data={entries}
 						renderItem={({ item }) => (
 							<VStack key={item.time} marginRight={4} space={0}>
-								<Box>
-									<Tag>{item.time}</Tag>
+								<Box p={4}>
+									<Tag
+										outlineColor={'white'}
+										borderColor={'white'}
+										backgroundColor={'#101010a2'}
+										borderRadius={'lg'}
+									>
+										<Text fontSize={'sm'}>{item.time}</Text>
+									</Tag>
 								</Box>
-								<VStack py={4} backgroundColor={'blue.900'} space={2}>
-									<Tag backgroundColor={'red.200'}>{item.title}</Tag>
-									<Tag>{item.description}</Tag>
+
+								<VStack
+									outlineColor={'white'}
+									borderColor={'white'}
+									borderWidth={1}
+									pt={8}
+									backgroundColor={'gray.900'}
+									space={8}
+									borderRadius={'lg'}
+									alignContent={'center'}
+									justifyContent={'center'}
+									maxW={width / 1.5}
+								>
+									<Heading px={4} fontSize={'lg'} textAlign={'center'}>
+										{item.title}
+									</Heading>
+									{item.description && (
+										<VStack
+											backgroundColor={'gray.900'}
+											borderBottomRadius={'lg'}
+										>
+											<Text py={4} px={4} color={'white'} fontSize={'sm'}>
+												{item.description}
+											</Text>
+										</VStack>
+									)}
 								</VStack>
 							</VStack>
 						)}
@@ -107,40 +143,19 @@ function Timeline() {
 							<Image
 								overflow={'visible'}
 								p={4}
-								boxSize={'600'}
-								resizeMode={'contain'}
-								alt='spatter'
-								source={spatter2}
-							/>
-						</VStack>
-						<VStack maxH={width / 2}>
-							<Image
-								overflow={'visible'}
-								p={4}
-								boxSize={'600'}
-								resizeMode={'contain'}
-								alt='spatter'
-								source={spatter2}
-							/>
-						</VStack>
-						<VStack maxH={width / 2}>
-							<Image
-								overflow={'visible'}
-								p={4}
-								boxSize={'600'}
+								boxSize={'300'}
 								resizeMode={'contain'}
 								alt='spatter'
 								source={spatter3}
 							/>
 						</VStack>
+
 						<VStack maxH={width / 2}>
 							<Image
-								overflow={'visible'}
-								p={4}
-								boxSize={'600'}
+								boxSize={'900'}
 								resizeMode={'contain'}
 								alt='spatter'
-								source={spatter2}
+								source={blue}
 							/>
 						</VStack>
 					</HStack>

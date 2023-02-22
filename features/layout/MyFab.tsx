@@ -1,3 +1,4 @@
+import { ButtonProps } from '@chakra-ui/react'
 import { FontAwesome } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
 import { View } from 'native-base'
@@ -38,7 +39,7 @@ const actions = [
 		textBackground: 'black',
 	},
 ]
-function MyFab() {
+function MyFab({ props }: any) {
 	const [active, setActive] = useState(false)
 	const handleClick = () => {
 		setActive(!active)
@@ -57,6 +58,7 @@ function MyFab() {
 			onPressItem={(name) => {
 				router.push(`/${name}`)
 			}}
+			{...props}
 		/>
 	)
 }
