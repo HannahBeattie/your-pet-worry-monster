@@ -1,10 +1,11 @@
-import { Box, Heading, HStack, Image, VStack, Text, Tag, Center } from 'native-base'
-import React, { useRef } from 'react'
-import { Animated, ImageSourcePropType, ScrollView, useWindowDimensions } from 'react-native'
-import { Value } from 'react-native-reanimated'
-import HomeButton from './HomeButton'
-import JiggleDeleteView from 'react-native-jiggle-delete-view'
+import { Box, Center, HStack, Image, Text, VStack } from 'native-base'
+import React from 'react'
+import { ImageSourcePropType, useWindowDimensions } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import JiggleDeleteView from 'react-native-jiggle-delete-view'
+import { useDispatch } from 'react-redux'
+import { deleteWorry, worriesSelectors } from '~features/worries/worrySlice'
+import HomeButton from './HomeButton'
 
 type WorryData = {
 	time: number | string
@@ -22,9 +23,17 @@ interface slideProps {
 export default function SlideX({ arr, imageArray, imProps, worryArray }: slideProps) {
 	const { height, width } = useWindowDimensions()
 	const [deleting, setDeleting] = React.useState(false)
+	const [showDeleteJiggle, setShowDeleteJiggle] = React.useState(false)
+	const dispatch = useDispatch()
+
+	const handleDelete = (w) => {
+		console.log('deleting worry:', w)
+		dispatch(deleteWorry(w))
+	}
 
 	return (
 		<>
+			<HomeButton />
 			{imageArray && (
 				<HStack minW={'100%'} flex={1} alignItems={'center'}>
 					{imageArray.map((i: ImageSourcePropType, index: number) => (
@@ -49,18 +58,22 @@ export default function SlideX({ arr, imageArray, imProps, worryArray }: slidePr
 						<VStack p={8} key={index} flex={1} maxW={width}>
 							<TouchableOpacity
 								onLongPress={() => {
-									setDeleting(!deleting)
+									setShowDeleteJiggle(!showDeleteJiggle)
 								}}
 							>
 								<JiggleDeleteView
-									deleting={deleting}
+									showDeleteJiggle={showDeleteJiggle}
 									onDelete={() => {
-										console.log('todo: delete', index)
+										setDeleting(!showDeleteJiggle)
+										console.log('set up deleteItem(index)')
+										handleDelete(w)
 									}}
 								>
-									<Text>{w.time}</Text>
-									<Text>{w.title}</Text>
-									<Text>{w.description}</Text>
+									<Center backgroundColor={'gray.900'}>
+										<Text>{w.time}</Text>
+										<Text>{w.title}</Text>
+										<Text>{w.description}</Text>
+									</Center>
 								</JiggleDeleteView>
 							</TouchableOpacity>
 						</VStack>

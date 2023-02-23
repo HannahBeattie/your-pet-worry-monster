@@ -11,6 +11,8 @@ import { useSelector } from 'react-redux'
 import { selectAllInactive } from '~features/worries/worrySlice'
 import { useFormatDate } from '~features/worries/useFormatDate'
 import SlideX from './SlideX'
+import HomeButton from './HomeButton'
+import MyFab from './MyFab'
 
 export default function Paralax() {
 	const { height, width } = useWindowDimensions()
@@ -18,7 +20,7 @@ export default function Paralax() {
 
 	const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
 		const scrollX = event.nativeEvent.contentOffset.x
-		console.log('Scroll X position:', scrollX)
+		// console.log('Scroll X position:', scrollX)
 	}
 
 	let worryData = useSelector(selectAllInactive).reverse()
