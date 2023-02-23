@@ -1,7 +1,8 @@
 import { Box, Heading, HStack, Image, VStack, Text, Tag } from 'native-base'
-import React from 'react'
-import { ImageSourcePropType, ScrollView, useWindowDimensions } from 'react-native'
+import React, { useRef } from 'react'
+import { Animated, ImageSourcePropType, ScrollView, useWindowDimensions } from 'react-native'
 import { Value } from 'react-native-reanimated'
+import HomeButton from './HomeButton'
 
 type WorryData = {
 	time: number | string
@@ -18,9 +19,15 @@ interface slideProps {
 
 export default function ScrollXGallery({ arr, imageArray, imProps, worryArray }: slideProps) {
 	const { height, width } = useWindowDimensions()
+	const scrollOffsetY = useRef(new Animated.Value(0)).current
+
 	return (
 		<ScrollView horizontal={true} nestedScrollEnabled showsHorizontalScrollIndicator={false}>
-			<ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+			<ScrollView
+				disableScrollViewPanResponder
+				horizontal={true}
+				showsHorizontalScrollIndicator={false}
+			>
 				{imageArray && (
 					<HStack minW={'100%'} flex={1} alignItems={'stretch'} mx={0}>
 						{imageArray.map((i: ImageSourcePropType, index: number) => (
