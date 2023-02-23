@@ -1,18 +1,13 @@
+import { View, VStack } from 'native-base'
 import React, { useRef } from 'react'
 import {
-	ScrollView,
 	NativeScrollEvent,
 	NativeSyntheticEvent,
+	ScrollView,
 	useWindowDimensions,
 } from 'react-native'
-import { Heading, View, VStack } from 'native-base'
-import ScrollXGallery from './SlideX'
-import { useSelector } from 'react-redux'
-import { selectAllInactive } from '~features/worries/worrySlice'
-import { useFormatDate } from '~features/worries/useFormatDate'
+import DisplayWorry from '~features/worries/DisplayWorry'
 import SlideX from './SlideX'
-import HomeButton from './HomeButton'
-import MyFab from './MyFab'
 
 export default function Paralax() {
 	const { height, width } = useWindowDimensions()
@@ -22,15 +17,6 @@ export default function Paralax() {
 		const scrollX = event.nativeEvent.contentOffset.x
 		// console.log('Scroll X position:', scrollX)
 	}
-
-	let worryData = useSelector(selectAllInactive).reverse()
-	let entries = worryData.map(function (value) {
-		return {
-			time: useFormatDate(value.id),
-			title: value.description,
-			description: value.extraNote,
-		}
-	})
 
 	const images = [
 		require('../../assets/spatter01.png'),
@@ -50,7 +36,7 @@ export default function Paralax() {
 				<VStack flex={1} minW={width} backgroundColor={'gray.900'}>
 					<VStack flex={1} minW={width}>
 						<SlideX imageArray={images} />
-						<SlideX worryArray={entries} />
+						<DisplayWorry />
 						<SlideX imageArray={images.reverse()} />
 					</VStack>
 				</VStack>
