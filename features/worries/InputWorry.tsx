@@ -1,5 +1,6 @@
+import { Entypo } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
-import { Button, Heading, Spacer, TextArea, VStack } from 'native-base'
+import { Button, Heading, HStack, Pressable, Spacer, TextArea, VStack } from 'native-base'
 import React from 'react'
 import { Dimensions, Keyboard } from 'react-native'
 import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler'
@@ -7,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import HomeButton from '~features/layout/HomeButton'
 import Scroll from '~features/layout/Scroll'
+import SimpleHome from '~features/layout/SimpleHome'
 import { addWorry, worriesSelectors } from '~features/worries/worrySlice'
 
 export default function InputWorry() {
@@ -38,9 +40,20 @@ export default function InputWorry() {
 
 	return (
 		<ScrollView overScrollMode='never'>
-			<VStack variant='page' h={h} flex={1}>
+			<VStack variant='page' h={h} flex={1} justifyItems={'stretch'}>
+				<HStack alignContent={'flex-end'} justifyItems={'flex-end'} alignSelf={'flex-end'}>
+					<Pressable
+						mt={-10}
+						pb={4}
+						onPress={() => {
+							router.push('/monsterMenu')
+						}}
+					>
+						<Entypo name='cross' size={24} color='white' />
+					</Pressable>
+				</HStack>
 				<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-					<VStack color={'black'} space={4}>
+					<VStack color={'black'} space={4} pb={10}>
 						<Heading textAlign={'start'} color={'white'}>
 							What are you feeling worried about?
 						</Heading>
@@ -87,18 +100,16 @@ export default function InputWorry() {
 						/>
 					</VStack>
 				</TouchableWithoutFeedback>
-
 				<Button
+					backgroundColor={'violet.300'}
 					onPress={() => {
 						handleWorrySubmit()
 					}}
 				>
-					<Heading>Add worry</Heading>
+					<Heading color={'violet.900'} fontWeight={'800'} textTransform={'uppercase'}>
+						Add worry
+					</Heading>
 				</Button>
-			</VStack>
-
-			<VStack variant={'page'} h={h / 2}>
-				<HomeButton />
 			</VStack>
 		</ScrollView>
 	)
