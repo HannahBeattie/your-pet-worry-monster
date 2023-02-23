@@ -25,7 +25,13 @@ function DisplayWorry() {
 	}
 
 	return (
-		<HStack direction={'row-reverse'} position={'absolute'} top={90} left={0} zIndex={4}>
+		<HStack
+			justifyItems={'center'}
+			pt={'40'}
+			direction={'row-reverse'}
+			minH={height}
+			justifyContent={'center'}
+		>
 			<Heading fontWeight={'200'} right={10} top={-30} position={'absolute'}>
 				{monster}'s Food Diary
 			</Heading>
@@ -48,7 +54,7 @@ function DisplayWorry() {
 								borderColor={'gray.600'}
 								backgroundColor={'gray.900'}
 								borderTopRadius={'md'}
-								w={200}
+								w={300}
 								alignSelf={'center'}
 							>
 								<Text color={'white'} fontWeight={'200'}>
@@ -59,7 +65,7 @@ function DisplayWorry() {
 								borderWidth={1}
 								borderColor={'gray.500'}
 								backgroundColor={'#0000005d'}
-								borderRadius={'xl'}
+								borderBottomRadius={'xl'}
 								alignItems={'stretch'}
 							>
 								<VStack space={4} px={4} maxH={550} pb={8} pt={4}>
@@ -67,7 +73,7 @@ function DisplayWorry() {
 										<Text color={'gray.200'}>Worry eaten</Text>
 									</Tag>
 									<VStack px={4} space={4} alignItems={'center'}>
-										<Text fontWeight={'light'} color={'white'}>
+										<Text fontSize={'md'} fontWeight={'light'} color={'white'}>
 											{worry.description}
 										</Text>
 										<Divider />
@@ -78,7 +84,7 @@ function DisplayWorry() {
 										>
 											The scariest bit
 										</Text>
-										<Text color={'white'} fontWeight={'light'}>
+										<Text fontSize={'sm'} color={'white'} fontWeight={'light'}>
 											{worry.extraNote}
 										</Text>
 									</VStack>

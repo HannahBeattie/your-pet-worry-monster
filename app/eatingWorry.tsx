@@ -7,7 +7,7 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { Pressable } from 'react-native'
 import { useRouter } from 'expo-router'
 
-const gregoryBlue = require('../assets/blueFace.png')
+const eaten = require('../assets/eaten.png')
 
 export default function EatingWorry() {
 	const router = useRouter()
@@ -15,7 +15,7 @@ export default function EatingWorry() {
 		<VStack variant={'page'} pt={100}>
 			<Heading textAlign={'center'}>YUMMMM!</Heading>
 			<Heading textAlign={'center'}>That Was delicious!</Heading>
-			<Blue />
+			<Image alt={'blue the monster'} source={eaten} flex={1} resizeMode='contain' />
 
 			<HStack
 				space={8}
