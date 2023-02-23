@@ -31,7 +31,7 @@ export default function SavingWorry() {
 					dispatch(
 						updateWorry({
 							id: latestActive.id,
-							changes: { isActive: !latestActive.isActive },
+							changes: { isActive: !latestActive.isActive, consumedAt: +new Date() },
 						})
 					),
 						router.push('/eatingWorry')

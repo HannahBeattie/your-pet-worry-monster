@@ -9,6 +9,7 @@ export type Worry = {
 	description: string
 	extraNote: string
 	isActive: boolean
+	consumedAt?: number
 }
 
 const worriesAdapter = createEntityAdapter<Worry>({

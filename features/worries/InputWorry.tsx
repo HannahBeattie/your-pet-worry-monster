@@ -27,6 +27,7 @@ export default function InputWorry() {
 		description: first,
 		extraNote: seccond,
 		isActive: true,
+		consumedAt: 0,
 	}
 	const handleWorrySubmit = () => {
 		dispatch(addWorry(worryValue))

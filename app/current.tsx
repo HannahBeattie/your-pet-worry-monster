@@ -33,7 +33,10 @@ export default function Current() {
 									dispatch(
 										updateWorry({
 											id: worry.id,
-											changes: { isActive: !worry.isActive },
+											changes: {
+												isActive: !worry.isActive,
+												consumedAt: +new Date(),
+											},
 										})
 									),
 										router.push('/eatingWorry')

@@ -6,7 +6,7 @@ export const theme = extendTheme({
 	},
 
 	colors: {
-		primary: defaultTheme.colors.trueGray,
+		primary: defaultTheme.colors.violet,
 	},
 
 	components: {
@@ -69,6 +69,7 @@ export const theme = extendTheme({
 				px: 6,
 				py: 2,
 				variant: 'outline',
+				backgroundColor: 'gray.900',
 			},
 		},
 

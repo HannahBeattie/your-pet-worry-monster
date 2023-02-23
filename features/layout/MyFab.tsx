@@ -6,8 +6,10 @@ import React, { useEffect, useState } from 'react'
 import { Text } from 'react-native'
 
 import { FloatingAction } from 'react-native-floating-action'
+import { useSelector } from 'react-redux'
+import { selectAllActive } from '~features/worries/worrySlice'
 
-const actions = [
+const one = [
 	{
 		text: 'Add Worry',
 		icon: <FontAwesome name='plus' size={24} color='red' />,
@@ -28,6 +30,30 @@ const actions = [
 		textStyle: { fontSize: 14, fontWeight: '600' },
 		textBackground: 'black',
 	},
+]
+
+const two = [
+	{
+		text: 'Add Worry',
+		icon: <FontAwesome name='plus' size={24} color='red' />,
+		name: 'addWorry',
+		position: 1,
+		color: 'orange',
+		textColor: 'white',
+		textBackground: 'black',
+		textStyle: { fontSize: 14, fontWeight: '600' },
+	},
+	{
+		text: 'Past Worries',
+		icon: <FontAwesome name='history' size={24} color='white' />,
+		name: 'history',
+		position: 2,
+		color: '#0D98BA',
+		textColor: 'white',
+		textStyle: { fontSize: 14, fontWeight: '600' },
+		textBackground: 'black',
+	},
+
 	{
 		text: 'Current Worries',
 		icon: <FontAwesome name='exclamation' size={24} color='white' />,
@@ -40,6 +66,7 @@ const actions = [
 	},
 ]
 function MyFab({ props }: any) {
+	const currentWorries = useSelector(selectAllActive)
 	const [active, setActive] = useState(false)
 	const handleClick = () => {
 		setActive(!active)
@@ -50,7 +77,7 @@ function MyFab({ props }: any) {
 		<FloatingAction
 			overlayColor='none'
 			color={active ? 'teal' : '#0D98BA'}
-			actions={actions}
+			actions={currentWorries.length !== 0 ? two : one}
 			position={'left'}
 			distanceToEdge={{ horizontal: 0, vertical: 0 }}
 			onOpen={handleClick}
