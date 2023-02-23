@@ -4,8 +4,8 @@ import { Button, Heading, HStack, Pressable, Spacer, TextArea, VStack } from 'na
 import React from 'react'
 import { Dimensions, Keyboard } from 'react-native'
 import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useDispatch, useSelector } from 'react-redux'
-
 import HomeButton from '~features/layout/HomeButton'
 import Scroll from '~features/layout/Scroll'
 import SimpleHome from '~features/layout/SimpleHome'
@@ -39,7 +39,7 @@ export default function InputWorry() {
 	const h = Dimensions.get('window').height
 
 	return (
-		<ScrollView overScrollMode='never'>
+		<KeyboardAwareScrollView enableAutomaticScroll showsVerticalScrollIndicator={false}>
 			<VStack variant='page' h={h} flex={1} justifyItems={'stretch'}>
 				<HStack alignContent={'flex-end'} justifyItems={'flex-end'} alignSelf={'flex-end'}>
 					<Pressable
@@ -111,6 +111,6 @@ export default function InputWorry() {
 					</Heading>
 				</Button>
 			</VStack>
-		</ScrollView>
+		</KeyboardAwareScrollView>
 	)
 }
