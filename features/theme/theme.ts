@@ -6,7 +6,7 @@ export const theme = extendTheme({
 	},
 
 	colors: {
-		primary: defaultTheme.colors.violet,
+		primary: defaultTheme.colors.trueGray,
 	},
 
 	components: {
@@ -54,6 +54,12 @@ export const theme = extendTheme({
 				},
 			},
 		},
+		Tag: {
+			defaultProps: {
+				borderRadius: 'lg',
+				backgroundColor: 'coolGray.800',
+			},
+		},
 
 		Button: {
 			baseStyle: {
@@ -69,6 +75,7 @@ export const theme = extendTheme({
 		Heading: {
 			defaultProps: {
 				fontSize: '2xl',
+				fontWeight: '300',
 			},
 		},
 

@@ -1,4 +1,4 @@
-import { View, VStack } from 'native-base'
+import { Box, View, VStack } from 'native-base'
 import React, { useRef } from 'react'
 import {
 	NativeScrollEvent,
@@ -7,7 +7,9 @@ import {
 	useWindowDimensions,
 } from 'react-native'
 import DisplayWorry from '~features/worries/DisplayWorry'
-import SlideX from './SlideX'
+import ImageSlide from './ImageSlide'
+import MyFab from './MyFab'
+import SimpleHome from './SimpleHome'
 
 export default function Paralax() {
 	const { height, width } = useWindowDimensions()
@@ -19,14 +21,15 @@ export default function Paralax() {
 	}
 
 	const images = [
-		require('../../assets/spatter01.png'),
-		require('../../assets/spatter02.png'),
 		require('../../assets/spatter03.png'),
+		require('../../assets/spatter02.png'),
+		require('../../assets/spatter01.png'),
 	]
 
 	return (
 		<View flex={1} backgroundColor={'gray.900'}>
 			<ScrollView
+				showsHorizontalScrollIndicator={false}
 				overScrollMode='never'
 				horizontal
 				ref={scrollViewRef}
@@ -35,12 +38,15 @@ export default function Paralax() {
 			>
 				<VStack flex={1} minW={width} backgroundColor={'gray.900'}>
 					<VStack flex={1} minW={width}>
-						<SlideX imageArray={images} />
+						<ImageSlide imageArray={images} />
 						<DisplayWorry />
-						<SlideX imageArray={images.reverse()} />
+						<ImageSlide imageArray={images.reverse()} />
 					</VStack>
 				</VStack>
 			</ScrollView>
+			<Box p={8} position={'fixed'}>
+				<SimpleHome />
+			</Box>
 		</View>
 	)
 }

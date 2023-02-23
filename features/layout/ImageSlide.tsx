@@ -3,21 +3,7 @@ import React from 'react'
 import { ImageSourcePropType, useWindowDimensions } from 'react-native'
 import HomeButton from './HomeButton'
 
-type WorryData = {
-	time: number | string
-	title: string
-	description?: string
-}
-
-interface SlideProps {
-	arr?: Array<any> | any
-	imageArray?: Array<string> | any
-	imProps?: any
-	worryArray?: Array<WorryData>
-	// worryArray?: Worry[]
-}
-
-export default function SlideX({ imageArray }: SlideProps) {
+export default function ImageSlide({ imageArray }: any) {
 	const { height, width } = useWindowDimensions()
 
 	return (
@@ -27,7 +13,7 @@ export default function SlideX({ imageArray }: SlideProps) {
 					<Box key={index} p={100} mx={200}>
 						<Image
 							overflow={'visible'}
-							boxSize={'450'}
+							boxSize={190}
 							resizeMode={'cover'}
 							alt='spatter'
 							maxW={width / 4}

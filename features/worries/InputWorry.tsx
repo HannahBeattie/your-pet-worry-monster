@@ -51,20 +51,22 @@ export default function InputWorry() {
 							placeholder='I am worried about...'
 							onChangeText={handleFirst}
 							value={first}
-							maxLength={400}
+							maxLength={200}
 							color={'black'}
+							autoCompleteType
 						/>
 						<Heading textAlign={'start'} color={'white'}>
 							Where, in your body, do you notice the worry?
 						</Heading>
 						<TextArea
+							autoCompleteType
 							value={third}
 							onChangeText={handleThird}
 							bgColor={'white'}
 							aria-label='text-area'
 							fontSize={'xl'}
 							placeholder='I feel it...'
-							maxLength={400}
+							maxLength={200}
 							color={'black'}
 						/>
 
@@ -73,6 +75,7 @@ export default function InputWorry() {
 						</Heading>
 
 						<TextArea
+							autoCompleteType
 							bgColor={'white'}
 							aria-label='text-area'
 							fontSize={'xl'}
@@ -80,7 +83,7 @@ export default function InputWorry() {
 							color={'black'}
 							onChangeText={handleSeccond}
 							value={seccond}
-							maxLength={400}
+							maxLength={100}
 						/>
 					</VStack>
 				</TouchableWithoutFeedback>
