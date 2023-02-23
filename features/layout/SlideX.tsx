@@ -40,7 +40,7 @@ export default function SlideX({ arr, imageArray, imProps, worryArray }: slidePr
 				</HStack>
 			)}
 			{worryArray && (
-				<HStack minW={'100%'}>
+				<HStack minW={'100%'} backgroundColor={'teal.900'}>
 					{worryArray.map((w: WorryData, index: number) => (
 						<VStack key={index} zIndex={4} flex={1} py={10} px={4}>
 							<Text>{w.time}</Text>

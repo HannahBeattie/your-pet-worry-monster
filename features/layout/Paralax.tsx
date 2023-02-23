@@ -32,12 +32,14 @@ export default function Paralax() {
 
 	return (
 		<ScrollView horizontal ref={scrollViewRef} onScroll={handleScroll} scrollEventThrottle={16}>
-			<Heading>scroll: </Heading>
+			<VStack flex={1}>
+				<Heading>Food diary</Heading>
 
-			<VStack>
-				<SlideX imageArray={images} />
-				<SlideX worryArray={entries} />
-				<SlideX imageArray={images} />
+				<VStack flex={1}>
+					<SlideX imageArray={images} />
+					<SlideX worryArray={entries} />
+					<SlideX imageArray={images.reverse()} />
+				</VStack>
 			</VStack>
 		</ScrollView>
 	)
