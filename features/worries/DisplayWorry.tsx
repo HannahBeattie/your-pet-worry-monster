@@ -32,12 +32,10 @@ function DisplayWorry() {
 			direction={'row-reverse'}
 			minH={height}
 			justifyContent={'center'}
+			position={'absolute'}
 		>
-			<Heading fontWeight={'200'} right={10} top={-30} position={'absolute'}>
-				{monster}'s Food Diary
-			</Heading>
 			{worryData.map((worry) => (
-				<VStack p={8} key={worry.id} flex={1} maxW={width}>
+				<VStack key={worry.id} flex={1} maxW={width} px={4}>
 					<TouchableOpacity
 						onLongPress={() => {
 							setShowDeleteJiggle(!showDeleteJiggle)
@@ -68,7 +66,7 @@ function DisplayWorry() {
 								borderBottomRadius={'xl'}
 								alignItems={'stretch'}
 							>
-								<VStack space={4} px={4} maxH={550} pb={8} pt={4}>
+								<VStack space={4} px={4} maxH={550} py={4}>
 									<Tag
 										color={'white'}
 										borderRadius={'lg'}
@@ -80,12 +78,20 @@ function DisplayWorry() {
 									<VStack px={4} space={4} alignItems={'center'}>
 										<Divider />
 
-										<Text fontSize={'sm'}>The extra-scary flavor:</Text>
+										<Text fontSize={'sm'} color={'violet.300'}>
+											The extra-scary flavor:
+										</Text>
 
 										<Text fontSize={'sm'} color={'white'} fontWeight={'light'}>
 											{worry.extraNote}
 										</Text>
-										<Text color={'gray.200'}>{useFormatDate(worry.id)}</Text>
+										<Text
+											fontSize={'sm'}
+											color={'violet.300'}
+											textTransform={'capitalize'}
+										>
+											worry wirst worried {useFormatDate(worry.id)}
+										</Text>
 									</VStack>
 								</VStack>
 							</Center>

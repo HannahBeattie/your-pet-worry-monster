@@ -48,7 +48,7 @@ const two = [
 		icon: <FontAwesome name='history' size={24} color='white' />,
 		name: 'history',
 		position: 2,
-		color: '#0D98BA',
+		color: '#1d4f5c',
 		textColor: 'white',
 		textStyle: { fontSize: 14, fontWeight: '600' },
 		textBackground: 'black',
@@ -76,7 +76,7 @@ function MyFab({ props }: any) {
 	return (
 		<FloatingAction
 			overlayColor='none'
-			color={active ? 'teal' : '#0D98BA'}
+			color={active ? '#956786' : '#3e8a96'}
 			actions={currentWorries.length !== 0 ? two : one}
 			position={'left'}
 			distanceToEdge={{ horizontal: 0, vertical: 0 }}

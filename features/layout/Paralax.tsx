@@ -1,4 +1,4 @@
-import { Box, View, VStack } from 'native-base'
+import { Box, Heading, HStack, View, VStack } from 'native-base'
 import React, { useRef } from 'react'
 import {
 	NativeScrollEvent,
@@ -6,6 +6,10 @@ import {
 	ScrollView,
 	useWindowDimensions,
 } from 'react-native'
+import { useSelector } from 'react-redux'
+import Blue from '~features/monster/Blue'
+import Gregory from '~features/monster/Gregory'
+import { monsterNameSelector } from '~features/monster/monsterSlice'
 import DisplayWorry from '~features/worries/DisplayWorry'
 import ImageSlide from './ImageSlide'
 import MyFab from './MyFab'
@@ -25,9 +29,12 @@ export default function Paralax() {
 		require('../../assets/spatter02.png'),
 		require('../../assets/spatter01.png'),
 	]
-
+	const monster = useSelector(monsterNameSelector)
 	return (
 		<View flex={1} backgroundColor={'gray.900'}>
+			<Heading fontWeight={'200'} position={'fixed'} right={-20} top={20} zIndex={10}>
+				{monster}'s Food Diary
+			</Heading>
 			<ScrollView
 				showsHorizontalScrollIndicator={false}
 				overScrollMode='never'
