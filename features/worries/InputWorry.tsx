@@ -47,6 +47,9 @@ export default function InputWorry() {
 						pb={4}
 						onPress={() => {
 							router.push('/monsterMenu')
+							setValue('')
+							setSeccond('')
+							setThird('')
 						}}
 					>
 						<Entypo name='cross' size={24} color='white' />
