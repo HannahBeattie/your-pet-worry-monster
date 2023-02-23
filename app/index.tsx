@@ -8,9 +8,5 @@ import { useFormatDate } from '~features/worries/useFormatDate'
 import { selectAllInactive } from '~features/worries/worrySlice'
 
 export default function Home() {
-	return (
-		<Page>
-			<Paralax />
-		</Page>
-	)
+	return <Paralax />
 }

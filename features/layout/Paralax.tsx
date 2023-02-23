@@ -1,5 +1,10 @@
 import React, { useRef } from 'react'
-import { ScrollView, NativeScrollEvent, NativeSyntheticEvent } from 'react-native'
+import {
+	ScrollView,
+	NativeScrollEvent,
+	NativeSyntheticEvent,
+	useWindowDimensions,
+} from 'react-native'
 import { Heading, View, VStack } from 'native-base'
 import ScrollXGallery from './SlideX'
 import { useSelector } from 'react-redux'
@@ -8,6 +13,7 @@ import { useFormatDate } from '~features/worries/useFormatDate'
 import SlideX from './SlideX'
 
 export default function Paralax() {
+	const { height, width } = useWindowDimensions()
 	const scrollViewRef = useRef<ScrollView>(null)
 
 	const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -31,16 +37,22 @@ export default function Paralax() {
 	]
 
 	return (
-		<ScrollView horizontal ref={scrollViewRef} onScroll={handleScroll} scrollEventThrottle={16}>
-			<VStack flex={1}>
-				<Heading>Food diary</Heading>
-
-				<VStack flex={1}>
-					<SlideX imageArray={images} />
-					<SlideX worryArray={entries} />
-					<SlideX imageArray={images.reverse()} />
+		<View flex={1} backgroundColor={'gray.900'}>
+			<ScrollView
+				overScrollMode='never'
+				horizontal
+				ref={scrollViewRef}
+				onScroll={handleScroll}
+				scrollEventThrottle={16}
+			>
+				<VStack flex={1} minW={width} backgroundColor={'gray.900'}>
+					<VStack flex={1} minW={width}>
+						<SlideX imageArray={images} />
+						<SlideX worryArray={entries} />
+						<SlideX imageArray={images.reverse()} />
+					</VStack>
 				</VStack>
-			</VStack>
-		</ScrollView>
+			</ScrollView>
+		</View>
 	)
 }
