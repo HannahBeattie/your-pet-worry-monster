@@ -1,5 +1,5 @@
 // import { checkTargetForNewValues } from 'framer-motion'
-import { Entypo } from '@expo/vector-icons'
+import { AntDesign, Entypo, FontAwesome, FontAwesome5 } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
 import {
 	Button,
@@ -17,7 +17,7 @@ import {
 } from 'native-base'
 import { IInputComponentType } from 'native-base/lib/typescript/components/primitives/Input/types'
 import React, { useCallback, useEffect, useRef } from 'react'
-import { StyleSheet, useWindowDimensions } from 'react-native'
+import { Pressable, StyleSheet, useWindowDimensions } from 'react-native'
 import { useSelector } from 'react-redux'
 import { monsterNameSelector } from '~features/monster/monsterSlice'
 import { WorryField } from '~features/worries/worrySlice'
@@ -35,7 +35,6 @@ interface FormProps {
 	nextButtonText?: string
 	onNextButtonPress?: () => void
 	autofocus?: boolean
-	disabled?: boolean
 }
 
 export default function WorryInput({
@@ -50,7 +49,6 @@ export default function WorryInput({
 	nextButtonText,
 	onNextButtonPress,
 	autofocus,
-	disabled,
 }: FormProps) {
 	const ref = useRef<any>(null)
 	const monsterName = useSelector(monsterNameSelector)
@@ -64,7 +62,6 @@ export default function WorryInput({
 	)
 
 	const { height } = useWindowDimensions()
-	const router = useRouter()
 
 	useEffect(() => {
 		if (!autofocus || !ref.current) {
@@ -80,10 +77,6 @@ export default function WorryInput({
 
 	// user can continue if they've entered a value or if the field is not required
 	const canContinue = !!value || !required
-
-	if (disabled) {
-		return null
-	}
 
 	return (
 		<ScrollView>
@@ -120,24 +113,45 @@ export default function WorryInput({
 						autoFocus={true}
 					/>
 					<Divider />
-					<HStack space='5'>
-						{canContinue ? (
-							<>
-								<Button flex={1} onPress={onSubmit}>
-									<Text>Give to {monsterName}</Text>
-								</Button>
+
+					{canContinue ? (
+						<>
+							<HStack space={4} mx={-4}>
+								<Pressable onPress={onSubmit}>
+									<VStack
+										borderRadius={'md'}
+										maxW={40}
+										backgroundColor={'blueGray.900'}
+										p={2}
+									>
+										<Text textAlign={'center'} color={'white'} fontSize={'sm'}>
+											Give it to {monsterName}
+										</Text>
+									</VStack>
+								</Pressable>
+								<Spacer />
 								{nextButtonText && onNextButtonPress ? (
-									<Button flex={1} onPress={onNextButtonPress}>
-										<Text>{nextButtonText}</Text>
+									<Button onPress={onNextButtonPress}>
+										<HStack>
+											<Text fontSize={'md'} color={'blueGray.500'}>
+												{nextButtonText}
+											</Text>
+											<FontAwesome5
+												p={2}
+												name='caret-right'
+												size={24}
+												color='#3b3d6d'
+											/>
+										</HStack>
 									</Button>
 								) : (
 									<Spacer />
 								)}
-							</>
-						) : (
-							<Spacer />
-						)}
-					</HStack>
+							</HStack>
+						</>
+					) : (
+						<Spacer />
+					)}
 				</VStack>
 			</KeyboardAvoidingView>
 		</ScrollView>
