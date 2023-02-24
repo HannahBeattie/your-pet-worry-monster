@@ -1,4 +1,6 @@
 // import { checkTargetForNewValues } from 'framer-motion'
+import { Entypo } from '@expo/vector-icons'
+import { useRouter } from 'expo-router'
 import {
 	Button,
 	Divider,
@@ -43,9 +45,20 @@ export default function WorryInput({
 	}, [])
 
 	const { height } = useWindowDimensions()
+	const router = useRouter()
 
 	return (
 		<ScrollView>
+			<HStack backgroundColor={'#fafafa'} pt={4} px={2}>
+				<TouchableOpacity
+					onPress={() => {
+						router.push('/monsterMenu')
+					}}
+					accessibilityLabel='exit screen'
+				>
+					<Entypo name='cross' size={24} color='black' />
+				</TouchableOpacity>
+			</HStack>
 			<KeyboardAvoidingView behavior='padding' style={styles.form}>
 				<VStack space={4} h={height}>
 					<Heading fontFamily='Poppins_300Light' color={'black'}>

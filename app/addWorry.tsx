@@ -1,4 +1,5 @@
-import { Feather } from '@expo/vector-icons'
+import { Entypo, Feather } from '@expo/vector-icons'
+import { HStack } from 'native-base'
 import React, { Component, RefObject } from 'react'
 import { Dimensions, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import WorryInput from '~features/layout/WorryInput'
@@ -78,6 +79,10 @@ export default class AddWorry extends Component<Props, State> {
 							<Feather name='arrow-right-circle' size={30} color='gray.900' />
 						</TouchableOpacity>
 					</WorryInput>
+
+					<TouchableOpacity accessibilityLabel='exit screen'>
+						<Entypo name='cross' size={24} color='black' />
+					</TouchableOpacity>
 				</View>
 			</ScrollView>
 		)
