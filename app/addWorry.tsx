@@ -81,17 +81,6 @@ const AddWorry: FC<Props> = () => {
 			scrollEnabled={false}
 			snapToInterval={Dimensions.get('window').height}
 		>
-			<HStack position={'fixed'} backgroundColor={'blueGray.100'}>
-				<IconButton
-					position={'fixed'}
-					pt={8}
-					icon={<Icon as={Entypo} name='cross' />}
-					_icon={{ color: 'black' }}
-					onPress={onClose}
-					accessibilityLabel='exit screen'
-					variant={'unstyled'}
-				/>
-			</HStack>
 			<KeyboardAvoidingView>
 				<View style={styles.screen}>
 					<WorryInput

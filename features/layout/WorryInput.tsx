@@ -99,6 +99,16 @@ export default function WorryInput({
 			keyboardShouldPersistTaps='handled'
 		>
 			<VStack flex={1}>
+				<HStack py={8} position={'sticky'} backgroundColor={'blueGray.100'}>
+					<IconButton
+						position={'fixed'}
+						icon={<Icon as={Entypo} name='cross' />}
+						_icon={{ color: 'black' }}
+						onPress={onClose}
+						accessibilityLabel='exit screen'
+						variant={'unstyled'}
+					/>
+				</HStack>
 				<KeyboardAvoidingView
 					flex={1}
 					minH={height}
