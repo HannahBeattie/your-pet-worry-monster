@@ -24,6 +24,19 @@ export const theme = extendTheme({
 					alignItems: 'stretch',
 					padding: 8,
 				},
+				intro: {
+					_light: {
+						backgroundColor: 'gray.300',
+					},
+					_dark: {
+						backgroundColor: 'gray.900',
+					},
+					flex: 1,
+					justifyContent: 'center',
+					alignItems: 'stretch',
+					padding: 8,
+					py: 100,
+				},
 				form: {
 					_dark: {
 						backgroundColor: 'gray.300',

@@ -1,8 +1,13 @@
 import { Button, HStack, Spacer } from 'native-base'
-import React from 'react'
+import React, { ReactComponentElement } from 'react'
+import { ButtonProps } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-export function ButtonLight({ handlePress, props, children }: any) {
+interface ButtonComponentProps {
+	handlePress: any
+	children: JSX.Element | JSX.Element[]
+}
+export function ButtonLight({ handlePress, children }: ButtonComponentProps) {
 	return (
 		<HStack pt={4}>
 			<Spacer />
@@ -17,7 +22,7 @@ export function ButtonLight({ handlePress, props, children }: any) {
 	)
 }
 
-export function ButtonDark({ handlePress, props, children }: any) {
+export function ButtonDark({ handlePress, children }: any) {
 	return (
 		<HStack pt={4}>
 			<Spacer />
@@ -29,5 +34,17 @@ export function ButtonDark({ handlePress, props, children }: any) {
 				<Button backgroundColor={'gray.900'}>{children}</Button>
 			</TouchableOpacity>
 		</HStack>
+	)
+}
+
+export function MultiUse({ handlePress, children }: any) {
+	return (
+		<TouchableOpacity
+			onPress={() => {
+				handlePress()
+			}}
+		>
+			<Button backgroundColor={'gray.900'}>{children}</Button>
+		</TouchableOpacity>
 	)
 }

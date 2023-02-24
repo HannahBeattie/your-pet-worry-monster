@@ -1,6 +1,8 @@
+import { AntDesign } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
-import { Button, Heading, Image, Spacer, Text, VStack } from 'native-base'
+import { Button, Center, Heading, HStack, Image, Spacer, Text, VStack } from 'native-base'
 import React from 'react'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useSelector } from 'react-redux'
 import { monsterNameSelector } from '~features/monster/monsterSlice'
 
@@ -8,27 +10,48 @@ const gregoryBlue = require('../../assets/blue.png')
 
 export default function ConfirmMyName() {
 	const router = useRouter()
+	const no = () => {
+		router.push('/name')
+	}
+	const yes = () => {
+		router.push('/monsterMenu')
+	}
 	const name = useSelector(monsterNameSelector)
 	return (
-		<VStack alignItems={'stretch'} flex={'1'}>
-			<Heading pt={8}>Great! My Name is {name}!</Heading>
+		<VStack variant={'intro'} px={0} py={10}>
+			<VStack>
+				<Heading>Wow! That is great.</Heading>
+				<Heading>How did you get so GOOD at thinking up names?</Heading>
+				<Heading>I am...{name}!</Heading>
+			</VStack>
+
 			<Image alt={'blue the monster'} source={gregoryBlue} flex={1} resizeMode='contain' />
-			<Button
-				bgColor={'red.500'}
-				onPress={() => {
-					router.push('/addName')
-				}}
-			>
-				<Heading color={'black'}>No, wait! I changed my mind!</Heading>
-			</Button>
-			<Button
-				bgColor={'blue.500'}
-				onPress={() => {
-					router.push('/monsterMenu')
-				}}
-			>
-				<Heading color={'black'}>Pleased to meet you {name}!</Heading>
-			</Button>
+
+			<HStack>
+				<TouchableOpacity
+					onPress={() => {
+						no()
+					}}
+				>
+					<HStack space={2}>
+						<Button backgroundColor={'gray.900'}>
+							<Text color={'white'}>Oops!</Text>
+						</Button>
+					</HStack>
+				</TouchableOpacity>
+				<Spacer />
+				<TouchableOpacity
+					onPress={() => {
+						yes()
+					}}
+				>
+					<HStack space={2} alignItems={'flex-end'}>
+						<Button backgroundColor={'gray.100'}>
+							<Text color={'black'}>Yay!</Text>
+						</Button>
+					</HStack>
+				</TouchableOpacity>
+			</HStack>
 		</VStack>
 	)
 }
