@@ -108,6 +108,7 @@ const AddWorry: FC<Props> = () => {
 					nextButtonText='I can feel this worry...'
 					onNextButtonPress={getScrollToPage(1)}
 					required
+					maxLength={400}
 				/>
 			</View>
 			<View style={styles.screen}>

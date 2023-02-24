@@ -94,6 +94,7 @@ export default function WorryInput({
 						autoCapitalize='none'
 						mb={-4}
 						mx={-2}
+						maxLength={400}
 					/>
 					<Divider />
 					<HStack space='5'>
