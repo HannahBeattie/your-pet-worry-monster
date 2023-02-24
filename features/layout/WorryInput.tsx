@@ -2,6 +2,7 @@
 import { AntDesign, Entypo, FontAwesome, FontAwesome5 } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
 import {
+	Box,
 	Button,
 	Divider,
 	Heading,
@@ -79,8 +80,8 @@ export default function WorryInput({
 	const canContinue = !!value || !required
 
 	return (
-		<ScrollView>
-			<HStack backgroundColor={'#fafafa'} pt={4} px={2}>
+		<ScrollView scrollEnabled={false}>
+			<HStack backgroundColor={'#fafafa'} pt={8} px={2}>
 				<IconButton
 					icon={<Icon as={Entypo} name='cross' />}
 					_icon={{ color: 'black' }}
@@ -88,6 +89,7 @@ export default function WorryInput({
 					accessibilityLabel='exit screen'
 				/>
 			</HStack>
+
 			<KeyboardAvoidingView behavior='padding' style={styles.form}>
 				<VStack space={4} h={height}>
 					<Heading fontFamily='Poppins_300Light' color={'black'}>
@@ -116,34 +118,38 @@ export default function WorryInput({
 
 					{canContinue ? (
 						<>
-							<HStack space={4} mx={-4}>
+							<HStack mx={-2} space={1}>
 								<Pressable onPress={onSubmit}>
-									<VStack
-										borderRadius={'md'}
-										maxW={40}
-										backgroundColor={'blueGray.900'}
-										p={2}
-									>
-										<Text textAlign={'center'} color={'white'} fontSize={'sm'}>
+									<Box bg={'blueGray.900'} borderRadius={'sm'}>
+										<Text
+											maxW={160}
+											px={4}
+											textAlign={'center'}
+											color={'white'}
+											fontSize={'sm'}
+											fontWeight={600}
+											py={2}
+										>
 											Give it to {monsterName}
 										</Text>
-									</VStack>
+									</Box>
 								</Pressable>
 								<Spacer />
 								{nextButtonText && onNextButtonPress ? (
-									<Button onPress={onNextButtonPress}>
-										<HStack>
-											<Text fontSize={'md'} color={'blueGray.500'}>
+									<Pressable onPress={onNextButtonPress}>
+										<Box bg={''} borderRadius={'sm'}>
+											<Text
+												px={4}
+												py={2}
+												textAlign={'center'}
+												color={'black'}
+												fontSize={'sm'}
+												fontWeight={600}
+											>
 												{nextButtonText}
 											</Text>
-											<FontAwesome5
-												p={2}
-												name='caret-right'
-												size={24}
-												color='#3b3d6d'
-											/>
-										</HStack>
-									</Button>
+										</Box>
+									</Pressable>
 								) : (
 									<Spacer />
 								)}

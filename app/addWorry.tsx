@@ -16,41 +16,6 @@ import { addWorry, Worry, WorryField } from '~features/worries/worrySlice'
 
 interface Props {}
 
-// interface State {
-// 	screenHeight: number
-// 	screenWidth: number
-// }
-
-// let scrollYPos = 0
-
-// export default class AddWorry extends Component<Props, State> {
-// 	private scroller: RefObject<ScrollView>
-
-// 	constructor(props: Props) {
-// 		super(props)
-// 		this.scroller = React.createRef<ScrollView>()
-// 		this.state = {
-// 			screenHeight: Dimensions.get('window').height,
-// 			screenWidth: Dimensions.get('window').width,
-// 		}
-// 	}
-
-// 	scrollToB = () => {
-// 		scrollYPos = this.state.screenHeight * 1
-// 		this.scroller.current?.scrollTo({ x: 0, y: scrollYPos })
-// 	}
-
-// 	scrollToC = () => {
-// 		scrollYPos = this.state.screenHeight * 2
-// 		this.scroller.current?.scrollTo({ x: 0, y: scrollYPos })
-// 	}
-
-// 	scrollToTop = () => {
-// 		this.scroller.current?.scrollTo({ x: 0, y: 0 })
-// 	}
-
-// 	render() {
-
 const AddWorry: FC<Props> = () => {
 	const dispatch = useDispatch()
 	const router = useRouter()
@@ -112,7 +77,7 @@ const AddWorry: FC<Props> = () => {
 			ref={scroller}
 			snapToInterval={Dimensions.get('window').height}
 			snapToAlignment={'center'}
-			style={{ paddingTop: 30, flex: 1 }}
+			style={{ paddingTop: 0, flex: 1 }}
 		>
 			<View style={styles.screen}>
 				<WorryInput
@@ -123,23 +88,27 @@ const AddWorry: FC<Props> = () => {
 					required
 				/>
 			</View>
-			<View style={styles.screen}>
-				<WorryInput
-					{...sharedInputProps({ name: 'extraNote', page: 1 })}
-					question='The scariest bit is...'
-					placeholder='very scary thing'
-					nextButtonText='I can feel this worry...'
-					// disabled={!!newWorry.description?.length}
-				/>
-			</View>
-			<View style={styles.screen}>
-				<WorryInput
-					{...sharedInputProps({ name: 'sensation', page: 2 })}
-					question='I can feel this worry...'
-					placeholder='somewhere in my body'
-					// disabled={!!newWorry.description?.length}
-				/>
-			</View>
+			{newWorry?.description?.length! > 1 && (
+				<>
+					<View style={styles.screen}>
+						<WorryInput
+							{...sharedInputProps({ name: 'extraNote', page: 1 })}
+							question='The scariest bit is...'
+							placeholder='very scary thing'
+							nextButtonText='I can feel this worry...'
+							// disabled={!!newWorry.description?.length}
+						/>
+					</View>
+					<View style={styles.screen}>
+						<WorryInput
+							{...sharedInputProps({ name: 'sensation', page: 2 })}
+							question='I can feel this worry...'
+							placeholder='somewhere in my body'
+							// disabled={!!newWorry.description?.length}
+						/>
+					</View>
+				</>
+			)}
 		</ScrollView>
 	)
 }

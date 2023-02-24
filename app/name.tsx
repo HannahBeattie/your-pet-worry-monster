@@ -27,7 +27,12 @@ function name() {
 			setError('First, I need a name')
 		} else if (value.length < 3) {
 			setError('Seems a little short for a name...')
+		} else if (value.length > 25) {
+			setError(
+				"That's little long....how about you shorten it a little and you and I can know, in our hearts what my true name is"
+			)
 		} else {
+			setError('')
 			router.push('/confirmName')
 			setValue('')
 		}
@@ -58,7 +63,7 @@ function name() {
 						{error}
 					</Text>
 					<ButtonLight handlePress={handlePress}>
-						<Feather name='check' size={24} color='black' />
+						<Feather name='check' size={10} color='black' />
 					</ButtonLight>
 				</VStack>
 				<Image
