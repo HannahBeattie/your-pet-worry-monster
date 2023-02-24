@@ -18,7 +18,7 @@ import {
 } from 'native-base'
 import { IInputComponentType } from 'native-base/lib/typescript/components/primitives/Input/types'
 import React, { useCallback, useEffect, useRef } from 'react'
-import { Pressable, StyleSheet, useWindowDimensions } from 'react-native'
+import { Dimensions, Pressable, StyleSheet, useWindowDimensions } from 'react-native'
 import { useSelector } from 'react-redux'
 import { monsterNameSelector } from '~features/monster/monsterSlice'
 import { WorryField } from '~features/worries/worrySlice'
@@ -169,5 +169,10 @@ const styles = StyleSheet.create({
 		paddingTop: 200,
 		paddingHorizontal: 30,
 		backgroundColor: '#fafafa',
+	},
+	screen: {
+		flexDirection: 'column',
+		height: Dimensions.get('window').height,
+		justifyContent: 'center',
 	},
 })

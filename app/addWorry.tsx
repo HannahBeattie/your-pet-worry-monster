@@ -1,9 +1,10 @@
 import { Entypo, Feather } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
-import { HStack } from 'native-base'
+import { HStack, KeyboardAvoidingView } from 'native-base'
 import React, { Component, FC, RefObject, useCallback, useRef, useState } from 'react'
 import {
 	Dimensions,
+	Platform,
 	ScrollView,
 	StyleSheet,
 	TouchableOpacity,
@@ -73,51 +74,52 @@ const AddWorry: FC<Props> = () => {
 	})
 
 	return (
-		<ScrollView
-			ref={scroller}
-			snapToInterval={Dimensions.get('window').height}
-			snapToAlignment={'center'}
-			style={{ paddingTop: 0, flex: 1 }}
+		<KeyboardAvoidingView
+			behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
+			style={{ flex: 1 }}
 		>
-			<View style={styles.screen}>
-				<WorryInput
-					{...sharedInputProps({ name: 'description', page: 0 })}
-					question='I am worried that...'
-					placeholder='a worry'
-					nextButtonText='The scariest bit is...'
-					required
-				/>
-			</View>
-			{newWorry?.description?.length! > 1 && (
-				<>
-					<View style={styles.screen}>
-						<WorryInput
-							{...sharedInputProps({ name: 'extraNote', page: 1 })}
-							question='The scariest bit is...'
-							placeholder='very scary thing'
-							nextButtonText='I can feel this worry...'
-							// disabled={!!newWorry.description?.length}
-						/>
-					</View>
-					<View style={styles.screen}>
-						<WorryInput
-							{...sharedInputProps({ name: 'sensation', page: 2 })}
-							question='I can feel this worry...'
-							placeholder='somewhere in my body'
-							// disabled={!!newWorry.description?.length}
-						/>
-					</View>
-				</>
-			)}
-		</ScrollView>
+			<ScrollView
+				ref={scroller}
+				snapToInterval={Dimensions.get('window').height}
+				snapToAlignment={'center'}
+				style={{ paddingTop: 0, flex: 1 }}
+			>
+				<View style={styles.screen}>
+					<WorryInput
+						{...sharedInputProps({ name: 'description', page: 0 })}
+						question='I am worried that...'
+						placeholder='a worry'
+						nextButtonText='The scariest bit is...'
+						required
+					/>
+				</View>
+				{newWorry?.description?.length! > 1 && (
+					<>
+						<View style={styles.screen}>
+							<WorryInput
+								{...sharedInputProps({ name: 'extraNote', page: 1 })}
+								question='The scariest bit is...'
+								placeholder='very scary thing'
+								nextButtonText='I can feel this worry...'
+							/>
+						</View>
+						<View style={styles.screen}>
+							<WorryInput
+								{...sharedInputProps({ name: 'sensation', page: 2 })}
+								question='I can feel this worry...'
+								placeholder='somewhere in my body'
+							/>
+						</View>
+					</>
+				)}
+			</ScrollView>
+		</KeyboardAvoidingView>
 	)
 }
 export default AddWorry
 
 const styles = StyleSheet.create({
 	screen: {
-		flexDirection: 'column',
 		height: Dimensions.get('window').height,
-		justifyContent: 'center',
 	},
 })
