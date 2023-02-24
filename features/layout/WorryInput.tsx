@@ -15,7 +15,8 @@ import {
 	Text,
 	VStack,
 } from 'native-base'
-import React, { useCallback } from 'react'
+import { IInputComponentType } from 'native-base/lib/typescript/components/primitives/Input/types'
+import React, { useCallback, useEffect, useRef } from 'react'
 import { StyleSheet, useWindowDimensions } from 'react-native'
 import { useSelector } from 'react-redux'
 import { monsterNameSelector } from '~features/monster/monsterSlice'
@@ -29,9 +30,12 @@ interface FormProps {
 	value?: string
 	onChangeText: (name: WorryField, value: string) => void
 	onSubmit: () => void
+	onClose: () => void
 	required?: boolean
 	nextButtonText?: string
 	onNextButtonPress?: () => void
+	autofocus?: boolean
+	disabled?: boolean
 }
 
 export default function WorryInput({
@@ -41,11 +45,14 @@ export default function WorryInput({
 	value,
 	onChangeText,
 	onSubmit,
+	onClose,
 	required,
 	nextButtonText,
 	onNextButtonPress,
+	autofocus,
+	disabled,
 }: FormProps) {
-	// const textareaRef = useRef<TextInput>(null)
+	const ref = useRef<any>(null)
 	const monsterName = useSelector(monsterNameSelector)
 
 	const handleChange = useCallback(
@@ -59,8 +66,24 @@ export default function WorryInput({
 	const { height } = useWindowDimensions()
 	const router = useRouter()
 
+	useEffect(() => {
+		if (!autofocus || !ref.current) {
+			return
+		}
+		if (ref.current.focus) {
+			console.log('Autofocus!!!', name, ref.current)
+			ref.current.focus()
+		} else {
+			console.log('No focus??', name, ref.current)
+		}
+	}, [ref, autofocus])
+
 	// user can continue if they've entered a value or if the field is not required
 	const canContinue = !!value || !required
+
+	if (disabled) {
+		return null
+	}
 
 	return (
 		<ScrollView>
@@ -68,9 +91,7 @@ export default function WorryInput({
 				<IconButton
 					icon={<Icon as={Entypo} name='cross' />}
 					_icon={{ color: 'black' }}
-					onPress={() => {
-						router.push('/monsterMenu')
-					}}
+					onPress={onClose}
 					accessibilityLabel='exit screen'
 				/>
 			</HStack>
@@ -81,6 +102,7 @@ export default function WorryInput({
 					</Heading>
 
 					<Input
+						ref={ref}
 						onChangeText={handleChange}
 						multiline
 						color={'blueGray.900'}
@@ -95,6 +117,7 @@ export default function WorryInput({
 						mb={-4}
 						mx={-2}
 						maxLength={400}
+						autoFocus={true}
 					/>
 					<Divider />
 					<HStack space='5'>

@@ -21,6 +21,7 @@ export default function DebugPage() {
 							<Text color={'red'}>{worry.consumedAt}</Text>
 							<Text color={'white'}>{worry.description}</Text>
 							<Text color={'gray.500'}>{worry.extraNote}</Text>
+							<Text color={'gray.500'}>{worry.sensation}</Text>
 							<Text color={'white'}>{worry.isActive ? 'Active' : 'Inactive'}</Text>
 						</VStack>
 					</TouchableOpacity>

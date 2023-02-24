@@ -8,11 +8,12 @@ export type Worry = {
 	id: number
 	description: string
 	extraNote?: string
+	sensation?: string
 	isActive: boolean
 	consumedAt?: number
 }
 
-export type WorryField = 'description' | 'extraNote'
+export type WorryField = 'description' | 'extraNote' | 'sensation'
 
 const worriesAdapter = createEntityAdapter<Worry>({
 	selectId: (worry) => worry.id,

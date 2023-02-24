@@ -57,17 +57,19 @@ const AddWorry: FC<Props> = () => {
 	const scroller = useRef<ScrollView>(null)
 	const { height: screenHeight } = useWindowDimensions()
 	const [newWorry, setNewWorry] = useState<Partial<Worry>>({})
+	const [whichFocus, setWhichFocus] = useState(0)
 
 	const getScrollToPage = useCallback(
 		(pageNum: number) => {
 			return () => {
 				scroller.current?.scrollTo({ x: 0, y: screenHeight * pageNum })
+				setWhichFocus(pageNum)
 			}
 		},
 		[scroller, screenHeight]
 	)
 
-	const onChange = useCallback(
+	const onChangeText = useCallback(
 		(name: WorryField, value: string) => {
 			// console.log(`${name} => ${value}`)
 			const update: Partial<Worry> = newWorry.id
@@ -82,12 +84,28 @@ const AddWorry: FC<Props> = () => {
 		[newWorry]
 	)
 
+	const onClose = useCallback(() => {
+		setNewWorry({})
+		const scrollTo = getScrollToPage(0)
+		scrollTo()
+		router.push('/monsterMenu')
+	}, [getScrollToPage])
+
 	const onSubmit = useCallback(() => {
 		console.log('TODO: Check that worry has required fields:', newWorry)
 		dispatch(addWorry(newWorry as Worry))
-		setNewWorry({})
-		router.push('/monsterMenu')
-	}, [newWorry])
+		onClose()
+	}, [newWorry, onClose])
+
+	const sharedInputProps = ({ name, page }: { name: WorryField; page: number }) => ({
+		onChangeText,
+		onSubmit,
+		onClose,
+		name,
+		value: newWorry[name],
+		onNextButtonPress: getScrollToPage(page + 1),
+		autofocus: whichFocus === page,
+	})
 
 	return (
 		<ScrollView
@@ -98,35 +116,30 @@ const AddWorry: FC<Props> = () => {
 		>
 			<View style={styles.screen}>
 				<WorryInput
-					onChangeText={onChange}
-					onSubmit={onSubmit}
-					value={newWorry.description}
-					name='description'
+					{...sharedInputProps({ name: 'description', page: 0 })}
 					question='I am worried that...'
 					placeholder='a worry'
-					// buttonText='submit'
-					nextButtonText='I can feel this worry...'
-					onNextButtonPress={getScrollToPage(1)}
+					nextButtonText='The scariest bit is...'
 					required
-					maxLength={400}
 				/>
 			</View>
 			<View style={styles.screen}>
 				<WorryInput
-					onChangeText={onChange}
-					onSubmit={onSubmit}
-					value={newWorry.extraNote}
-					name='extraNote'
+					{...sharedInputProps({ name: 'extraNote', page: 1 })}
 					question='The scariest bit is...'
 					placeholder='very scary thing'
+					nextButtonText='I can feel this worry...'
+					// disabled={!!newWorry.description?.length}
 				/>
 			</View>
-			{/* <View style={styles.screen}>
+			<View style={styles.screen}>
 				<WorryInput
+					{...sharedInputProps({ name: 'sensation', page: 2 })}
 					question='I can feel this worry...'
 					placeholder='somewhere in my body'
+					// disabled={!!newWorry.description?.length}
 				/>
-			</View> */}
+			</View>
 		</ScrollView>
 	)
 }
