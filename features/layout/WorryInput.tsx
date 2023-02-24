@@ -24,6 +24,7 @@ interface FormProps {
 	nextRoute?: string
 	handleButton?: any
 	children: any
+	scroll?: any
 }
 
 export default function WorryInput({
