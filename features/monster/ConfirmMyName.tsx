@@ -20,7 +20,7 @@ export default function ConfirmMyName() {
 	return (
 		<VStack variant={'intro'} px={0} py={10}>
 			<VStack>
-				<Heading>Wow! That is great.</Heading>
+				<Heading>I...I...I LOVE it!</Heading>
 				<Heading>How did you get so GOOD at thinking up names?</Heading>
 				<Heading>I am...{name}!</Heading>
 			</VStack>
