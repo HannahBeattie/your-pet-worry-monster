@@ -9,12 +9,16 @@ import { useRouter } from 'expo-router'
 
 const eaten = require('../assets/eaten.png')
 
+const chef = require('../assets/chef.png')
+
 export default function EatingWorry() {
 	const router = useRouter()
 	return (
 		<VStack variant={'page'} pt={100}>
 			<Heading textAlign={'center'}>YUMMMM!</Heading>
 			<Heading textAlign={'center'}>That Was delicious!</Heading>
+			{/* <Image alt={'blue the monster'} source={chef} flex={1} resizeMode='contain' /> */}
+
 			<Image alt={'blue the monster'} source={eaten} flex={1} resizeMode='contain' />
 
 			<HStack

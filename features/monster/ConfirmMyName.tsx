@@ -6,7 +6,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useSelector } from 'react-redux'
 import { monsterNameSelector } from '~features/monster/monsterSlice'
 
-const gregoryBlue = require('../../assets/blue.png')
+const chef = require('../../assets/blue.png')
 
 export default function ConfirmMyName() {
 	const router = useRouter()
@@ -25,7 +25,7 @@ export default function ConfirmMyName() {
 				<Heading>I am...{name}!</Heading>
 			</VStack>
 
-			<Image alt={'blue the monster'} source={gregoryBlue} flex={1} resizeMode='contain' />
+			<Image alt={'blue the monster'} source={chef} flex={1} resizeMode='contain' />
 
 			<HStack>
 				<TouchableOpacity
