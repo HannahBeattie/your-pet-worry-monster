@@ -5,6 +5,7 @@ import React from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useDispatch } from 'react-redux'
 import { setName } from '~features/monster/monsterSlice'
+import { ButtonLight } from '~features/theme/buttons'
 
 function name() {
 	const gregoryBlue = require('../assets/blue.png')
@@ -15,8 +16,6 @@ function name() {
 
 	const handleChange = (value: string) => {
 		setValue(value)
-		// if (value.length < 1) setError('I need a name')
-		// if (value.length < 2)
 	}
 
 	const placeHolderText = 'name'
@@ -56,18 +55,9 @@ function name() {
 				<Text color={'red.500'} fontSize={'sm'}>
 					{error}
 				</Text>
-				<HStack pt={4}>
-					<Spacer />
-					<TouchableOpacity
-						onPress={() => {
-							handlePress()
-						}}
-					>
-						<Button backgroundColor={'gray.100'}>
-							<Feather name='check' size={24} color='black' />
-						</Button>
-					</TouchableOpacity>
-				</HStack>
+				<ButtonLight handlePress={handlePress}>
+					<Feather name='check' size={24} color='black' />
+				</ButtonLight>
 			</VStack>
 			<Image alt={'blue the monster'} source={gregoryBlue} flex={1} resizeMode='contain' />
 		</VStack>
