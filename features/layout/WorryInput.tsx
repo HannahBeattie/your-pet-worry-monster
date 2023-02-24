@@ -47,28 +47,6 @@ export default function WorryInput({
 		console.log('Changed value to: ', text)
 	}, [])
 
-	// useEffect(() => {
-	// 	if (textareaRef.current === null) {
-	// 		return
-	// 	}
-
-	// 	textareaRef.current.focus()
-	// }, [textareaRef])
-
-	const handleScroll = (nextRef: any) => {
-		// if (nextRef.current) {
-		// 	nextRef.current?.scrollTo({
-		// 		x: 0,
-		// 		y: nextRef.current?.getLayout()?.y,
-		// 		animated: true,
-		// 	})
-		// }
-
-		nextRef.current?.scrollTo({ behavior: 'smooth' })
-		console.log('todo! scroll to next')
-	}
-
-	console.log(`REF: ${inputRef}`)
 	const { height, width } = useWindowDimensions()
 	const router = useRouter()
 	let scrollYPos = 0
