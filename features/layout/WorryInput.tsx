@@ -15,7 +15,15 @@ import {
 	VStack,
 } from 'native-base'
 import React, { useCallback, useEffect, useRef } from 'react'
-import { Dimensions, Pressable, StyleSheet, useWindowDimensions } from 'react-native'
+import {
+	Dimensions,
+	Platform,
+	Pressable,
+	SafeAreaView,
+	StyleSheet,
+	useWindowDimensions,
+} from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useSelector } from 'react-redux'
 import { monsterNameSelector } from '~features/monster/monsterSlice'
 import { WorryField } from '~features/worries/worrySlice'
@@ -87,96 +95,104 @@ export default function WorryInput({
 			scrollEnabled={false}
 			snapToInterval={Dimensions.get('window').height}
 			snapToAlignment={'center'}
+			contentInsetAdjustmentBehavior='automatic'
+			keyboardShouldPersistTaps='handled'
 		>
-			<KeyboardAvoidingView behavior='padding' style={styles.form}>
-				<IconButton
-					icon={<Icon as={Entypo} name='cross' />}
-					_icon={{ color: 'black' }}
-					onPress={onClose}
-					accessibilityLabel='exit screen'
-					position={'absolute'}
-					top={8}
-					left={0}
-					variant={'unstyled'}
-				/>
+			<VStack flex={1}>
+				<KeyboardAvoidingView
+					flex={1}
+					minH={height}
+					behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
+				>
+					<KeyboardAwareScrollView
+						enableAutomaticScroll={true}
+						pagingEnabled
+						extraHeight={100}
+						extraScrollHeight={60}
+					>
+						<VStack justifyContent={'space-between'} minH={height} flex={1} py={100}>
+							<VStack px={30}>
+								<Heading fontFamily='Poppins_300Light' color={'black'}>
+									{question}
+								</Heading>
 
-				<VStack space={4} h={height}>
-					<Heading fontFamily='Poppins_300Light' color={'black'}>
-						{question}
-					</Heading>
+								<Input
+									maxH={290}
+									ref={ref}
+									onChangeText={handleChange}
+									multiline
+									color={'blueGray.900'}
+									placeholderTextColor={'blueGray.500'}
+									placeholder={placeholder}
+									value={value}
+									size='2xl'
+									fontSize='lg'
+									fontFamily='Poppins_300Light'
+									variant={'unstyled'}
+									autoCapitalize='none'
+									mx={-2}
+									maxLength={400}
+									autoFocus={true}
+								/>
 
-					<Input
-						ref={ref}
-						onChangeText={handleChange}
-						multiline
-						color={'blueGray.900'}
-						placeholderTextColor={'blueGray.500'}
-						placeholder={placeholder}
-						value={value}
-						size='2xl'
-						fontSize='2xl'
-						fontFamily='Poppins_300Light'
-						variant={'unstyled'}
-						autoCapitalize='none'
-						mb={-4}
-						mx={-2}
-						maxLength={400}
-						autoFocus={true}
-					/>
-					<Divider />
+								<Divider />
 
-					{canContinue ? (
-						<>
-							<HStack mx={-2} space={1}>
-								<Pressable onPress={onSubmit}>
-									<Box bg={'blueGray.900'} borderRadius={'sm'}>
-										<Text
-											maxW={160}
-											px={4}
-											textAlign={'center'}
-											color={'white'}
-											fontSize={'sm'}
-											fontWeight={600}
-											py={2}
-										>
-											Give it to {monsterName}
-										</Text>
-									</Box>
-								</Pressable>
-								<Spacer />
-								{nextButtonText && onNextButtonPress ? (
-									<Pressable onPress={onNextButtonPress}>
-										<Box bg={''} borderRadius={'sm'}>
-											<Text
-												px={4}
-												py={2}
-												textAlign={'center'}
-												color={'black'}
-												fontSize={'sm'}
-												fontWeight={600}
-											>
-												{nextButtonText}
-											</Text>
-										</Box>
-									</Pressable>
+								{canContinue ? (
+									<>
+										<HStack mx={-2} space={1} py={4}>
+											<Pressable onPress={onSubmit}>
+												<Box bg={'blueGray.900'} borderRadius={'sm'}>
+													<Text
+														maxW={160}
+														px={4}
+														textAlign={'center'}
+														color={'white'}
+														fontSize={'sm'}
+														fontWeight={600}
+														py={2}
+													>
+														Give it to {monsterName}
+													</Text>
+												</Box>
+											</Pressable>
+											<Spacer />
+											{nextButtonText && onNextButtonPress ? (
+												<Pressable onPress={onNextButtonPress}>
+													<Box bg={''} borderRadius={'sm'}>
+														<Text
+															px={4}
+															py={2}
+															textAlign={'center'}
+															color={'black'}
+															fontSize={'sm'}
+															fontWeight={600}
+														>
+															{nextButtonText}
+														</Text>
+													</Box>
+												</Pressable>
+											) : (
+												<Spacer />
+											)}
+										</HStack>
+									</>
 								) : (
 									<Spacer />
 								)}
-							</HStack>
-						</>
-					) : (
-						<Spacer />
-					)}
-				</VStack>
-			</KeyboardAvoidingView>
+							</VStack>
+						</VStack>
+					</KeyboardAwareScrollView>
+				</KeyboardAvoidingView>
+			</VStack>
 		</ScrollView>
+		// </KeyboardAwareScrollView>
 	)
 }
 const styles = StyleSheet.create({
 	form: {
 		flex: 1,
-		paddingTop: 200,
 		paddingHorizontal: 30,
+		pt: 100,
 		backgroundColor: '#fafafa',
 	},
 	screen: {

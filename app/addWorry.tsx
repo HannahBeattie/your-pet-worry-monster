@@ -1,6 +1,6 @@
 import { Entypo, Feather } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
-import { HStack, KeyboardAvoidingView } from 'native-base'
+import { HStack, Icon, IconButton, KeyboardAvoidingView } from 'native-base'
 import React, { Component, FC, RefObject, useCallback, useRef, useState } from 'react'
 import {
 	Dimensions,
@@ -73,19 +73,26 @@ const AddWorry: FC<Props> = () => {
 		autofocus: whichFocus === page,
 	})
 
-	const checkVallid = newWorry?.description?.length! > 3 ? false : true
 	return (
-		<KeyboardAvoidingView
-			behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
-			style={{ flex: 1 }}
+		<ScrollView
+			ref={scroller}
+			snapToAlignment={'center'}
+			style={{ paddingTop: 0, flex: 1 }}
+			scrollEnabled={false}
+			snapToInterval={Dimensions.get('window').height}
 		>
-			<ScrollView
-				ref={scroller}
-				snapToInterval={Dimensions.get('window').height}
-				snapToAlignment={'center'}
-				style={{ paddingTop: 0, flex: 1 }}
-				scrollEnabled={false}
-			>
+			<HStack position={'fixed'} backgroundColor={'blueGray.100'}>
+				<IconButton
+					position={'fixed'}
+					pt={8}
+					icon={<Icon as={Entypo} name='cross' />}
+					_icon={{ color: 'black' }}
+					onPress={onClose}
+					accessibilityLabel='exit screen'
+					variant={'unstyled'}
+				/>
+			</HStack>
+			<KeyboardAvoidingView>
 				<View style={styles.screen}>
 					<WorryInput
 						{...sharedInputProps({ name: 'description', page: 0 })}
@@ -114,8 +121,8 @@ const AddWorry: FC<Props> = () => {
 						</View>
 					</>
 				)}
-			</ScrollView>
-		</KeyboardAvoidingView>
+			</KeyboardAvoidingView>
+		</ScrollView>
 	)
 }
 export default AddWorry
@@ -123,5 +130,7 @@ export default AddWorry
 const styles = StyleSheet.create({
 	screen: {
 		height: Dimensions.get('window').height,
+		flex: 1,
+		justifyContent: 'center',
 	},
 })
