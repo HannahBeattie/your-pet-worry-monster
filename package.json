@@ -6,6 +6,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo-google-fonts/poppins": "^0.2.3",
     "@expo/vector-icons": "^13.0.0",
     "@react-native-async-storage/async-storage": "~1.17.3",
     "@react-navigation/drawer": "^6.6.0",
@@ -23,6 +24,7 @@
     "peer": "^0.6.1",
     "react": "18.1.0",
     "react-dom": "18.1.0",
+    "react-expanding-textarea": "^2.3.6",
     "react-native": "0.70.5",
     "react-native-floating-action": "^1.22.0",
     "react-native-gesture-handler": "~2.8.0",

@@ -7,8 +7,8 @@ import Gregory from '~features/monster/Gregory'
 export default function Home() {
 	return (
 		<Page>
-			{/* <Gregory /> */}
-			<Val />
+			<Gregory />
+			{/* <Val /> */}
 		</Page>
 	)
 }

@@ -24,6 +24,17 @@ export const theme = extendTheme({
 					alignItems: 'stretch',
 					padding: 8,
 				},
+				form: {
+					_dark: {
+						backgroundColor: 'gray.300',
+					},
+					flex: 1,
+
+					alignItems: 'stretch',
+					pt: '200',
+					paddingX: 8,
+					space: 10,
+				},
 				abs: {
 					position: 'absolute',
 					left: '0',
@@ -52,12 +63,6 @@ export const theme = extendTheme({
 					alignItems: 'stretch',
 					justifyContent: 'center',
 				},
-			},
-		},
-		Tag: {
-			defaultProps: {
-				borderRadius: 'lg',
-				backgroundColor: 'coolGray.800',
 			},
 		},
 
@@ -89,6 +94,9 @@ export const theme = extendTheme({
 				btn: {
 					textDecorationLine: 'none',
 					color: 'white',
+				},
+				form: {
+					color: 'teal.900',
 				},
 			},
 		},
