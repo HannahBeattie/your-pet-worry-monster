@@ -1,115 +1,111 @@
-// import { checkTargetForNewValues } from 'framer-motion'
 import { Feather } from '@expo/vector-icons'
-import { useRouter } from 'expo-router'
+import React, { Component } from 'react'
 import {
-	Button,
-	Divider,
-	Heading,
-	HStack,
-	Input,
-	KeyboardAvoidingView,
-	Spacer,
+	Dimensions,
+	Platform,
+	ScrollView,
+	StyleSheet,
 	Text,
-	VStack,
-} from 'native-base'
-import React, { useCallback, useEffect, useRef } from 'react'
-import { StyleSheet, TextInput, useWindowDimensions } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
-// import HomeButton from '~features/layout/HomeButton'
+	TouchableOpacity,
+	View,
+} from 'react-native'
+import WorryInput from '~features/layout/WorryInput'
 
-interface FormProps {
-	question: string
-	placeholder: string
-	icon: any
-	buttonText: string
-	hideButton: boolean
-	nextRoute: string
-	handleButton: any
-}
+// import React, { useRef } from 'react'
+// import { ScrollView } from 'react-native-gesture-handler'
+// import WorryInput from '~features/layout/WorryInput'
 
-export default function AddWorry({
-	question,
-	placeholder,
-	icon,
-	buttonText,
-	hideButton,
-	nextRoute,
-	handleButton,
-}: FormProps) {
-	// const textareaRef = useRef<TextInput>(null)
+// export default function addWorry() {
+// 	const first = useRef(null)
+// 	const second = useRef(null)
+// 	const third = useRef(null)
 
-	const handleChange = useCallback((text: string) => {
-		console.log('Changed value to: ', text)
-	}, [])
+// 	return (
+// 		<ScrollView>
+// 			<WorryInput inputRef={first} nextRef={second} />
+// 			<WorryInput inputRef={second} nextRef={third} />
+// 			<WorryInput inputRef={third} nextRef={first} />
+// 		</ScrollView>
+// 	)
+// // }
 
-	// useEffect(() => {
-	// 	if (textareaRef.current === null) {
-	// 		return
-	// 	}
+// <TouchableOpacity
+// 							area-accessibilityLabel='navagate next'
+// 							onPress={() => {
+// 								handleScroll(nextRef)
+// 								console.log('going from:', inputRef, 'to:', nextRef)
+// 							}}
+// 						>
+// 							{icon ? (
+// 								icon
+// 							) : (
+// 								<Feather name='arrow-right-circle' size={30} color='gray.900' />
+// 							)}
+// 						</TouchableOpacity>
+let scrollYPos = 0
 
-	// 	textareaRef.current.focus()
-	// }, [textareaRef])
+export default class App extends Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			screenHeight: Dimensions.get('window').height,
+			screenWidth: Dimensions.get('window').width,
+		}
+	}
 
-	const { height, width } = useWindowDimensions()
-	const router = useRouter()
-	return (
-		<KeyboardAvoidingView behavior='padding' style={styles.form}>
-			<VStack space={4} h={height}>
-				<Heading fontFamily='Poppins_300Light' color={'black'}>
-					{question ? question : 'question'}
-				</Heading>
+	scrollToB = () => {
+		scrollYPos = this.state.screenHeight * 1
+		this.scroller.scrollTo({ x: 0, y: scrollYPos })
+	}
+	scrollToC = () => {
+		scrollYPos = this.state.screenHeight * 2
+		this.scroller.scrollTo({ x: 0, y: scrollYPos })
+	}
+	scrollToTop = () => {
+		this.scroller.scrollTo({ x: 0, y: 0 })
+	}
 
-				<Input
-					onChangeText={handleChange}
-					// ref={textareaRef}
-					multiline
-					color={'blueGray.900'}
-					placeholderTextColor={'blueGray.500'}
-					placeholder={placeholder ? placeholder : 'placeholder'}
-					size='2xl'
-					fontSize='2xl'
-					fontFamily='Poppins_300Light'
-					variant={'unstyled'}
-					autoCapitalize='none'
-					mb={-4}
-					mx={-2}
-				/>
-				<Divider />
-				<HStack>
-					{!hideButton && (
-						<TouchableOpacity>
-							<Button
-								onPress={() => {
-									handleButton()
-								}}
-							>
-								<Text>{buttonText ? buttonText : 'button'}</Text>
-							</Button>
-						</TouchableOpacity>
-					)}
-					<Spacer />
-					<TouchableOpacity
-						area-accessibilityLabel='navagate next'
-						onPress={() => {
-							router.push(nextRoute ? nextRoute : '/monsterMenu')
-						}}
-					>
-						{icon ? (
-							icon
-						) : (
+	render() {
+		return (
+			<ScrollView
+				style={styles.container}
+				ref={(scroller) => {
+					this.scroller = scroller
+				}}
+			>
+				<View style={styles.screen}>
+					<WorryInput>
+						<TouchableOpacity onPress={this.scrollToB}>
 							<Feather name='arrow-right-circle' size={30} color='gray.900' />
-						)}
-					</TouchableOpacity>
-				</HStack>
-			</VStack>
-		</KeyboardAvoidingView>
-	)
+						</TouchableOpacity>
+					</WorryInput>
+				</View>
+				<View style={styles.screen}>
+					<WorryInput>
+						<TouchableOpacity onPress={this.scrollToC}>
+							<Feather name='arrow-right-circle' size={30} color='gray.900' />
+						</TouchableOpacity>
+					</WorryInput>
+				</View>
+				<View style={styles.screen}>
+					<WorryInput>
+						<TouchableOpacity onPress={this.scrollToTop}>
+							<Feather name='arrow-right-circle' size={30} color='gray.900' />
+						</TouchableOpacity>
+					</WorryInput>
+				</View>
+			</ScrollView>
+		)
+	}
 }
+
 const styles = StyleSheet.create({
-	form: {
+	container: {
 		flex: 1,
-		paddingTop: 200,
-		paddingHorizontal: 30,
-		backgroundColor: '#fafafa',
+	},
+	screen: {
+		flexDirection: 'column',
+		height: Dimensions.get('window').height,
+		justifyContent: 'center',
 	},
 })
