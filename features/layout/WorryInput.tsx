@@ -1,6 +1,4 @@
 // import { checkTargetForNewValues } from 'framer-motion'
-import { Feather } from '@expo/vector-icons'
-import { useRouter } from 'expo-router'
 import {
 	Button,
 	Divider,
@@ -13,15 +11,14 @@ import {
 	Text,
 	VStack,
 } from 'native-base'
-import React, { useCallback, useEffect, useRef } from 'react'
-import { StyleSheet, TextInput, useWindowDimensions } from 'react-native'
+import React, { useCallback } from 'react'
+import { StyleSheet, useWindowDimensions } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 // import HomeButton from '~features/layout/HomeButton'
 
 interface FormProps {
 	question?: string
 	placeholder?: string
-	icon?: any
 	buttonText?: string
 	hideButton?: boolean
 	nextRoute?: string
@@ -32,13 +29,10 @@ interface FormProps {
 export default function WorryInput({
 	question,
 	placeholder,
-	icon,
 	buttonText,
 	hideButton,
 	nextRoute,
 	handleButton,
-	inputRef,
-	nextRef,
 	children,
 }: FormProps) {
 	// const textareaRef = useRef<TextInput>(null)
@@ -47,14 +41,12 @@ export default function WorryInput({
 		console.log('Changed value to: ', text)
 	}, [])
 
-	const { height, width } = useWindowDimensions()
-	const router = useRouter()
-	let scrollYPos = 0
+	const { height } = useWindowDimensions()
 
 	return (
 		<ScrollView>
 			<KeyboardAvoidingView behavior='padding' style={styles.form}>
-				<VStack space={4} h={height} ref={inputRef}>
+				<VStack space={4} h={height}>
 					<Heading fontFamily='Poppins_300Light' color={'black'}>
 						{question ? question : 'question'}
 					</Heading>

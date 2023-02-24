@@ -40,23 +40,40 @@ export default class AddWorry extends Component<Props, State> {
 
 	render() {
 		return (
-			<ScrollView style={styles.container} ref={this.scroller}>
+			<ScrollView
+				ref={this.scroller}
+				snapToInterval={Dimensions.get('window').height}
+				snapToAlignment={'center'}
+				style={{ paddingTop: 30, flex: 1 }}
+			>
 				<View style={styles.screen}>
-					<WorryInput>
+					<WorryInput
+						question='I am worried that...'
+						placeholder='a worry'
+						buttonText='submit'
+					>
 						<TouchableOpacity onPress={this.scrollToB}>
 							<Feather name='arrow-right-circle' size={30} color='gray.900' />
 						</TouchableOpacity>
 					</WorryInput>
 				</View>
 				<View style={styles.screen}>
-					<WorryInput>
+					<WorryInput
+						question='I can feel this worry...'
+						placeholder='In my body...'
+						buttonText='add feeling'
+					>
 						<TouchableOpacity onPress={this.scrollToC}>
 							<Feather name='arrow-right-circle' size={30} color='gray.900' />
 						</TouchableOpacity>
 					</WorryInput>
 				</View>
 				<View style={styles.screen}>
-					<WorryInput>
+					<WorryInput
+						question='The scariest bit is...'
+						placeholder='very scary thing'
+						buttonText='add scary bit'
+					>
 						<TouchableOpacity onPress={this.scrollToTop}>
 							<Feather name='arrow-right-circle' size={30} color='gray.900' />
 						</TouchableOpacity>
@@ -68,9 +85,6 @@ export default class AddWorry extends Component<Props, State> {
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-	},
 	screen: {
 		flexDirection: 'column',
 		height: Dimensions.get('window').height,
