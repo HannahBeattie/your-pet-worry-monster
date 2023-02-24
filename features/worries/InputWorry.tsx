@@ -1,8 +1,18 @@
 import { Entypo } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
-import { Button, Heading, HStack, Pressable, Spacer, TextArea, VStack } from 'native-base'
+import {
+	Button,
+	Heading,
+	HStack,
+	KeyboardAvoidingView,
+	Pressable,
+	Spacer,
+	StatusBar,
+	TextArea,
+	VStack,
+} from 'native-base'
 import React from 'react'
-import { Dimensions, Keyboard } from 'react-native'
+import { Dimensions, Keyboard, Platform } from 'react-native'
 import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useDispatch, useSelector } from 'react-redux'
@@ -40,81 +50,83 @@ export default function InputWorry() {
 	const h = Dimensions.get('window').height
 
 	return (
-		<KeyboardAwareScrollView enableAutomaticScroll showsVerticalScrollIndicator={false}>
-			<VStack variant='page' h={h} flex={1} justifyItems={'stretch'}>
-				<HStack alignContent={'flex-end'} justifyItems={'flex-end'} alignSelf={'flex-end'}>
-					<Pressable
-						mt={-10}
-						pb={4}
-						onPress={() => {
-							router.push('/monsterMenu')
-							setValue('')
-							setSeccond('')
-							setThird('')
-						}}
-					>
-						<Entypo name='cross' size={24} color='white' />
-					</Pressable>
-				</HStack>
-				<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-					<VStack color={'black'} space={4} pb={10}>
-						<Heading textAlign={'start'} color={'white'}>
-							What are you feeling worried about?
-						</Heading>
-						<TextArea
-							bgColor={'white'}
-							aria-label='text-area'
-							fontSize={'xl'}
-							placeholder='I am worried about...'
-							onChangeText={handleFirst}
-							value={first}
-							maxLength={200}
-							color={'black'}
-							autoCompleteType
-						/>
-						<Heading textAlign={'start'} color={'white'}>
-							Where, in your body, do you notice the worry?
-						</Heading>
-						<TextArea
-							autoCompleteType
-							value={third}
-							onChangeText={handleThird}
-							bgColor={'white'}
-							aria-label='text-area'
-							fontSize={'xl'}
-							placeholder='I feel it...'
-							maxLength={200}
-							color={'black'}
-						/>
-
-						<Heading color={'white'} textAlign={'start'}>
-							What is the scariest bit of that worry?
-						</Heading>
-
-						<TextArea
-							autoCompleteType
-							bgColor={'white'}
-							aria-label='text-area'
-							fontSize={'xl'}
-							placeholder='The scariest bit is...'
-							color={'black'}
-							onChangeText={handleSeccond}
-							value={seccond}
-							maxLength={100}
-						/>
-					</VStack>
-				</TouchableWithoutFeedback>
-				<Button
-					backgroundColor={'violet.300'}
+		// <KeyboardAvoidingView behavior='padding' height={'full'} flex={1}>
+		// <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+		<VStack variant='page' minH={h} flex={1}>
+			<HStack alignContent={'flex-end'} justifyItems={'flex-end'} alignSelf={'flex-end'}>
+				<Pressable
+					mt={-10}
+					pb={4}
 					onPress={() => {
-						handleWorrySubmit()
+						router.push('/monsterMenu')
+						setValue('')
+						setSeccond('')
+						setThird('')
 					}}
 				>
-					<Heading color={'violet.900'} fontWeight={'800'} textTransform={'uppercase'}>
-						Add worry
-					</Heading>
-				</Button>
+					<Entypo name='cross' size={24} color='white' />
+				</Pressable>
+			</HStack>
+
+			<VStack color={'black'} space={4} pb={10}>
+				<Heading textAlign={'start'} color={'white'}>
+					What are you feeling worried about?
+				</Heading>
+				<TextArea
+					bgColor={'white'}
+					aria-label='text-area'
+					fontSize={'xl'}
+					placeholder='I am worried about...'
+					onChangeText={handleFirst}
+					value={first}
+					maxLength={200}
+					color={'black'}
+					autoCompleteType
+				/>
+				<Heading textAlign={'start'} color={'white'}>
+					Where, in your body, do you notice the worry?
+				</Heading>
+				<TextArea
+					autoCompleteType
+					value={third}
+					onChangeText={handleThird}
+					bgColor={'white'}
+					aria-label='text-area'
+					fontSize={'xl'}
+					placeholder='I feel it...'
+					maxLength={200}
+					color={'black'}
+				/>
+
+				<Heading color={'white'} textAlign={'start'}>
+					What is the scariest bit of that worry?
+				</Heading>
+
+				<TextArea
+					autoCompleteType
+					bgColor={'white'}
+					aria-label='text-area'
+					fontSize={'xl'}
+					placeholder='The scariest bit is...'
+					color={'black'}
+					onChangeText={handleSeccond}
+					value={seccond}
+					maxLength={100}
+				/>
 			</VStack>
-		</KeyboardAwareScrollView>
+
+			<Button
+				backgroundColor={'violet.300'}
+				onPress={() => {
+					handleWorrySubmit()
+				}}
+			>
+				<Heading color={'violet.900'} fontWeight={'800'} textTransform={'uppercase'}>
+					Add worry
+				</Heading>
+			</Button>
+		</VStack>
+		// </TouchableWithoutFeedback>
+		// </KeyboardAvoidingView>
 	)
 }
