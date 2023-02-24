@@ -73,6 +73,7 @@ const AddWorry: FC<Props> = () => {
 		autofocus: whichFocus === page,
 	})
 
+	const checkVallid = newWorry?.description?.length! > 3 ? false : true
 	return (
 		<KeyboardAvoidingView
 			behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
@@ -83,6 +84,7 @@ const AddWorry: FC<Props> = () => {
 				snapToInterval={Dimensions.get('window').height}
 				snapToAlignment={'center'}
 				style={{ paddingTop: 0, flex: 1 }}
+				scrollEnabled={false}
 			>
 				<View style={styles.screen}>
 					<WorryInput

@@ -1,9 +1,7 @@
 // import { checkTargetForNewValues } from 'framer-motion'
-import { AntDesign, Entypo, FontAwesome, FontAwesome5 } from '@expo/vector-icons'
-import { useRouter } from 'expo-router'
+import { Entypo } from '@expo/vector-icons'
 import {
 	Box,
-	Button,
 	Divider,
 	Heading,
 	HStack,
@@ -16,7 +14,6 @@ import {
 	Text,
 	VStack,
 } from 'native-base'
-import { IInputComponentType } from 'native-base/lib/typescript/components/primitives/Input/types'
 import React, { useCallback, useEffect, useRef } from 'react'
 import { Dimensions, Pressable, StyleSheet, useWindowDimensions } from 'react-native'
 import { useSelector } from 'react-redux'
@@ -64,33 +61,45 @@ export default function WorryInput({
 
 	const { height } = useWindowDimensions()
 
+	// user can continue if they've entered a value or if the field is not required
+	const canContinue = !!value || !required
+	useEffect(() => {
+		if (!autofocus || !ref.current || canContinue) {
+			return
+		}
+		ref.current.focus()
+	}, [ref, autofocus, canContinue])
+
 	useEffect(() => {
 		if (!autofocus || !ref.current) {
 			return
 		}
-		if (ref.current.focus) {
+		if (ref.current.focus && canContinue) {
 			console.log('Autofocus!!!', name, ref.current)
 			ref.current.focus()
 		} else {
 			console.log('No focus??', name, ref.current)
 		}
-	}, [ref, autofocus])
-
-	// user can continue if they've entered a value or if the field is not required
-	const canContinue = !!value || !required
+	}, [ref, autofocus, canContinue])
 
 	return (
-		<ScrollView scrollEnabled={false}>
-			<HStack backgroundColor={'#fafafa'} pt={8} px={2}>
+		<ScrollView
+			scrollEnabled={false}
+			snapToInterval={Dimensions.get('window').height}
+			snapToAlignment={'center'}
+		>
+			<KeyboardAvoidingView behavior='padding' style={styles.form}>
 				<IconButton
 					icon={<Icon as={Entypo} name='cross' />}
 					_icon={{ color: 'black' }}
 					onPress={onClose}
 					accessibilityLabel='exit screen'
+					position={'absolute'}
+					top={8}
+					left={0}
+					variant={'unstyled'}
 				/>
-			</HStack>
 
-			<KeyboardAvoidingView behavior='padding' style={styles.form}>
 				<VStack space={4} h={height}>
 					<Heading fontFamily='Poppins_300Light' color={'black'}>
 						{question}
