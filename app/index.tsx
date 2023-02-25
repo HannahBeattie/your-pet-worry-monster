@@ -6,6 +6,5 @@ import Gregory from '~features/monster/Gregory'
 import Intro from '~features/monster/Intro'
 
 export default function Home() {
-	// return <Intro />
 	return <Intro />
 }

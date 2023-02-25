@@ -1,12 +1,14 @@
+import { useRouter } from 'expo-router'
 import { MotiView } from 'moti'
-import { Image, Text, VStack } from 'native-base'
+import { Button, Image, Text, VStack } from 'native-base'
 import React, { useEffect, useRef } from 'react'
-import { Animated } from 'react-native'
+import { Animated, TouchableOpacity } from 'react-native'
 import ZoomOut from '~features/layout/animation/ZoomOut'
 
 function MeetGreg() {
 	const noWorries = require('../assets/blue.png')
 
+	const router = useRouter()
 	const textAnim = useRef(new Animated.Value(0)).current
 	const imageAnim = useRef(new Animated.Value(0)).current
 
@@ -24,13 +26,28 @@ function MeetGreg() {
 		})
 
 		Animated.parallel([textAnimation, imageAnimation]).start()
+
+		// Navigate to the next page after two seconds
+		const timeout = setTimeout(() => {
+			router.push('/nextIntro')
+		}, 100)
+
+		// Clear the timeout when the component unmounts
+		return () => clearTimeout(timeout)
 	}, [])
 
 	return (
 		<VStack variant={'page'}>
-			<ZoomOut>
-				<Image alt={'blue the monster'} source={noWorries} flex={1} resizeMode='contain' />
-			</ZoomOut>
+			<TouchableOpacity>
+				<ZoomOut>
+					<Image
+						alt={'blue the monster'}
+						source={noWorries}
+						flex={1}
+						resizeMode='contain'
+					/>
+				</ZoomOut>
+			</TouchableOpacity>
 		</VStack>
 	)
 }
