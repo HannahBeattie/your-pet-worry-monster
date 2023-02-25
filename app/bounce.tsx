@@ -31,7 +31,8 @@ export default function Bounce() {
 	})
 
 	const animatedStyle = useAnimatedStyle(() => ({
-		transform: [{ translateX: translateX.value }, { translateY: translateY.value }],
+		// transform: [{ translateX: translateX.value }, { translateY: translateY.value }],
+		transform: [{ translateY: translateY.value }],
 	}))
 
 	return (
