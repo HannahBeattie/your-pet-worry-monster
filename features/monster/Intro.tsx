@@ -1,27 +1,21 @@
 import { useRouter } from 'expo-router'
-import { Button, Heading, VStack } from 'native-base'
-import React, { useEffect, useState } from 'react'
+import { Button, Heading, Image, VStack } from 'native-base'
+import React, { useEffect, useRef, useState } from 'react'
 import { Animated, TouchableOpacity } from 'react-native'
+import ZoomOut from '~features/layout/animation/ZoomOut'
 
 export default function Intro(): JSX.Element {
+	const imageAnim = useRef(new Animated.Value(0)).current
+	const noWorries = require('../../assets/blue.png')
 	const [step, setStep] = useState(0)
 	const router = useRouter()
-
 	const [fadeAnim] = useState(new Animated.Value(0))
-	// const updateStep = () => {
-	// 	if (step === stepValues.length - 1) {
-	// 		// router.push('/monsterMenu')
-	// 	}
-	// 	setStep(step + 1)
-	// }
 
 	const updateStep = () => {
 		const newStep = step + 1
 		if (newStep >= stepValues.length) {
-			// If we've reached the end of the steps, navigate to "/hello" page
-			// router.push('/hello')
-			// Reset the step to 0 to start over if the user navigates back to this component
 			setStep(0)
+			router.push('/meetGreg')
 		} else {
 			setStep(newStep % stepValues.length)
 		}
@@ -34,14 +28,13 @@ export default function Intro(): JSX.Element {
 		}).start()
 	}, [step, fadeAnim])
 
-	const stepValues = ['GRRRRR', 'ROOOOWWllll', 'I am the ferroooccioouus', 'Worry Monster!']
+	const stepValues = ['GRRRRR', 'ROOOOWWllll', 'I am the ...', 'DREADED', 'WORRY MONSTER']
 
 	useEffect(() => {
 		const interval = setInterval(() => {
 			const newStep = step + 1
 			if (newStep >= stepValues.length) {
-				// If we've reached the end of the steps, navigate to "/hello" page
-				// router.push('/hello')
+				router.push('/meetGreg')
 				// Reset the step to 0 to start over if the user navigates back to this component
 				setStep(0)
 			} else {
