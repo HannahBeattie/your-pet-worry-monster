@@ -46,7 +46,7 @@ export default function NextIntro() {
 		// Navigate to the next page after two seconds
 		const timeout = setTimeout(() => {
 			router.push('/name')
-		}, 2000)
+		}, 600)
 
 		// Clear the timeout when the component unmounts
 		return () => clearTimeout(timeout)
@@ -60,7 +60,7 @@ export default function NextIntro() {
 						router.push('/name')
 					}}
 				> */}
-				<TextSequence stepValues={textArray} rout={'/name'} />
+				<TextSequence stepValues={textArray} route={'/name'} />
 				{/* </TouchableOpacity> */}
 			</Center>
 		</VStack>

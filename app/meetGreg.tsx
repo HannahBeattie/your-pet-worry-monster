@@ -29,7 +29,7 @@ function MeetGreg() {
 		// Navigate to the next page after two seconds
 		const timeout = setTimeout(() => {
 			router.push('/nextIntro')
-		}, 2000)
+		}, 600)
 
 		// Clear the timeout when the component unmounts
 		return () => clearTimeout(timeout)
