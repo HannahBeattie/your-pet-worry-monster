@@ -5,34 +5,58 @@ import Animated, {
 	useSharedValue,
 	withTiming,
 	interpolate,
+	runOnJS,
 } from 'react-native-reanimated'
 
-const BLINK_INTERVAL = 500 // interval between blinks in milliseconds
 const BLINK_DURATION = 100 // duration of the blink animation in milliseconds
+const BLINK_DELAY = 500 // delay between blink animations in milliseconds
+const IMAGES = [
+	require('../../../assets/blue.png'),
+	require('../../../assets/blueSad.png'),
+	require('../../../assets/blue.png'),
+]
 
 export default function Blink() {
 	const blinkAnimation = useSharedValue(0)
 
-	React.useEffect(() => {
-		const intervalId = setInterval(() => {
-			blinkAnimation.value = withTiming(1, { duration: BLINK_DURATION }, () => {
-				blinkAnimation.value = withTiming(0, { duration: BLINK_DURATION })
+	const animateBlink = (index: number) => {
+		blinkAnimation.value = withTiming(1, { duration: BLINK_DURATION }, () => {
+			blinkAnimation.value = withTiming(0, { duration: BLINK_DURATION }, () => {
+				if (index === IMAGES.length - 1) {
+					runOnJS(animateSequence)()
+				} else {
+					runOnJS(animateBlink)(index + 1)
+				}
 			})
-		}, BLINK_INTERVAL)
+		})
+	}
 
-		return () => clearInterval(intervalId)
+	const animateSequence = () => {
+		animateBlink(0)
+	}
+
+	React.useEffect(() => {
+		animateSequence()
 	}, [])
 
-	const opacity = interpolate(blinkAnimation.value, [0, 1], [1, 0])
+	const opacity1 = interpolate(blinkAnimation.value, [0, 1], [1, 0])
+	const opacity2 = interpolate(blinkAnimation.value, [0, 1], [0, 1])
+	const opacity3 = interpolate(blinkAnimation.value, [0, 1], [1, 0])
 
 	return (
 		<View style={styles.container}>
-			<Image source={require('./images/character1.png')} style={styles.image} />
-			<Animated.Image
-				source={require('./images/character2.png')}
-				style={[styles.image, useAnimatedStyle(() => ({ opacity })).value]}
-			/>
-			<Image source={require('./images/character3.png')} style={styles.image} />
+			{IMAGES.map((source, index) => (
+				<Animated.Image
+					key={index}
+					source={source}
+					style={[
+						styles.image,
+						useAnimatedStyle(() => ({
+							opacity: index === 0 ? opacity1 : index === 1 ? opacity2 : opacity3,
+						})),
+					]}
+				/>
+			))}
 		</View>
 	)
 }
@@ -40,12 +64,14 @@ export default function Blink() {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		flexDirection: 'row',
 		justifyContent: 'center',
 		alignItems: 'center',
+		width: '100%',
 	},
 	image: {
-		width: 100,
-		height: 100,
+		position: 'absolute',
+		flex: 1,
+		maxHeight: 400,
+		resizeMode: 'contain',
 	},
 })

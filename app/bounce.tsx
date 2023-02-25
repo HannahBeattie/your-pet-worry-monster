@@ -17,11 +17,11 @@ export default function Bounce() {
 
 	const onGestureEvent = useAnimatedGestureHandler({
 		onStart: (_, context) => {
-			context.translateX = translateX.value
+			// context.translateX = translateX.value
 			context.translateY = translateY.value
 		},
 		onActive: (event, context) => {
-			translateX.value = context.translateX + event.translationX
+			// translateX.value = context.translateX + event.translationX
 			translateY.value = context.translateY + event.translationY
 		},
 		onEnd: (event) => {
