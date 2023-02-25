@@ -11,8 +11,8 @@ export default function TextSequence({ stepValues, rout }: any): JSX.Element {
 	const updateStep = () => {
 		const newStep = step + 1
 		if (newStep >= stepValues.length) {
-			setStep(0)
 			router.push({ rout })
+			setStep(0)
 		} else {
 			setStep(newStep % stepValues.length)
 		}

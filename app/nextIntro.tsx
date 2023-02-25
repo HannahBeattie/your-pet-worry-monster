@@ -11,7 +11,8 @@ export default function NextIntro() {
 	const textArray = [
 		'',
 		'I like to eat worries!',
-		'...my name is...!',
+		'I think worries are delicious!!',
+		'my name is...',
 		'...wait',
 		"I don't have a name!",
 		'What should I call mysel?',
@@ -54,13 +55,13 @@ export default function NextIntro() {
 	return (
 		<VStack variant={'page'} flex={1}>
 			<Center>
-				<TouchableOpacity
+				{/* <TouchableOpacity
 					onPress={() => {
 						router.push('/name')
 					}}
-				>
-					<TextSequence stepValues={textArray} rout={'/name'} />
-				</TouchableOpacity>
+				> */}
+				<TextSequence stepValues={textArray} rout={'/name'} />
+				{/* </TouchableOpacity> */}
 			</Center>
 		</VStack>
 	)

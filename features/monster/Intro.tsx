@@ -14,8 +14,8 @@ export default function Intro(): JSX.Element {
 	const updateStep = () => {
 		const newStep = step + 1
 		if (newStep >= stepValues.length) {
-			setStep(0)
 			router.push('/meetGreg')
+			setStep(0)
 		} else {
 			setStep(newStep % stepValues.length)
 		}
