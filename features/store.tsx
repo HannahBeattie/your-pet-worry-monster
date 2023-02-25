@@ -22,6 +22,7 @@ const persistedReducer = persistReducer(
 	{
 		key: 'root',
 		storage: AsyncStorage,
+		// whitelist: [], // uncomment to clear the persisted redux data
 	},
 	rootReducer
 )

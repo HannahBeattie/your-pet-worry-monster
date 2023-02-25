@@ -18,8 +18,10 @@ export default function DebugPage() {
 				{worryData.map((worry, idx) => (
 					<TouchableOpacity key={`worry-${idx}`}>
 						<VStack p='4' bg='gray.700' my='2'>
+							<Text color={'red'}>{worry.consumedAt}</Text>
 							<Text color={'white'}>{worry.description}</Text>
 							<Text color={'gray.500'}>{worry.extraNote}</Text>
+							<Text color={'gray.500'}>{worry.sensation}</Text>
 							<Text color={'white'}>{worry.isActive ? 'Active' : 'Inactive'}</Text>
 						</VStack>
 					</TouchableOpacity>

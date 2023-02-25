@@ -4,7 +4,7 @@ import React, { PropsWithChildren } from 'react'
 function Scroll({ children }: PropsWithChildren) {
 	return (
 		<VStack backgroundColor={'gray.900'} flex={1}>
-			<ScrollView s>{children}</ScrollView>
+			<ScrollView>{children}</ScrollView>
 		</VStack>
 	)
 }
