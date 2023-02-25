@@ -22,13 +22,14 @@ export default function Intro(): JSX.Element {
 	}
 	useEffect(() => {
 		Animated.timing(fadeAnim, {
+			delay: 2,
 			toValue: 1,
 			duration: 10, // duration of the animation in milliseconds
 			useNativeDriver: true, // required for performance reasons on Android
 		}).start()
 	}, [step, fadeAnim])
 
-	const stepValues = ['GRRRRR', 'ROOOOWWllll', 'I am the ...', 'DREADED', 'WORRY MONSTER']
+	const stepValues = ['', '', 'GRRRRR', 'ROOOOWWllll', 'I am the ...', 'DREADED', 'WORRY MONSTER']
 
 	useEffect(() => {
 		const interval = setInterval(() => {

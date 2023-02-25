@@ -1,6 +1,5 @@
 import { useRouter } from 'expo-router'
-import { MotiView } from 'moti'
-import { Button, Image, Text, VStack } from 'native-base'
+import { Image, VStack } from 'native-base'
 import React, { useEffect, useRef } from 'react'
 import { Animated, TouchableOpacity } from 'react-native'
 import ZoomOut from '~features/layout/animation/ZoomOut'
@@ -30,7 +29,7 @@ function MeetGreg() {
 		// Navigate to the next page after two seconds
 		const timeout = setTimeout(() => {
 			router.push('/nextIntro')
-		}, 100)
+		}, 2000)
 
 		// Clear the timeout when the component unmounts
 		return () => clearTimeout(timeout)
@@ -38,7 +37,11 @@ function MeetGreg() {
 
 	return (
 		<VStack variant={'page'}>
-			<TouchableOpacity>
+			<TouchableOpacity
+				onPress={() => {
+					router.push('/nextIntro')
+				}}
+			>
 				<ZoomOut>
 					<Image
 						alt={'blue the monster'}

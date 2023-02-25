@@ -1,7 +1,8 @@
 import { useRouter } from 'expo-router'
-import { Image, VStack } from 'native-base'
+import { Center, Image, VStack } from 'native-base'
 import React, { useEffect, useRef } from 'react'
-import { Animated } from 'react-native'
+import { Animated, TouchableOpacity } from 'react-native'
+
 import TextSequence from '~features/monster/TextSequence'
 
 export default function NextIntro() {
@@ -44,18 +45,23 @@ export default function NextIntro() {
 		// Navigate to the next page after two seconds
 		const timeout = setTimeout(() => {
 			router.push('/name')
-		}, 100)
+		}, 2000)
 
 		// Clear the timeout when the component unmounts
 		return () => clearTimeout(timeout)
 	}, [])
 
 	return (
-		<VStack variant={'page'} flex={1} justifyContent={'center'}>
-			<VStack mt={100} mb={-100} alignItems={'center'}>
-				<TextSequence stepValues={textArray} rout={'/name'} />
-			</VStack>
-			<Image alt={'blue the monster'} source={noWorries} flex={1} resizeMode='contain' />
+		<VStack variant={'page'} flex={1}>
+			<Center>
+				<TouchableOpacity
+					onPress={() => {
+						router.push('/name')
+					}}
+				>
+					<TextSequence stepValues={textArray} rout={'/name'} />
+				</TouchableOpacity>
+			</Center>
 		</VStack>
 	)
 }

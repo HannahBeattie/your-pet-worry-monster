@@ -3,15 +3,16 @@ import { Heading, VStack } from 'native-base'
 import React, { useEffect, useState } from 'react'
 import { Animated, TouchableOpacity } from 'react-native'
 
-export default function TextSequence({ stepValues }: any): JSX.Element {
+export default function TextSequence({ stepValues, rout }: any): JSX.Element {
 	const [step, setStep] = useState(0)
 	const [fadeAnim] = useState(new Animated.Value(0))
+	const router = useRouter()
 
 	const updateStep = () => {
 		const newStep = step + 1
 		if (newStep >= stepValues.length) {
 			setStep(0)
-			// router.push('/meetGreg')
+			router.push({ rout })
 		} else {
 			setStep(newStep % stepValues.length)
 		}
@@ -28,7 +29,7 @@ export default function TextSequence({ stepValues }: any): JSX.Element {
 		const interval = setInterval(() => {
 			const newStep = step + 1
 			if (newStep >= stepValues.length) {
-				// router.push('/meetGreg')
+				router.push({ rout })
 				// Reset the step to 0 to start over if the user navigates back to this component
 				setStep(0)
 			} else {
