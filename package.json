@@ -4,7 +4,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "build": "eas build -e preview -p ios",
+    "build": "eas build -e preview -p ios --non-interactive",
     "build-dev": "eas build -e development -p ios --non-interactive"
   },
   "dependencies": {
