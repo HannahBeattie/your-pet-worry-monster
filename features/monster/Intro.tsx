@@ -3,6 +3,7 @@ import { Button, Heading, Image, VStack } from 'native-base'
 import React, { useEffect, useRef, useState } from 'react'
 import { Animated, TouchableOpacity } from 'react-native'
 import ZoomOut from '~features/layout/animation/ZoomOut'
+import * as Haptics from 'expo-haptics'
 
 export default function Intro(): JSX.Element {
 	const imageAnim = useRef(new Animated.Value(0)).current
@@ -50,9 +51,14 @@ export default function Intro(): JSX.Element {
 		<VStack variant='page' flex={1} alignItems='center'>
 			<TouchableOpacity onPress={updateStep}>
 				<Animated.View style={{ opacity: fadeAnim }}>
-					<Heading fontSize={'3xl'} color={'white'}>
-						{stepValues[step]}
-					</Heading>
+					<Button
+						variant={'ghost'}
+						onPress={() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy)}
+					>
+						<Heading fontSize={'3xl'} color={'white'}>
+							{stepValues[step]}
+						</Heading>
+					</Button>
 				</Animated.View>
 			</TouchableOpacity>
 		</VStack>

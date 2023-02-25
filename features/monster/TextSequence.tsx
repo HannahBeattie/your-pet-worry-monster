@@ -1,7 +1,8 @@
 import { useRouter } from 'expo-router'
-import { Heading, VStack } from 'native-base'
+import { Button, Heading, VStack } from 'native-base'
 import React, { useEffect, useState } from 'react'
 import { Animated, TouchableOpacity } from 'react-native'
+import * as Haptics from 'expo-haptics'
 
 export default function TextSequence({ stepValues, route }: any): JSX.Element {
 	const [step, setStep] = useState(0)
@@ -14,6 +15,7 @@ export default function TextSequence({ stepValues, route }: any): JSX.Element {
 			router.push(route)
 			setStep(0)
 		} else {
+			Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
 			setStep(newStep % stepValues.length)
 		}
 	}
@@ -44,9 +46,16 @@ export default function TextSequence({ stepValues, route }: any): JSX.Element {
 		<VStack>
 			<TouchableOpacity onPress={updateStep}>
 				<Animated.View style={{ opacity: fadeAnim }}>
-					<Heading fontSize={'3xl'} color={'white'}>
-						{stepValues[step]}
-					</Heading>
+					<Button
+						variant={'ghost'}
+						onPress={() =>
+							Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
+						}
+					>
+						<Heading fontSize={'3xl'} color={'white'}>
+							{stepValues[step]}
+						</Heading>
+					</Button>
 				</Animated.View>
 			</TouchableOpacity>
 		</VStack>

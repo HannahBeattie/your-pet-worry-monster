@@ -1,10 +1,14 @@
+import { VStack } from 'native-base'
 import React from 'react'
-import Page from '~features/layout/Page'
-import Val from '~features/layout/Val'
-import Blue from '~features/monster/Blue'
-import Gregory from '~features/monster/Gregory'
-import Intro from '~features/monster/Intro'
+import MyFab from '~features/layout/MyFab'
+import Bounce from './bounce'
 
-export default function Home() {
-	return <Intro />
+function index() {
+	return (
+		<VStack variant={'page'}>
+			<Bounce />
+		</VStack>
+	)
 }
+
+export default index
