@@ -1,8 +1,6 @@
 import React from 'react'
-import Blink from '~features/layout/animation/Blink'
+import Move from '~features/monster/Move'
 
-function blinky() {
-	return <Blink />
+export default function Blinky() {
+	return <Move />
 }
-
-export default blinky
