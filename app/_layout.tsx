@@ -8,6 +8,7 @@ import {
 	Poppins_500Medium,
 	Poppins_300Light,
 	Poppins_600SemiBold,
+	Poppins_400Regular,
 } from '@expo-google-fonts/poppins'
 import { Miniver_400Regular } from '@expo-google-fonts/miniver'
 
@@ -17,6 +18,7 @@ export default function Layout() {
 		Poppins_300Light,
 		Miniver_400Regular,
 		Poppins_600SemiBold,
+		Poppins_400Regular,
 	})
 
 	return (

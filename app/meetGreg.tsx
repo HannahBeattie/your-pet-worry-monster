@@ -4,9 +4,8 @@ import React, { useEffect, useRef } from 'react'
 import { Animated, TouchableOpacity } from 'react-native'
 import ZoomOut from '~features/layout/animation/ZoomOut'
 
+const noWorries = require('../assets/blue.png')
 function MeetGreg() {
-	const noWorries = require('../assets/blue.png')
-
 	const router = useRouter()
 	const textAnim = useRef(new Animated.Value(0)).current
 	const imageAnim = useRef(new Animated.Value(0)).current
