@@ -79,7 +79,7 @@ function MyFab({ props }: any) {
 			color={active ? '#956786' : '#3e8a96'}
 			actions={currentWorries.length !== 0 ? two : one}
 			position={'left'}
-			distanceToEdge={{ horizontal: 0, vertical: 0 }}
+			distanceToEdge={{ horizontal: 10, vertical: 30 }}
 			onOpen={handleClick}
 			onClose={handleClick}
 			onPressItem={(name) => {

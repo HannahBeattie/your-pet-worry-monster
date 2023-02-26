@@ -151,15 +151,14 @@ export default function WorryInput({
 									<>
 										<HStack mx={-2} space={1} py={4}>
 											<Pressable onPress={onSubmit}>
-												<Box bg={'blueGray.900'} borderRadius={'sm'}>
+												<Box bg={'#18181a'} borderRadius={'sm'}>
 													<Text
 														maxW={160}
-														px={4}
+														p={4}
 														textAlign={'center'}
 														color={'white'}
 														fontSize={'sm'}
-														fontWeight={600}
-														py={2}
+														fontFamily='Poppins_600SemiBold'
 													>
 														Give it to {monsterName}
 													</Text>
@@ -170,11 +169,11 @@ export default function WorryInput({
 												<Pressable onPress={onNextButtonPress}>
 													<Box bg={''} borderRadius={'sm'}>
 														<Text
-															px={4}
+															fontFamily='Poppins_300Light'
 															py={2}
 															textAlign={'center'}
 															color={'black'}
-															fontSize={'sm'}
+															fontSize={'md'}
 															fontWeight={600}
 														>
 															{nextButtonText}

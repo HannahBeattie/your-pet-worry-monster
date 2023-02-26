@@ -36,7 +36,7 @@ export default function EatingWorry() {
 				>
 					<Pressable
 						onPress={() => {
-							router.push('/monsterMenu')
+							router.push('/')
 						}}
 					>
 						<MaterialCommunityIcons name='home-outline' size={40} color='white' />

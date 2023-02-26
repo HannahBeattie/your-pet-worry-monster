@@ -3,7 +3,12 @@ import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { persistor, store } from '~features/store'
 import { StyleProvider } from '~features/theme/StyleProvider'
-import { useFonts, Poppins_500Medium, Poppins_300Light } from '@expo-google-fonts/poppins'
+import {
+	useFonts,
+	Poppins_500Medium,
+	Poppins_300Light,
+	Poppins_600SemiBold,
+} from '@expo-google-fonts/poppins'
 import { Miniver_400Regular } from '@expo-google-fonts/miniver'
 
 export default function Layout() {
@@ -11,6 +16,7 @@ export default function Layout() {
 		Poppins_500Medium,
 		Poppins_300Light,
 		Miniver_400Regular,
+		Poppins_600SemiBold,
 	})
 
 	return (

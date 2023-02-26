@@ -6,15 +6,15 @@ import { Animated, ImageBackground, StyleSheet } from 'react-native'
 
 const base = require('../../assets/base.png')
 const stepValues = [
-	require('../../assets/blue.png'),
-	require('../../assets/one.png'),
-	require('../../assets/two.png'),
-	require('../../assets/three.png'),
-	require('../../assets/four.png'),
-	require('../../assets/five.png'),
+	require('../../assets/animation/1.png'),
+	// require('../../assets/animation/2.png'),
+	// require('../../assets/animation/3.png'),
+	// require('../../assets/animation/4.png'),
+	require('../../assets/animation/5.png'),
+	require('../../assets/animation/6.png'),
 ]
 
-const three = require('../../assets/three.png')
+const bgIm = require('../../assets/blue.png')
 
 export default function Move() {
 	const [step, setStep] = useState(0)
@@ -47,7 +47,7 @@ export default function Move() {
 			} else {
 				setStep(newStep % stepValues.length)
 			}
-		}, 2000)
+		}, 5000)
 
 		return () => clearInterval(interval)
 	}, [step, stepValues])
@@ -61,7 +61,7 @@ export default function Move() {
 
 	return (
 		<VStack flex={1}>
-			<ImageBackground source={stepValues[0]} resizeMode='contain' style={styles.image}>
+			<ImageBackground source={bgIm} resizeMode='contain' style={styles.image}>
 				<Image
 					key={`img-${step}`}
 					minH={'full'}
@@ -72,9 +72,9 @@ export default function Move() {
 				/>
 			</ImageBackground>
 
-			<Button backgroundColor={'red.100'} onPress={handleButtonClick}>
+			{/* <Button backgroundColor={'red.100'} onPress={handleButtonClick}>
 				CLICK
-			</Button>
+			</Button> */}
 		</VStack>
 	)
 }

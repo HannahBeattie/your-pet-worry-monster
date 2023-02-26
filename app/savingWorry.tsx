@@ -27,6 +27,24 @@ export default function SavingWorry() {
 			<Blue />
 			<Text>Wouly you like me to hold on to this worry for a bit?</Text>
 			<Button
+				bg={'gray.200'}
+				onPress={() => {
+					router.push('/')
+				}}
+			>
+				<Text
+					fontFamily='Poppins_300Light'
+					py={2}
+					textAlign={'center'}
+					color={'black'}
+					fontSize={'lg'}
+					fontWeight={600}
+				>
+					Yes please.
+				</Text>
+			</Button>
+			<Button
+				bg={'gray.201'}
 				onPress={() => {
 					dispatch(
 						updateWorry({
@@ -37,15 +55,16 @@ export default function SavingWorry() {
 						router.push('/eatingWorry')
 				}}
 			>
-				No thank you, I am ready to say goodbye to this worry.
-			</Button>
-
-			<Button
-				onPress={() => {
-					router.push('/current')
-				}}
-			>
-				Yes please.
+				<Text
+					fontFamily='Poppins_300Light'
+					py={2}
+					textAlign={'center'}
+					color={'black'}
+					fontSize={'lg'}
+					fontWeight={600}
+				>
+					No thank you, I am ready to say goodbye to this worry.
+				</Text>
 			</Button>
 
 			{/* <Text>All Active: {allActive.map((worry: Worry) => worry.description).join(', ')}</Text> */}

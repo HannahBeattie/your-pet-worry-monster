@@ -54,7 +54,7 @@ const AddWorry: FC<Props> = () => {
 		setNewWorry({})
 		const scrollTo = getScrollToPage(0)
 		scrollTo()
-		router.push('/monsterMenu')
+		router.push('/savingWorry')
 	}, [getScrollToPage])
 
 	const onSubmit = useCallback(() => {
