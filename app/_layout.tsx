@@ -11,6 +11,8 @@ import {
 	Poppins_400Regular,
 } from '@expo-google-fonts/poppins'
 import { Miniver_400Regular } from '@expo-google-fonts/miniver'
+import { Neucha_400Regular } from '@expo-google-fonts/neucha'
+import { NanumPenScript_400Regular } from '@expo-google-fonts/nanum-pen-script'
 
 export default function Layout() {
 	const [fontsLoaded] = useFonts({
@@ -19,6 +21,8 @@ export default function Layout() {
 		Miniver_400Regular,
 		Poppins_600SemiBold,
 		Poppins_400Regular,
+		Neucha_400Regular,
+		NanumPenScript_400Regular,
 	})
 
 	return (
