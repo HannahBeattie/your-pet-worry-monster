@@ -3,12 +3,14 @@ import { KeyboardAvoidingView } from 'native-base'
 import React, { FC, useCallback, useRef, useState } from 'react'
 import {
 	Dimensions,
+	KeyboardAvoidingViewComponent,
 	Platform,
 	ScrollView,
 	StyleSheet,
 	useWindowDimensions,
 	View,
 } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useDispatch } from 'react-redux'
 import WorryInput from '~features/layout/WorryInput'
 import { addWorry, Worry, WorryField } from '~features/worries/worrySlice'

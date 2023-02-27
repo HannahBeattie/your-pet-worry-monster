@@ -23,6 +23,7 @@ function DisplayWorry() {
 		console.log('deleting worry:', worry)
 		dispatch(deleteWorry(worry.id))
 	}
+	const font = { fontFamily: 'Poppins_300Light', color: 'black', fontSize: 'md' }
 
 	console.log('worryData:', worryData)
 	return (
@@ -35,7 +36,7 @@ function DisplayWorry() {
 			position={'absolute'}
 		>
 			{worryData.map((worry) => (
-				<VStack key={worry.id} flex={1} maxW={width} px={2}>
+				<VStack key={worry.id} px={4} maxW={width}>
 					<TouchableOpacity
 						onLongPress={() => {
 							setShowDeleteJiggle(!showDeleteJiggle)
@@ -48,50 +49,60 @@ function DisplayWorry() {
 								handleDelete(worry)
 							}}
 						>
-							<Tag
-								borderTopWidth={1}
-								borderColor={'gray.600'}
-								backgroundColor={'gray.900'}
-								borderTopRadius={'md'}
-								alignSelf={'center'}
-							>
-								<Text color={'white'} fontWeight={'200'} fontSize={'md'} px={4}>
-									Worry consumed {useFormatDate(worry!.consumedAt!)}
-								</Text>
-							</Tag>
 							<Center
 								borderWidth={1}
-								borderColor={'gray.500'}
-								backgroundColor={'#0000005d'}
-								borderBottomRadius={'xl'}
+								backgroundColor={'#ffffffe6'}
 								alignItems={'stretch'}
+								p={4}
+								pb={8}
+								borderRadius={'sm'}
 							>
-								<VStack space={4} px={4} maxH={550} py={4}>
-									<Tag
-										color={'white'}
-										borderRadius={'lg'}
-										backgroundColor={'coolGray.800'}
+								<VStack space={4} alignItems={'center'} pb={4}>
+									<Text
+										fontWeight={'200'}
+										px={4}
+										fontFamily={'Poppins_500Medium'}
+										color={'black'}
+										fontSize={'md'}
 									>
-										<Text>{worry.description}</Text>
-									</Tag>
+										Worry consumed {useFormatDate(worry!.consumedAt!)}
+									</Text>
+								</VStack>
 
-									<VStack px={4} space={4} alignItems={'center'}>
-										<Divider />
-
-										<Text fontSize={'sm'} color={'violet.300'}>
-											The extra-scary flavor:
-										</Text>
-
-										<Text fontSize={'sm'} color={'white'} fontWeight={'light'}>
-											{worry.extraNote}
-										</Text>
+								<VStack space={4} maxH={550}>
+									<Divider />
+									<Text {...font} fontFamily={'Poppins_500Medium'}>
+										{worry.description}
+									</Text>
+									<Divider />
+									<VStack space={0} alignItems={'center'}>
 										<Text
-											fontSize={'sm'}
-											color={'violet.300'}
 											textTransform={'capitalize'}
+											{...font}
+											fontSize={'sm'}
 										>
-											worry wirst worried {useFormatDate(worry.id)}
+											First worried {useFormatDate(worry.id)}
 										</Text>
+										{worry.extraNote && (
+											<>
+												<Text
+													{...font}
+													color={'black'}
+													fontFamily={'Poppins_500Medium'}
+												>
+													The extra-scary flavor:
+												</Text>
+
+												<Text
+													fontWeight={'light'}
+													{...font}
+													fontSize={'sm'}
+													fontFamily={'Poppins_500Medium'}
+												>
+													{worry.extraNote}
+												</Text>
+											</>
+										)}
 									</VStack>
 								</VStack>
 							</Center>

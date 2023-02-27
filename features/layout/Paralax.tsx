@@ -46,8 +46,8 @@ export default function Paralax() {
 				<VStack flex={1} minW={width} backgroundColor={'gray.900'}>
 					<VStack flex={1} minW={width}>
 						<ImageSlide imageArray={images} />
-						<DisplayWorry />
 						<ImageSlide imageArray={images.reverse()} />
+						<DisplayWorry />
 					</VStack>
 				</VStack>
 			</ScrollView>

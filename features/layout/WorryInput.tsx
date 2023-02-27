@@ -118,7 +118,7 @@ export default function WorryInput({
 					behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
 				>
 					<KeyboardAwareScrollView
-						enableAutomaticScroll={true}
+						enableAutomaticScroll
 						pagingEnabled
 						extraHeight={100}
 						extraScrollHeight={100}
@@ -144,7 +144,7 @@ export default function WorryInput({
 									variant={'unstyled'}
 									autoCapitalize='none'
 									mx={-2}
-									maxLength={400}
+									maxLength={280}
 									autoFocus={true}
 									isFocused={true}
 								/>
