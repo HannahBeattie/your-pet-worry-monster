@@ -76,9 +76,10 @@ export default function Warn({ children }: any) {
 					</VStack>
 				</Alert>
 			</Collapse>
-			<HStack pt={4}>
+
+			<HStack mr={-4}>
+				<Spacer />
 				<Button
-					backgroundColor='gray.800'
 					py={3}
 					px={3}
 					borderRadius={200}
@@ -87,7 +88,6 @@ export default function Warn({ children }: any) {
 				>
 					<AntDesign name='delete' size={24} color='white' />
 				</Button>
-				<Spacer />
 			</HStack>
 		</VStack>
 	)

@@ -38,7 +38,6 @@ const MyModal: FC<Props> = ({ fullWorry, partialWorry, children }) => {
 				<VStack p={!visibleModal ? 4 : 0}>
 					<Heading color={'black'}>Partial</Heading>
 				</VStack>
-				{!!visibleModal && <Warn />}
 
 				<Spacer />
 				<VStack my={'4'} alignItems={'center'} justifyContent={'center'}>
@@ -50,12 +49,16 @@ const MyModal: FC<Props> = ({ fullWorry, partialWorry, children }) => {
 						)}
 
 						{!!visibleModal && (
-							<HStack w={width} pr={6} pb={4}>
+							<HStack width={'100%'} mr={-100}>
 								<Spacer />
-								<TouchableOpacity onPress={onPress} accessibilityLabel='Close'>
-									<Spacer />
+								<Button
+									backgroundColor={'#fffff000'}
+									variant={'ghost'}
+									onPress={onPress}
+									accessibilityLabel='Close'
+								>
 									<AntDesign name='closecircleo' size={24} color='black' />
-								</TouchableOpacity>
+								</Button>
 							</HStack>
 						)}
 					</HStack>
@@ -77,7 +80,17 @@ const MyModal: FC<Props> = ({ fullWorry, partialWorry, children }) => {
 		>
 			<VStack flex={1} pt={20} px={8}>
 				<Heading color={'black'}>Details</Heading>
+				<Divider />
+				<Spacer />
+
+				{!!visibleModal && (
+					<HStack>
+						<Warn />
+					</HStack>
+				)}
+				<Spacer />
 			</VStack>
+
 			{renderButton('Close', () => setVisibleModal(null))}
 		</VStack>
 	)
