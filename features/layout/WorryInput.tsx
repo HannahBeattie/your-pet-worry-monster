@@ -2,6 +2,7 @@
 import { Entypo } from '@expo/vector-icons'
 import {
 	Box,
+	Button,
 	Divider,
 	Heading,
 	HStack,
@@ -69,8 +70,10 @@ export default function WorryInput({
 
 	const { height } = useWindowDimensions()
 
+	const [error, setError] = React.useState('')
+
 	// user can continue if they've entered a value or if the field is not required
-	const canContinue = !!value || !required
+	const canContinue = !!value?.length || !required
 	useEffect(() => {
 		if (!autofocus || !ref.current || canContinue) {
 			return
@@ -115,10 +118,10 @@ export default function WorryInput({
 					behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
 				>
 					<KeyboardAwareScrollView
-						enableAutomaticScroll={true}
+						enableAutomaticScroll
 						pagingEnabled
 						extraHeight={100}
-						extraScrollHeight={60}
+						extraScrollHeight={100}
 					>
 						<VStack justifyContent={'space-between'} minH={height} flex={1} py={100}>
 							<VStack px={30}>
@@ -141,54 +144,64 @@ export default function WorryInput({
 									variant={'unstyled'}
 									autoCapitalize='none'
 									mx={-2}
-									maxLength={400}
+									maxLength={280}
 									autoFocus={true}
+									isFocused={true}
 								/>
 
 								<Divider />
 
-								{canContinue ? (
-									<>
-										<HStack mx={-2} space={1} py={4}>
-											<Pressable onPress={onSubmit}>
-												<Box bg={'blueGray.900'} borderRadius={'sm'}>
+								<Text color={'red.300'}>{error}</Text>
+
+								<>
+									<HStack>
+										<Button
+											onPress={onSubmit}
+											isDisabled={!canContinue}
+											isFocused={false}
+										>
+											<Box bg={'blueGray.900'} borderRadius={'sm'}>
+												<Text
+													maxW={180}
+													textAlign={'center'}
+													color={'white'}
+													fontSize={'sm'}
+													fontWeight={600}
+													py={2}
+												>
+													Give it to {monsterName}
+												</Text>
+											</Box>
+										</Button>
+										<Spacer />
+										{nextButtonText && onNextButtonPress ? (
+											<Button
+												isFocused={false}
+												variant={'ghost'}
+												backgroundColor={'gray.100'}
+												onPress={onNextButtonPress}
+												isDisabled={!canContinue}
+											>
+												<Box bg={''} borderRadius={'sm'}>
 													<Text
-														maxW={160}
-														px={4}
+														pr={4}
+														py={2}
 														textAlign={'center'}
-														color={'white'}
+														color={'black'}
 														fontSize={'sm'}
 														fontWeight={600}
-														py={2}
 													>
-														Give it to {monsterName}
+														{nextButtonText}
 													</Text>
 												</Box>
-											</Pressable>
+											</Button>
+										) : (
 											<Spacer />
-											{nextButtonText && onNextButtonPress ? (
-												<Pressable onPress={onNextButtonPress}>
-													<Box bg={''} borderRadius={'sm'}>
-														<Text
-															px={4}
-															py={2}
-															textAlign={'center'}
-															color={'black'}
-															fontSize={'sm'}
-															fontWeight={600}
-														>
-															{nextButtonText}
-														</Text>
-													</Box>
-												</Pressable>
-											) : (
-												<Spacer />
-											)}
-										</HStack>
-									</>
-								) : (
-									<Spacer />
-								)}
+										)}
+									</HStack>
+								</>
+
+								<Spacer />
 							</VStack>
 						</VStack>
 					</KeyboardAwareScrollView>
