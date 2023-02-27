@@ -35,28 +35,10 @@ const MyModal: FC<Props> = ({ fullWorry, partialWorry, children }) => {
 	const renderButton = (text: string, onPress: () => void) => (
 		<VStack px={4} mx={8}>
 			<VStack space={10} backgroundColor={'gray.200'}>
-				<VStack px={4}>
+				<VStack p={!visibleModal ? 4 : 0}>
 					<Heading color={'black'}>Partial</Heading>
 				</VStack>
-				{!!visibleModal && (
-					<>
-						<Warn />
-
-						{/* </Warn><VStack flex={1}>
-							<TouchableOpacity onPress={handleDelete} accessibilityLabel='Delete'>
-								<Button
-									backgroundColor='gray.800'
-									py={4}
-									px={4}
-									borderRadius={200}
-									_pressed={{ backgroundColor: 'red.800' }}
-								>
-									<AntDesign name='delete' size={24} color='white' />
-								</Button>
-							</TouchableOpacity>
-						</VStack> */}
-					</>
-				)}
+				{!!visibleModal && <Warn />}
 
 				<Spacer />
 				<VStack my={'4'} alignItems={'center'} justifyContent={'center'}>
@@ -68,7 +50,7 @@ const MyModal: FC<Props> = ({ fullWorry, partialWorry, children }) => {
 						)}
 
 						{!!visibleModal && (
-							<HStack w={width} px={10}>
+							<HStack w={width} pr={6} pb={4}>
 								<Spacer />
 								<TouchableOpacity onPress={onPress} accessibilityLabel='Close'>
 									<Spacer />
@@ -103,7 +85,6 @@ const MyModal: FC<Props> = ({ fullWorry, partialWorry, children }) => {
 	return (
 		<View style={styles.container}>
 			{renderButton('Full Screen modal', () => setVisibleModal(1))}
-
 			<Modal
 				isVisible={visibleModal === 1}
 				animationIn={'zoomInDown'}
