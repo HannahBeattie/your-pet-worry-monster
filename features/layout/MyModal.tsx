@@ -59,7 +59,7 @@ const MyModal: FC<Props> = ({ fullWorry, partialWorry, children }) => {
 				)}
 
 				<Spacer />
-				<VStack mb={'4'} alignItems={'center'} justifyContent={'center'}>
+				<VStack my={'4'} alignItems={'center'} justifyContent={'center'}>
 					<HStack>
 						{!visibleModal && (
 							<TouchableOpacity onPress={onPress} accessibilityLabel='Expand'>
@@ -110,7 +110,7 @@ const MyModal: FC<Props> = ({ fullWorry, partialWorry, children }) => {
 				animationOut={'zoomOutUp'}
 				animationInTiming={1000}
 				animationOutTiming={1000}
-				style={{ marginHorizontal: 0 }}
+				style={{ marginHorizontal: 0, marginVertical: 0 }}
 			>
 				{renderModalContent()}
 			</Modal>
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		px: 0,
 		mx: 0,
-		backgroundColor: 'teal',
+		backgroundColor: '#151515',
 	},
 })
 
