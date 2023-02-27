@@ -8,7 +8,6 @@ export default function Home() {
 	return (
 		<Page>
 			<Gregory />
-			{/* <Val /> */}
 		</Page>
 	)
 }

@@ -1,13 +1,11 @@
-import { Entypo, Feather } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
-import { HStack, Icon, IconButton, KeyboardAvoidingView } from 'native-base'
-import React, { Component, FC, RefObject, useCallback, useRef, useState } from 'react'
+import { KeyboardAvoidingView } from 'native-base'
+import React, { FC, useCallback, useRef, useState } from 'react'
 import {
 	Dimensions,
 	Platform,
 	ScrollView,
 	StyleSheet,
-	TouchableOpacity,
 	useWindowDimensions,
 	View,
 } from 'react-native'
@@ -81,7 +79,7 @@ const AddWorry: FC<Props> = () => {
 			scrollEnabled={false}
 			snapToInterval={Dimensions.get('window').height}
 		>
-			<KeyboardAvoidingView>
+			<KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} enabled>
 				<View style={styles.screen}>
 					<WorryInput
 						{...sharedInputProps({ name: 'description', page: 0 })}

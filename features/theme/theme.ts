@@ -48,6 +48,18 @@ export const theme = extendTheme({
 					paddingX: 8,
 					space: 10,
 				},
+				soft: {
+					_dark: {
+						backgroundColor: 'gray.300',
+					},
+					flex: 1,
+
+					alignItems: 'stretch',
+					pt: 100,
+
+					paddingX: 8,
+					space: 8,
+				},
 				abs: {
 					position: 'absolute',
 					left: '0',

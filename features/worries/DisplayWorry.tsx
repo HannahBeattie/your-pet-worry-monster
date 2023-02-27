@@ -35,7 +35,7 @@ function DisplayWorry() {
 			position={'absolute'}
 		>
 			{worryData.map((worry) => (
-				<VStack key={worry.id} flex={1} maxW={width} px={4}>
+				<VStack key={worry.id} flex={1} maxW={width} px={2}>
 					<TouchableOpacity
 						onLongPress={() => {
 							setShowDeleteJiggle(!showDeleteJiggle)
