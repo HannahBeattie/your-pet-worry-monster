@@ -12,83 +12,57 @@ import {
 	Collapse,
 	Heading,
 	Spacer,
+	AlertDialog,
+	Icon,
 } from 'native-base'
 import React, { Children } from 'react'
 import { Pressable, useWindowDimensions } from 'react-native'
 
 export default function Warn({ children }: any) {
-	const [show, setShow] = React.useState(false)
+	const [isOpen, setIsOpen] = React.useState(false)
+	const onClose = () => setIsOpen(false)
+	const cancelRef = React.useRef(null)
 	const { height, width } = useWindowDimensions()
 	return (
-		<VStack w='100%' alignItems='center'>
-			<Collapse
-				isOpen={show}
-				width={width}
-				justifyContent={'center'}
-				justifyItems={'center'}
-				alignContent={'center'}
-				alignSelf={'center'}
-				marginTop={3}
+		<Center zIndex={4}>
+			<IconButton
+				icon={<Icon color={'white'} as={AntDesign} name={'delete'} />}
+				name={'delete'}
+				borderRadius='full'
+				bg='gray.900'
+				size={'lg'}
+				onPress={() => setIsOpen(!isOpen)}
+			/>
+			<AlertDialog
+				leastDestructiveRef={cancelRef}
+				isOpen={isOpen}
+				color={'black'}
+				onClose={onClose}
+				zIndex={3}
 			>
-				<Alert status='error' py={2} my={2}>
-					<VStack space={1} flexShrink={1} w='100%'>
-						<HStack
-							flexShrink={1}
-							space={2}
-							alignItems='center'
-							justifyContent='space-between'
-						>
-							<HStack flexShrink={1} space={2} alignItems='center'>
-								<Alert.Icon />
-								<Text
-									fontSize='md'
-									fontWeight='medium'
-									_dark={{
-										color: 'coolGray.800',
-									}}
-								>
-									Are you sure?
-								</Text>
-							</HStack>
-
-							<IconButton
+				<AlertDialog.Content>
+					<AlertDialog.CloseButton />
+					<AlertDialog.Header>Delete Worry</AlertDialog.Header>
+					<AlertDialog.Body>Are you sure? This cannot be undone.</AlertDialog.Body>
+					<AlertDialog.Footer>
+						<Button.Group space={2}>
+							<Button
 								variant='unstyled'
-								_focus={{
-									borderWidth: 0,
-								}}
-								icon={<CloseIcon size='3' />}
-								_icon={{
-									color: 'coolGray.600',
-								}}
-								onPress={() => setShow(false)}
-							/>
-						</HStack>
-						<Center>
-							<HStack space={1}>
-								<Button variant={'ghost'} backgroundColor={'red.800'}>
-									<Heading color={'red.100'}>Yip!</Heading>
-								</Button>
-								<Button variant={'ghost'} backgroundColor={'gray.800'}>
-									<Heading color={'white'}>Oops!</Heading>
-								</Button>
-							</HStack>
-						</Center>
-					</VStack>
-				</Alert>
-			</Collapse>
-
-			<HStack mr={-4}>
-				<Spacer />
-				<Button
-					py={3}
-					px={3}
-					borderRadius={200}
-					_pressed={{ backgroundColor: 'red.800' }}
-					onPress={() => setShow(true)}
-				>
-					<AntDesign name='delete' size={24} color='white' />
-				</Button>
-			</HStack>
-		</VStack>
+								colorScheme='coolGray'
+								onPress={onClose}
+								ref={cancelRef}
+							>
+								Cancel
+							</Button>
+							<Button colorScheme='danger' onPress={onClose}>
+								Delete
+							</Button>
+						</Button.Group>
+					</AlertDialog.Footer>
+				</AlertDialog.Content>
+			</AlertDialog>
+		</Center>
 	)
 }
+
+/* <AntDesign name='delete' size={24} color='white' /> */

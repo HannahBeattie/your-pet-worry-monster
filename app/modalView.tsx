@@ -1,8 +1,24 @@
-import React from 'react'
-import MyModal from '~features/layout/MyModal'
+import { Text, View } from 'native-base'
+import React, { useState } from 'react'
+import { StyleSheet } from 'react-native'
+import Collapsible from '~features/layout/Collapsable'
 
-function modalView() {
-	return <MyModal />
+export default function modalView() {
+	return (
+		<View style={styles.container}>
+			<Collapsible title='My Collapsible Component'>
+				<Text color={'black'}>
+					This content will be shown when the component is expanded
+				</Text>
+			</Collapsible>
+		</View>
+	)
 }
 
-export default modalView
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		backgroundColor: '#fff',
+		padding: 0,
+	},
+})
