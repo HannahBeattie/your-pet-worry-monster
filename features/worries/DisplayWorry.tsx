@@ -1,14 +1,12 @@
-import { Center, Divider, Heading, HStack, Tag, Text, VStack } from 'native-base'
-import { Pressable, TouchableOpacity, useWindowDimensions } from 'react-native'
+import { Center, Divider, HStack, Text, VStack } from 'native-base'
+import React from 'react'
+import { TouchableOpacity, useWindowDimensions } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteWorry, selectAllInactive, Worry } from '~features/worries/worrySlice'
-import React from 'react'
 //@ts-expect-error
 import JiggleDeleteView from 'react-native-jiggle-delete-view'
 import { monsterNameSelector } from '~features/monster/monsterSlice'
 import { useFormatDate } from './useFormatDate'
-import { AntDesign } from '@expo/vector-icons'
-import SimpleHome from '~features/layout/SimpleHome'
 
 function DisplayWorry() {
 	let worryData = useSelector(selectAllInactive)
