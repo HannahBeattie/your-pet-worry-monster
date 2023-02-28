@@ -34,6 +34,7 @@
     "react-expanding-textarea": "^2.3.6",
     "react-native": "0.70.5",
     "react-native-collapsible": "^1.6.0",
+    "react-native-draggable-flatlist": "^4.0.1",
     "react-native-floating-action": "^1.22.0",
     "react-native-gesture-handler": "~2.8.0",
     "react-native-jiggle-delete-view": "^1.0.1",
