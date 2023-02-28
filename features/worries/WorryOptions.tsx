@@ -35,7 +35,7 @@ function WorryOptions() {
 			<VStack backgroundColor={'blueGray.900'} px={4} borderRadius={'lg'} pb={8} pt={4}>
 				{latestActive && (
 					<Text {...textProps} fontSize={'lg'} pt={2}>
-						I am worried about{' '}
+						I am worried about
 						{latestActive?.description.length >= 50
 							? latestActive?.description.slice(0, 50) + '...'
 							: latestActive?.description}
@@ -46,7 +46,7 @@ function WorryOptions() {
 						<Text {...textProps} fontSize={'lg'} pt={2}>
 							The scariest bit is{' '}
 							{latestActive?.extraNote?.length >= 50
-								? latestActive?.extraNote.slice(0, 50) + '...'
+								? latestActive?.extraNote?.slice(0, 50) + '...'
 								: latestActive?.extraNote}
 						</Text>
 					</VStack>
@@ -61,7 +61,7 @@ function WorryOptions() {
 					}}
 				>
 					<Tag {...buttonProps}>
-						<Text {...textProps} {...buttonProps} fontFamily={'	Poppins_500Medium,'}>
+						<Text {...textProps} {...buttonProps} fontFamily={'Poppins_500Medium'}>
 							Yes Please.
 						</Text>
 					</Tag>
@@ -81,9 +81,9 @@ function WorryOptions() {
 					}}
 				>
 					<Tag {...buttonProps}>
-						<VStack space={0} {...buttonProps}>
-							<Text {...textProps}>No thank you,</Text>
-							<Text {...textProps} fontFamily={'	Poppins_500Medium,'}>
+						<VStack {...buttonProps}>
+							<Text {...textProps}>No thank you</Text>
+							<Text {...textProps} fontFamily={'Poppins_500Medium'}>
 								I am ready to say goodbye to this worry.
 							</Text>
 						</VStack>

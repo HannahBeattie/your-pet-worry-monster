@@ -2,24 +2,19 @@ import { Entypo } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
 import {
 	Button,
+	Center,
+	Divider,
 	Heading,
+	HStack,
+	ScrollView,
 	Spacer,
 	Text,
 	VStack,
-	ScrollView,
-	Center,
-	Divider,
-	HStack,
 } from 'native-base'
 import React from 'react'
-import { Pressable } from 'react-native'
 
 import { useDispatch, useSelector } from 'react-redux'
-import HomeButton from '~features/layout/HomeButton'
-import Scroll from '~features/layout/Scroll'
 import SimpleHome from '~features/layout/SimpleHome'
-import Blue from '~features/monster/Blue'
-import Gregory from '~features/monster/Gregory'
 import { useFormatDate } from '~features/worries/useFormatDate'
 import { selectAllActive, updateWorry } from '~features/worries/worrySlice'
 
@@ -38,7 +33,7 @@ export default function Current() {
 					alignItems: 'stretch',
 					justifyContent: 'flex-start',
 					minHeight: '100%',
-					marginStart: '0',
+					marginStart: 0,
 					backgroundColor: 'blue.300',
 				}}
 			>
@@ -63,7 +58,7 @@ export default function Current() {
 									px={0}
 									backgroundColor={'gray.900'}
 									borderTopRadius={'sm'}
-									borderBottomRadius={'0'}
+									borderBottomRadius={0}
 									onPress={() => {
 										dispatch(
 											updateWorry({
