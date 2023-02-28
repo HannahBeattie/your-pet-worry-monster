@@ -7,8 +7,17 @@ import { useFormatDate } from '~features/worries/useFormatDate'
 import { selectAllInactive } from '~features/worries/worrySlice'
 import DragExpander from './DragExpander'
 
+const longWorry = {
+	id: +new Date(),
+	description: `Descriptive stuff all goes here! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
+	extraNote: `Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
+	sensation: `labore et dolore magna aliqua. Ut enim ad minim`,
+	consumedAt: +new Date() - 400000,
+	isActive: false,
+}
+
 function WorryFeature() {
-	const worryData = useSelector(selectAllInactive)
+	const worryData = [longWorry, ...useSelector(selectAllInactive)]
 	const monsterName = useSelector(monsterNameSelector)
 	const { width } = useWindowDimensions()
 	return (
@@ -26,6 +35,14 @@ function WorryFeature() {
 									I worried that {worry.description}
 								</Text>
 							}
+							onDelete={() => {
+								console.log(
+									`TODO: Delete worry "${worry.description.slice(
+										0,
+										12
+									)}...", or maybe AlertDialog?`
+								)
+							}}
 						>
 							<VStack space={4} pt={4} alignItems='stretch'>
 								{worry.sensation && (

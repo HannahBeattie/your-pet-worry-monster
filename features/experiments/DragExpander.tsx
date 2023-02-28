@@ -1,4 +1,5 @@
-import { Box, VStack } from 'native-base'
+import { Entypo } from '@expo/vector-icons'
+import { Box, Icon, IconButton, VStack } from 'native-base'
 import { ComponentProps, FC, ReactElement } from 'react'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import Animated, {
@@ -15,6 +16,7 @@ import Animated, {
 export type DragExpanderProps = ComponentProps<typeof VStack> & {
 	header: ReactElement
 	_bg?: ComponentProps<typeof Box>
+	onDelete?: () => void
 }
 
 const snapEscape = 20 // distance that the user needs to drag to snap to the other position
@@ -22,6 +24,7 @@ const snapEscape = 20 // distance that the user needs to drag to snap to the oth
 const DragExpander: FC<DragExpanderProps> = ({
 	header,
 	_bg,
+	onDelete,
 	p,
 	px,
 	py,
@@ -42,12 +45,74 @@ const DragExpander: FC<DragExpanderProps> = ({
 	const expandedSpring = useDerivedValue(() =>
 		withSpring(expanded.value, { stiffness: 250, damping: 21 })
 	) // springy value for expanded
-	const headerH = useSharedValue(50) // this is used to store the height for the component when it isn't expanded
-	const expandedH = useSharedValue(100) // this is used to store the height for the expanded part of the component
+	const headerH = useSharedValue(50) // this stores the height of the header
+	const expandedH = useSharedValue(100) // this stores the height for the expanded stuff (children)
 	const snapDown = useDerivedValue(() => expandedH.value / 2) // y offset when not expanded
 	const snapUp = useDerivedValue(() => 0) // y offset when expanded
 	const offY = useSharedValue(snapDown.value) // y-location ("offset") for the components that are being animated
 	const startY = useSharedValue(snapDown.value) // y-location when the user started the pan gesture, used for internal computations in the gesture handlers
+
+	const DELETE_H = 70 // this stores the height for the delete button
+	const deleteH = useSharedValue(DELETE_H) // this stores the height for the delete button
+	const isUpUp = useSharedValue(false) // true when user hae double-expanded up to show delete button
+	const upUp = useSharedValue(0) // 0-to-1 animated value for whether we're double-expanded or not
+	const upUpSpring = useDerivedValue(() =>
+		withSpring(upUp.value, { stiffness: 250, damping: 21 })
+	) // springy upUp
+	const snapUpUp = useDerivedValue(() => -deleteH.value) // y offset when expanded
+
+	const gesture = Gesture.Pan()
+		.activeOffsetY([-5, 5])
+		.onBegin(() => {
+			isPressed.value = true
+		})
+		.onUpdate((e) => {
+			// update y offset based on how far the user has dragged since the start of the gesture
+			offY.value = e.translationY + startY.value
+			// update our 0-to-1 "expanded" animated value based on where we are between the snap points
+			expanded.value = interpolate(
+				offY.value,
+				[snapDown.value, snapUp.value],
+				[0, 1],
+				Extrapolation.CLAMP
+			)
+			upUp.value = interpolate(
+				offY.value,
+				[snapUp.value, snapUpUp.value],
+				[0, 1],
+				Extrapolation.CLAMP
+			)
+		})
+		.onEnd(() => {
+			// Now that the gesture has finished, we're going to snap to either the 'down' or the 'up' snap point
+			// First, handle the upUp double-expand for the delete button
+			const upUpDiff = isUpUp.value ? offY.value - snapUpUp.value : snapUp.value - offY.value
+			if (isUp.value && upUpDiff > snapEscape) {
+				// We've dragged enough to escape the current snap, toggle isUp
+				isUpUp.value = !isUpUp.value
+			}
+			// Next, figure out how far we've dragged away from the current snap point, and toggle isUp if we've got far enough
+			const diff = isUp.value ? offY.value - snapUp.value : snapDown.value - offY.value
+			if (diff > snapEscape) {
+				// We've dragged enough to escape the current snap, toggle isUp
+				isUp.value = !isUp.value
+			}
+			// Choose our snap target based on the updated value of isUp
+			const snapTo = isUpUp.value
+				? snapUpUp.value
+				: isUp.value
+				? snapUp.value
+				: snapDown.value
+			// Update our 0-to-1 "expanded" value
+			expanded.value = isUp.value ? 1 : 0
+			upUp.value = isUpUp.value ? 1 : 0
+			// Spring to our snap target!
+			offY.value = withSpring(snapTo)
+			startY.value = withSpring(snapTo)
+		})
+		.onFinalize(() => {
+			isPressed.value = false
+		})
 
 	// animStyle moves the whole component
 	const animStyle = useAnimatedStyle(() => {
@@ -81,41 +146,15 @@ const DragExpander: FC<DragExpanderProps> = ({
 		}
 	})
 
-	const gesture = Gesture.Pan()
-		.activeOffsetY([-5, 5])
-		.onBegin(() => {
-			isPressed.value = true
-		})
-		.onUpdate((e) => {
-			// update y offset based on how far the user has dragged since the start of the gesture
-			offY.value = e.translationY + startY.value
-			// update our 0-to-1 "expanded" animated value based on where we are between the snap points
-			expanded.value = interpolate(
-				offY.value,
-				[snapDown.value, snapUp.value],
-				[0, 1],
-				Extrapolation.CLAMP
-			)
-		})
-		.onEnd(() => {
-			// Now that the gesture has finished, we're going to snap to either the 'down' or the 'up' snap point
-			// First, figure out how far we've dragged away from the current snap point, and toggle isUp if we've got far enough
-			const diff = isUp.value ? offY.value - snapUp.value : snapDown.value - offY.value
-			if (diff > snapEscape) {
-				// We've dragged enough to escape the current snap, toggle isUp
-				isUp.value = !isUp.value
-			}
-			// Choose our snap target based on the updated value of isUp
-			const snapTo = isUp.value ? snapUp.value : snapDown.value
-			// Update our 0-to-1 "expanded" value
-			expanded.value = isUp.value ? 1 : 0
-			// Spring to our snap target!
-			offY.value = withSpring(snapTo)
-			startY.value = withSpring(snapTo)
-		})
-		.onFinalize(() => {
-			isPressed.value = false
-		})
+	// animStyleDelete controls the styling of the delete button
+	const animStyleDelete = useAnimatedStyle(() => {
+		const visibility = interpolate(upUpSpring.value, [0.75, 1], [0, 1])
+		const scale = interpolate(upUpSpring.value, [0.75, 1], [0.5, 1])
+		return {
+			opacity: visibility,
+			transform: [{ translateY: -offY.value }, { scale }],
+		}
+	})
 
 	return (
 		<GestureDetector gesture={gesture}>
@@ -175,6 +214,15 @@ const DragExpander: FC<DragExpanderProps> = ({
 								// this view contains content that is only displayed when expanded
 							>
 								{children}
+							</Animated.View>
+						</VStack>
+						<VStack position='absolute' alignItems='center' bottom={0} left='50%'>
+							<Animated.View style={[animStyleDelete]}>
+								<IconButton
+									icon={<Icon as={Entypo} name='circle-with-cross' />}
+									_icon={{ color: 'red.500', size: '4xl' }}
+									onPress={onDelete}
+								/>
 							</Animated.View>
 						</VStack>
 					</VStack>
