@@ -1,11 +1,11 @@
-import { Box, Heading, Text, VStack } from 'native-base'
-import { ComponentProps, FC, PropsWithChildren, ReactElement } from 'react'
-import { StyleProp, useWindowDimensions, ViewProps } from 'react-native'
+import { VStack } from 'native-base'
+import { ComponentProps, FC, ReactElement } from 'react'
+import { useWindowDimensions } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import Animated, {
 	Extrapolation,
-	interpolate,
 	StyleProps,
+	interpolate,
 	useAnimatedStyle,
 	useSharedValue,
 	withSpring,
@@ -30,7 +30,6 @@ const DragExpander: FC<DragExpanderProps> = ({
 	expanded,
 	_animated,
 	initialHeight,
-	// backgroundColor,
 	...rest
 }) => {
 	const { height } = useWindowDimensions()
@@ -80,11 +79,9 @@ const DragExpander: FC<DragExpanderProps> = ({
 			isPressed.value = false
 		})
 
-	// const { style: animStyleProp, ...animRest } = _animated ?? { style: {} }
-
 	return (
-		<GestureDetector gesture={gesture}>
-			<VStack alignItems='stretch' flex={1}>
+		<VStack alignItems='stretch' flex={1}>
+			<GestureDetector gesture={gesture}>
 				<Animated.View style={[style, _animated]}>
 					<VStack alignItems='stretch' {...rest}>
 						{children}
@@ -93,8 +90,8 @@ const DragExpander: FC<DragExpanderProps> = ({
 						</Animated.View>
 					</VStack>
 				</Animated.View>
-			</VStack>
-		</GestureDetector>
+			</GestureDetector>
+		</VStack>
 	)
 }
 export default DragExpander
