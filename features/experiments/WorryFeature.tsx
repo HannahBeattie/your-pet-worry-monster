@@ -22,7 +22,7 @@ function WorryFeature() {
 							p={8}
 							maxW={width * 0.7}
 							header={
-								<Text fontSize={'sm'} width='100%'>
+								<Text fontSize={'sm'} width='100%' fontWeight='700'>
 									I worried that {worry.description}
 								</Text>
 							}
@@ -37,11 +37,21 @@ function WorryFeature() {
 									</Text>
 								)}
 								<VStack alignItems='flex-end'>
-									<Text fontSize={'xs'} fontStyle='italic'>
+									<Text
+										fontSize={'xs'}
+										fontStyle='italic'
+										color='gray.200'
+										fontWeight='200'
+									>
 										Worried {useFormatDate(worry.id)}
 									</Text>
 									{worry.consumedAt && (
-										<Text fontSize={'xs'} fontStyle='italic'>
+										<Text
+											fontSize={'xs'}
+											fontStyle='italic'
+											color='gray.200'
+											fontWeight='200'
+										>
 											Eaten by {monsterName} {useFormatDate(worry.consumedAt)}
 										</Text>
 									)}
