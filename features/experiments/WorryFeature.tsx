@@ -1,18 +1,11 @@
-import {
-	Center,
-	Container,
-	Heading,
-	HStack,
-	ScrollView,
-	Text,
-	useAccessibleColors,
-	VStack,
-} from 'native-base'
-import React, { useMemo } from 'react'
+import { Heading, HStack, ScrollView, Text, VStack } from 'native-base'
+import React from 'react'
 import { useSelector } from 'react-redux'
 import { useFormatDate } from '~features/worries/useFormatDate'
 import { selectAllInactive, Worry } from '~features/worries/worrySlice'
 import DragExpander from './DragExpander'
+import { useWindowDimensions } from 'react-native'
+import { monsterNameSelector } from '~features/monster/monsterSlice'
 
 const longWorry: Worry = {
 	id: +new Date(),
@@ -25,6 +18,8 @@ const longWorry: Worry = {
 
 function WorryFeature() {
 	const worryData = useSelector(selectAllInactive)
+	const monsterName = useSelector(monsterNameSelector)
+	const { width } = useWindowDimensions()
 	const bg = '#444'
 	return (
 		<VStack variant={'page'}>
@@ -33,34 +28,35 @@ function WorryFeature() {
 					{worryData.map((worry) => (
 						<DragExpander
 							key={worry.id}
+							_bg={{ bg: 'gray.700', borderRadius: 'lg' }}
 							p={8}
-							_animated={{
-								backgroundColor: bg,
-							}}
-							initialHeight={240}
+							maxW={width * 0.7}
 							expanded={
-								<VStack space={4} pt={4}>
-									{worry.extraNote && (
-										<>
-											<Heading backgroundColor={'yellow.300'}>
-												FIRST WORRIED
-											</Heading>
-											<Text fontSize={'sm'} backgroundColor={'yellow.300'}>
-												First worried {useFormatDate(worry.id!)}
-											</Text>
-										</>
-									)}
+								<VStack space={4} pt={4} alignItems='stretch'>
 									{worry.sensation && (
-										<Text fontSize={'sm'}>{worry.sensation}</Text>
+										<Text fontSize={'sm'}>I felt it in {worry.sensation}</Text>
 									)}
 									{worry.extraNote && (
-										<Text fontSize={'sm'}>{worry.extraNote}</Text>
+										<Text fontSize={'sm'}>
+											The scariest part was {worry.extraNote}
+										</Text>
 									)}
+									<VStack alignItems='flex-end'>
+										<Text fontSize={'xs'} fontStyle='italic'>
+											Worried {useFormatDate(worry.id)}
+										</Text>
+										{worry.consumedAt && (
+											<Text fontSize={'xs'} fontStyle='italic'>
+												Eaten by {monsterName}{' '}
+												{useFormatDate(worry.consumedAt)}
+											</Text>
+										)}
+									</VStack>
 								</VStack>
 							}
 						>
 							<Text fontSize={'sm'} width='100%'>
-								{worry.description}
+								I worried that {worry.description}
 							</Text>
 						</DragExpander>
 					))}
