@@ -138,13 +138,13 @@ export default function WorryInput({
 									placeholderTextColor={'blueGray.500'}
 									placeholder={placeholder}
 									value={value}
-									size='2xl'
+									size='xl'
 									fontSize='lg'
 									fontFamily='Poppins_300Light'
 									variant={'unstyled'}
 									autoCapitalize='none'
 									mx={-2}
-									maxLength={280}
+									maxLength={180}
 									autoFocus={true}
 									isFocused={true}
 								/>
