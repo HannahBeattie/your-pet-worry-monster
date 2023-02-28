@@ -16,6 +16,7 @@ import Animated, {
 export type DragExpanderProps = ComponentProps<typeof VStack> & {
 	header: ReactElement
 	_bg?: ComponentProps<typeof Box>
+	_container?: ComponentProps<typeof VStack>
 	onDelete?: () => void
 }
 
@@ -24,6 +25,7 @@ const snapEscape = 20 // distance that the user needs to drag to snap to the oth
 const DragExpander: FC<DragExpanderProps> = ({
 	header,
 	_bg,
+	_container,
 	onDelete,
 	p,
 	px,
@@ -45,8 +47,8 @@ const DragExpander: FC<DragExpanderProps> = ({
 	const expandedSpring = useDerivedValue(() =>
 		withSpring(expanded.value, { stiffness: 250, damping: 21 })
 	) // springy value for expanded
-	const headerH = useSharedValue(50) // this stores the height of the header
-	const expandedH = useSharedValue(100) // this stores the height for the expanded stuff (children)
+	const headerH = useSharedValue(200) // this stores the height of the header
+	const expandedH = useSharedValue(200) // this stores the height for the expanded stuff (children)
 	const snapDown = useDerivedValue(() => expandedH.value / 2) // y offset when not expanded
 	const snapUp = useDerivedValue(() => 0) // y offset when expanded
 	const offY = useSharedValue(snapDown.value) // y-location ("offset") for the components that are being animated
@@ -164,20 +166,45 @@ const DragExpander: FC<DragExpanderProps> = ({
 					justifyContent='center'
 					w='100%'
 					position='relative'
-					{...rest}
+					{..._container}
 				>
-					<Box
-						// This is a view that renders the background behind the other components
+					<VStack
+						// This view renders the delete button -- it's first here so
+						// that it renders underneath everything else
+						position='absolute'
+						alignItems='center'
+						bottom={0}
+						left={0}
+						right={0}
+					>
+						<Animated.View style={[animStyleDelete]}>
+							<IconButton
+								icon={<Icon as={Entypo} name='circle-with-cross' />}
+								_icon={{ color: 'red.500', size: '4xl' }}
+								onPress={onDelete}
+							/>
+						</Animated.View>
+					</VStack>
+
+					<VStack
+						// This view renders the background behind the content
 						{..._bg}
 						{...padProps}
 						position='absolute'
+						alignItems='stretch'
 						left={0}
 						top={0}
 						right={0}
 					>
 						<Animated.View style={[animStyleBg]} />
-					</Box>
-					<VStack alignItems='stretch' {...padProps}>
+					</VStack>
+
+					<VStack
+						alignItems='stretch'
+						{...padProps}
+						{...rest}
+						// This view contains the content -- the header and children
+					>
 						<VStack
 							// This view contains the "header" and is always displayed
 							alignItems='stretch'
@@ -195,6 +222,7 @@ const DragExpander: FC<DragExpanderProps> = ({
 							{header}
 						</VStack>
 						<VStack
+							// this view contains content that is only displayed when expanded
 							alignItems='stretch'
 							ref={refExpanded}
 							onLayout={({ nativeEvent }) => {
@@ -204,6 +232,7 @@ const DragExpander: FC<DragExpanderProps> = ({
 									'worklet'
 									if (height > 0) {
 										expandedH.value = height
+										expanded.value = 0
 										offY.value = height / 2
 									}
 								})(nativeEvent.layout.height)
@@ -211,18 +240,8 @@ const DragExpander: FC<DragExpanderProps> = ({
 						>
 							<Animated.View
 								style={[animStyleExpanded, { display: 'flex', width: '100%' }]}
-								// this view contains content that is only displayed when expanded
 							>
 								{children}
-							</Animated.View>
-						</VStack>
-						<VStack position='absolute' alignItems='center' bottom={0} left='50%'>
-							<Animated.View style={[animStyleDelete]}>
-								<IconButton
-									icon={<Icon as={Entypo} name='circle-with-cross' />}
-									_icon={{ color: 'red.500', size: '4xl' }}
-									onPress={onDelete}
-								/>
 							</Animated.View>
 						</VStack>
 					</VStack>

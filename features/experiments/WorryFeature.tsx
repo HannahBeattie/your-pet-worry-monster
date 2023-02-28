@@ -17,7 +17,7 @@ const longWorry = {
 }
 
 function WorryFeature() {
-	const worryData = [longWorry, ...useSelector(selectAllInactive)]
+	const worryData = useSelector(selectAllInactive).reverse()
 	const monsterName = useSelector(monsterNameSelector)
 	const { width } = useWindowDimensions()
 	return (
@@ -27,12 +27,13 @@ function WorryFeature() {
 					{worryData.map((worry) => (
 						<DragExpander
 							key={worry.id}
-							_bg={{ bg: 'gray.700', borderRadius: 'lg' }}
-							p={8}
+							p={10}
+							px={8}
 							maxW={width * 0.7}
+							_bg={{ bg: 'gray.700', borderRadius: 'lg' }}
 							header={
 								<Text fontSize={'sm'} width='100%' fontWeight='700'>
-									I worried that {worry.description}
+									I worried {useFormatDate(worry.id)} that {worry.description}
 								</Text>
 							}
 							onDelete={() => {
@@ -53,26 +54,17 @@ function WorryFeature() {
 										The scariest part was {worry.extraNote}
 									</Text>
 								)}
-								<VStack alignItems='flex-end'>
+								{worry.consumedAt && (
 									<Text
 										fontSize={'xs'}
 										fontStyle='italic'
 										color='gray.200'
 										fontWeight='200'
+										pt={1.5}
 									>
-										Worried {useFormatDate(worry.id)}
+										Eaten by {monsterName} {useFormatDate(worry.consumedAt)}
 									</Text>
-									{worry.consumedAt && (
-										<Text
-											fontSize={'xs'}
-											fontStyle='italic'
-											color='gray.200'
-											fontWeight='200'
-										>
-											Eaten by {monsterName} {useFormatDate(worry.consumedAt)}
-										</Text>
-									)}
-								</VStack>
+								)}
 							</VStack>
 						</DragExpander>
 					))}
