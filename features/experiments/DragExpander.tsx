@@ -1,26 +1,42 @@
 import { Box, Heading, Text, VStack } from 'native-base'
-import { FC, PropsWithChildren, ReactElement } from 'react'
+import { ComponentProps, FC, PropsWithChildren, ReactElement } from 'react'
+import { StyleProp, useWindowDimensions, ViewProps } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import Animated, {
 	Extrapolation,
 	interpolate,
+	StyleProps,
 	useAnimatedStyle,
 	useSharedValue,
 	withSpring,
 } from 'react-native-reanimated'
 
-export type DragExpanderProps = PropsWithChildren<{
+export type DragExpanderProps = ComponentProps<typeof VStack> & {
 	expanded?: ReactElement
-}>
+	_animated?: StyleProps
+	initialHeight?: number
+}
 
-const DragExpander: FC<DragExpanderProps> = ({ children, expanded }) => {
-	const snaps = {
-		down: 250, // y location when not expanded
-		up: 80, // y location when expanded
-		half: 0, // halfway between up and down, computed below
-		escape: 20, // how far you have to drag before it flips to the other snap point
-	}
-	snaps.half = (snaps.down - snaps.up) / 2 + snaps.up
+const snaps = {
+	down: 250, // y location when not expanded
+	up: 0, // y location when expanded
+	half: 0, // halfway between up and down, computed below
+	escape: 20, // how far you have to drag before it flips to the other snap point
+}
+snaps.half = (snaps.down - snaps.up) / 2 + snaps.up
+
+const DragExpander: FC<DragExpanderProps> = ({
+	children,
+	expanded,
+	_animated,
+	initialHeight,
+	// backgroundColor,
+	...rest
+}) => {
+	const { height } = useWindowDimensions()
+	const pagePadY = 8 * 4 * 2 // "page" vstack variant has p=8, multiply by 4 because native-base numbers are 4px each, x2 for top and bottom
+	const maxH = height - pagePadY
+	const minH = initialHeight ?? 300
 
 	const isUp = useSharedValue(false) // start out not-expanded
 	const isPressed = useSharedValue(false) // we're actually not using this right now, but you could use it to adjust scale/etc based on if the user is currently pressing
@@ -31,7 +47,7 @@ const DragExpander: FC<DragExpanderProps> = ({ children, expanded }) => {
 		height: interpolate(
 			offY.value,
 			[snaps.down - snaps.escape, snaps.up + snaps.escape],
-			[100, 480],
+			[minH, maxH],
 			Extrapolation.CLAMP
 		),
 	}))
@@ -64,11 +80,13 @@ const DragExpander: FC<DragExpanderProps> = ({ children, expanded }) => {
 			isPressed.value = false
 		})
 
+	// const { style: animStyleProp, ...animRest } = _animated ?? { style: {} }
+
 	return (
 		<GestureDetector gesture={gesture}>
 			<VStack alignItems='stretch' flex={1}>
-				<Animated.View style={[style, { backgroundColor: '#38c' }]}>
-					<VStack alignItems='stretch' py={8}>
+				<Animated.View style={[style, _animated]}>
+					<VStack alignItems='stretch' {...rest}>
 						{children}
 						<Animated.View style={[styleDetails, { width: '100%' }]}>
 							{expanded}
