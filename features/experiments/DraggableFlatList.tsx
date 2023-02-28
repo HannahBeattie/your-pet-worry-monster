@@ -77,10 +77,10 @@ export const DraggableFlatlist = () => {
 						}}
 					>
 						<HStack flex={1} alignItems={'stretch'}>
-							<Entypo name='circle-with-cross' size={20} color='white' />
+							<MaterialCommunityIcons name='food-drumstick' size={24} color='white' />
 
 							<Text {...font} fontSize={'sm'} px={8} color='white'>
-								Say goodye to this worry!
+								Feed this worry to {name}
 							</Text>
 						</HStack>
 					</Button>
