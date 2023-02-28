@@ -1,4 +1,5 @@
 import { Box, Heading, Text, VStack } from 'native-base'
+import { FC, PropsWithChildren, ReactElement } from 'react'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import Animated, {
 	Extrapolation,
@@ -8,15 +9,19 @@ import Animated, {
 	withSpring,
 } from 'react-native-reanimated'
 
-const snaps = {
-	up: 80,
-	down: 300,
-	half: 0, // halfway between up and down, computed below
-	escape: 20,
-}
-snaps.half = (snaps.down - snaps.up) / 2 + snaps.up
+export type DragExpanderProps = PropsWithChildren<{
+	expanded?: ReactElement
+}>
 
-export default function DragExpander() {
+const DragExpander: FC<DragExpanderProps> = ({ children, expanded }) => {
+	const snaps = {
+		up: 80,
+		down: 250,
+		half: 0, // halfway between up and down, computed below
+		escape: 20,
+	}
+	snaps.half = (snaps.down - snaps.up) / 2 + snaps.up
+
 	const isPressed = useSharedValue(false)
 	const isUp = useSharedValue(false)
 	const offY = useSharedValue(snaps.down)
@@ -59,19 +64,14 @@ export default function DragExpander() {
 			<VStack alignItems='stretch' flex={1}>
 				<Animated.View style={[style, { backgroundColor: '#38c' }]}>
 					<VStack alignItems='stretch' py={8}>
-						<Heading alignSelf='center'>Hello</Heading>
+						{children}
 						<Animated.View style={[styleDetails, { width: '100%' }]}>
-							<Text p={8}>
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-								eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-								ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-								aliquip ex ea commodo consequat.
-							</Text>
+							{expanded}
 						</Animated.View>
 					</VStack>
 				</Animated.View>
-				<Box flex={1} p={16} />
 			</VStack>
 		</GestureDetector>
 	)
 }
+export default DragExpander
