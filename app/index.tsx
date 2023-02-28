@@ -1,10 +1,10 @@
 import React from 'react'
+import DragExpander from '~features/experiments/DragExpander'
 import Page from '~features/layout/Page'
-import Gregory from '~features/monster/Gregory'
 export default function Home() {
 	return (
 		<Page>
-			<Gregory />
+			<DragExpander />
 		</Page>
 	)
 }
