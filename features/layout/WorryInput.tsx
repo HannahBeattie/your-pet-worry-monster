@@ -171,6 +171,7 @@ export default function WorryInput({
 									borderRadius={'md'}
 									py={4}
 									px={3}
+									maxW={'170'}
 									_pressed={{ backgroundColor: 'gray.200' }}
 								>
 									<Text
