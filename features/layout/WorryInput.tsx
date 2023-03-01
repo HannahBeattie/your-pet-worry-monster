@@ -129,21 +129,22 @@ export default function WorryInput({
 
 							<Text color={'red.300'}>{error}</Text>
 
-							<HStack space={2}>
+							<HStack alignItems='flex-start' space={2}>
 								<Button
 									onPress={onSubmit}
 									isDisabled={!canContinue}
 									isFocused={false}
 									bg={'blueGray.900'}
 									borderRadius={'md'}
-									flex={1}
+									// flex={0.8}
+									py={4}
+									px={3}
 								>
 									<Text
 										textAlign={'center'}
 										color={'white'}
 										fontSize={'sm'}
 										fontWeight={600}
-										py={2}
 									>
 										Give it to {monsterName}
 									</Text>
@@ -151,17 +152,17 @@ export default function WorryInput({
 								{hasNext ? (
 									<Button
 										isFocused={false}
-										variant={'ghost'}
-										backgroundColor={'gray.300'}
+										variant={'outline'}
+										backgroundColor={'transparent'}
 										onPress={onNextButtonPress}
 										isDisabled={!canContinue}
-										borderRadius={'sm'}
+										borderColor={'blueGray.400'}
+										py={4}
+										px={2}
 										flex={1}
 									>
 										<Text
-											pr={4}
-											py={2}
-											textAlign={'center'}
+											// textAlign={'center'}
 											color={'black'}
 											fontSize={'sm'}
 											fontWeight={600}
