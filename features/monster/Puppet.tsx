@@ -180,22 +180,26 @@ function animStyleForPart({
 	const ll = layout
 	const { left, w, top, h, rot, doubleSpring, gain, look, springOpts } = part
 	const oo = doubleSpring ? originSpring : origin
-	let lookOffX = 0
-	let lookOffY = 0
+	const gg = gain ?? { x: 1, y: 1 }
+	const baseOffset = { x: oo.x * gg.x, y: oo.y * gg.y }
+	const lookOffset = { x: 0, y: 0 }
 	if (look && isPressed) {
-		const dx = press.x - (ll.x + ll.width * (left + w / 2))
-		const dy = press.y - (ll.y + ll.height * (top + h / 2))
+		const dx = press.x - (ll.x + baseOffset.x + ll.width * (left + w / 2))
+		const dy = press.y - (ll.y + baseOffset.y + ll.height * (top + h / 2))
 		const distPress = Math.sqrt(dx * dx + dy * dy)
 		const dirX = dx / distPress
 		const dirY = dy / distPress
-		lookOffX = look * dirX
-		lookOffY = look * dirY
+		lookOffset.x = look * dirX
+		lookOffset.y = look * dirY
 	}
-	const gg = gain ?? { x: 1, y: 1 }
+	const finalOffset = {
+		x: baseOffset.x + lookOffset.x * ll.width,
+		y: baseOffset.y + lookOffset.y * ll.height,
+	}
 	return {
 		transform: [
-			{ translateX: withSpring(oo.x * gg.x + lookOffX * ll.width, springOpts) },
-			{ translateY: withSpring(oo.y * gg.y + lookOffY * ll.height, springOpts) },
+			{ translateX: withSpring(finalOffset.x, springOpts) },
+			{ translateY: withSpring(finalOffset.y, springOpts) },
 			{ rotate: `${rot ?? 0}deg` },
 		],
 		left: ll.x + ll.width * left,
