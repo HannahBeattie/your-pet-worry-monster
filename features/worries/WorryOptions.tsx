@@ -16,7 +16,6 @@ function WorryOptions() {
 	const router = useRouter()
 	const dispatch = useDispatch()
 	const latestActive = useSelector(selectLastActiveItem)
-	// console.log('latestActive is:', latestActive)
 	const { width, height } = useWindowDimensions()
 
 	const textProps = {
@@ -48,20 +47,21 @@ function WorryOptions() {
 
 			<SafeAreaView style={{ flex: 1 }}>
 				<VStack flex={1} px={4} justifyContent={'space-evenly'}>
-					<Text fontFamily={'Poppins_500Medium'} fontSize={'md'} px={4}>
-						Wouly you like me to hold on to this worry for a bit?
-					</Text>
 					{latestActive && (
 						<DragExpander
 							backgroundColor={'black'}
 							borderRadius={'lg'}
 							px={4}
 							py={2}
-							borderColor={'blueGray.300'}
+							borderColor={'red.600'}
 							borderWidth={0.5}
 							header={
 								<VStack space={2}>
-									<Text {...textProps} fontFamily={'Poppins_500Medium'}>
+									<Text
+										{...textProps}
+										fontFamily={'Poppins_500Medium'}
+										color={'red.300'}
+									>
 										{useFormatDate(latestActive?.id)}
 									</Text>
 									<Text {...textProps}>
@@ -77,7 +77,10 @@ function WorryOptions() {
 						</DragExpander>
 					)}
 
-					<VStack space={2} pb={8}>
+					<VStack space={4}>
+						<Text fontFamily={'Poppins_500Medium'} fontSize={'md'} px={4}>
+							Wouly you like me to hold on to this worry for a bit?
+						</Text>
 						<Button
 							onPress={() => {
 								dispatch(
@@ -91,38 +94,36 @@ function WorryOptions() {
 								),
 									router.push('/eatingWorry')
 							}}
-							bg={'blueGray.200'}
-							outlineColor={'blueGray.100'}
-							borderRadius={'md'}
+							bg={'#ffffff'}
 							py={4}
 							px={8}
 						>
 							<Text
+								{...textProps}
 								textAlign={'center'}
 								color={'black'}
 								fontSize={'md'}
-								fontWeight={600}
 								fontFamily={'Poppins_500Medium'}
+								fontWeight={600}
+								borderRadius={0}
 							>
 								No thank you. I am ready to part with this worry .
 							</Text>
 						</Button>
 
 						<Button
-							variant={'outline'}
-							backgroundColor={'transparent'}
 							onPress={() => {
 								router.push('/current')
 							}}
-							borderColor={'blueGray.400'}
+							bg={'black'}
 							py={4}
 							px={8}
-							fontSize={'md'}
-							bgColor={'blueGray.200'}
+							borderWidth={1}
+							borderColor={'blueGray.700'}
 						>
 							<Text
 								textAlign={'center'}
-								color={'black'}
+								color={'white'}
 								fontSize={'md'}
 								fontWeight={600}
 								fontFamily={'Poppins_500Medium'}
