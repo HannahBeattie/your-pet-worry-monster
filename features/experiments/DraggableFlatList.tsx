@@ -109,10 +109,10 @@ export const DraggableFlatlist = () => {
 					</Button>
 
 					<Container py={4}>
-						<Text px={4} color={'white'}>
+						<Text px={4} color={'orange.400'}>
 							{useFormatDate(item.id)}
 						</Text>
-						<Text px={4} color={'white'}>
+						<Text px={4} color={'orange.400'}>
 							{item.title}
 						</Text>
 					</Container>
@@ -131,28 +131,21 @@ export const DraggableFlatlist = () => {
 								router.push('/monsterMenu')
 							}}
 						>
-							<AntDesign name='back' size={24} color='white' />
+							<AntDesign name='back' size={24} color='pink' />
 						</Pressable>
 					</Box>
 					<ScrollView showsHorizontalScrollIndicator={false}>
 						<VStack px={8} pb={100}>
 							<Heading
-								{...font}
-								color={'white'}
+								color={'pink.200'}
 								fontSize={'3xl'}
 								textAlign={'center'}
-								pt={4}
+								py={4}
 							>
 								Current Worries
 							</Heading>
-							<Text
-								{...font}
-								fontSize={'md'}
-								color={'white'}
-								textAlign={'center'}
-								pb={10}
-							>
-								Drag to re-order
+							<Text textAlign={'center'} pb={2} color={'pink.200'}>
+								drag to order
 							</Text>
 
 							<DraggableFlatList<FlatListItem>

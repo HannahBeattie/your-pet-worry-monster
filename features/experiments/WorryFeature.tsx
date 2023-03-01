@@ -47,7 +47,13 @@ function WorryFeature() {
 				<VStack px={2}>
 					<SimpleHome />
 				</VStack>
-				<Heading position={'absolute'} top={10} right={4} color={'teal.600'}>
+				<Heading
+					fontSize={'md'}
+					position={'absolute'}
+					top={10}
+					right={4}
+					color={'gray.400'}
+				>
 					{name}'s Food Diary
 				</Heading>
 				<ScrollView
@@ -65,7 +71,10 @@ function WorryFeature() {
 								p={10}
 								px={8}
 								maxW={width * 0.7}
-								_bg={{ bg: 'gray.800', borderRadius: 'lg' }}
+								_bg={{ bg: 'gray.900', borderRadius: 'lg' }}
+								borderWidth={1}
+								borderColor={'gray.800'}
+								borderRadius={'md'}
 								header={
 									<Text
 										key={`desc-${worry.id}-${rerender}`}
