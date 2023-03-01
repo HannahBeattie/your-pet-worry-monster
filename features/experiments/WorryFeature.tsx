@@ -39,7 +39,7 @@ function WorryFeature() {
 					<SimpleHome />
 				</VStack>
 				<Heading position={'absolute'} top={10} right={4} color={'teal.600'}>
-					{name}'s' food Diary
+					{name}'s food Diary
 				</Heading>
 				<ScrollView
 					horizontal={true}
