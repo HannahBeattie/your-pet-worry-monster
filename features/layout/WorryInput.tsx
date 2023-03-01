@@ -1,5 +1,6 @@
 // import { checkTargetForNewValues } from 'framer-motion'
 import { Entypo } from '@expo/vector-icons'
+import { useNavigation, useRouter } from 'expo-router'
 import {
 	Box,
 	Button,
@@ -13,7 +14,7 @@ import {
 	Text,
 	VStack,
 } from 'native-base'
-import React, { useCallback, useRef } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Animated, { FadeInDown, FadeOutUp } from 'react-native-reanimated'
 import { useSelector } from 'react-redux'
@@ -28,10 +29,9 @@ export interface WorryInputProps {
 	onChangeText: (name: WorryField, value: string) => void
 	onSubmit: () => void
 	onClose: () => void
-	required?: boolean
 	nextButtonText?: string
 	onNextButtonPress?: () => void
-	autofocus?: boolean
+	onValidate?: (value?: string) => string | undefined
 }
 
 export default function WorryInput({
@@ -42,24 +42,49 @@ export default function WorryInput({
 	onChangeText,
 	onSubmit,
 	onClose,
-	required,
 	nextButtonText,
 	onNextButtonPress,
+	onValidate,
 }: WorryInputProps) {
 	const ref = useRef<any>(null)
 	const monsterName = useSelector(monsterNameSelector)
+	const hasNext = nextButtonText && onNextButtonPress
+	const noError = ' '
+	const [error, setError] = useState(noError)
+	const [dirty, setDirty] = useState(false)
+	const validationError = useMemo(
+		() => (onValidate && onValidate(value)) ?? noError,
+		[onValidate, value]
+	)
+	const canContinue = !validationError.trim().length // can continue if validationError is empty
 
 	const handleChange = useCallback(
 		(text: string) => {
 			onChangeText(name, text)
+			setDirty(true)
 		},
 		[name, onChangeText]
 	)
 
-	const [error, setError] = React.useState('')
+	const onBlur = useCallback(() => {
+		// Called when the keyboard is closed, set the error if the input isn't valid
+		setDirty(true)
+		if (onValidate) {
+			const err = onValidate(value)
+			setError(err ?? noError)
+		}
+	}, [onValidate, value])
 
-	const canContinue = !!value?.length || !required
-	const hasNext = nextButtonText && onNextButtonPress
+	useEffect(() => {
+		// Clear the validation error if the input was bad but now it's good
+		if (error === validationError) {
+			return // it's the same so no need to update
+		}
+		if (!error.trim().length) {
+			return // error is empty, let onBlur handle setting new errors
+		}
+		setError(validationError) // clear the error message
+	}, [error, validationError])
 
 	return (
 		<VStack alignItems={'stretch'} flex={1}>
@@ -114,6 +139,7 @@ export default function WorryInput({
 								isFullWidth
 								blurOnSubmit
 								returnKeyType={hasNext ? 'next' : 'done'}
+								onBlur={onBlur}
 								onSubmitEditing={() => {
 									if (!canContinue) {
 										return
@@ -127,7 +153,9 @@ export default function WorryInput({
 
 							<Divider />
 
-							<Text color={'red.300'}>{error}</Text>
+							<Text color={'red.400'} pt={1} pl={1} pb={2} fontSize='md'>
+								{dirty ? error : ' '}
+							</Text>
 
 							<HStack alignItems='flex-start' space={2}>
 								<Button
@@ -161,12 +189,7 @@ export default function WorryInput({
 										px={2}
 										flex={1}
 									>
-										<Text
-											// textAlign={'center'}
-											color={'black'}
-											fontSize={'sm'}
-											fontWeight={600}
-										>
+										<Text color={'black'} fontSize={'sm'} fontWeight={600}>
 											{nextButtonText}
 										</Text>
 									</Button>

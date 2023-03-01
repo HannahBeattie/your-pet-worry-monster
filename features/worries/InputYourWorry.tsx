@@ -10,6 +10,12 @@ const inputItems = [
 		question: 'I am worried...',
 		placeholder: 'very scary thing',
 		nextButtonText: 'I can feel this worry...',
+		required: true,
+		onValidate: (value?: string) => {
+			if (!value?.length) {
+				return 'No worries?'
+			}
+		},
 	},
 	{
 		name: 'sensation' as WorryField,
@@ -30,6 +36,10 @@ export default function InputYourWorry() {
 	const dispatch = useDispatch()
 	const router = useRouter()
 
+	// worryNum is a counter that increments the react key for the worry inputs
+	// so that fresh inputs are rendered after submitting/closing a worry
+	const [worryNum, setWorryNum] = useState(0)
+
 	const onChangeText = useCallback(
 		(name: WorryField, value: string) => {
 			// console.log(`${name} => ${value}`)
@@ -46,10 +56,15 @@ export default function InputYourWorry() {
 	)
 
 	const onClose = useCallback(() => {
-		setNewWorry({})
-		whichInput(0)
 		router.push('/monsterMenu')
-	}, [])
+		// Wait a second for the new route to render, then reset the inputs
+		// (we need to wait because otherwise the inputs onBlur functions get called)
+		setTimeout(() => {
+			setNewWorry({})
+			whichInput(0)
+			setWorryNum(worryNum + 1)
+		}, 100)
+	}, [worryNum])
 
 	const onSubmit = useCallback(() => {
 		// "trim" fields to remove spaces/newlines from the start and end
@@ -72,15 +87,13 @@ export default function InputYourWorry() {
 		input,
 	})
 
-	const { name, question, placeholder, nextButtonText } = inputItems[input]
+	const { name, ...rest } = inputItems[input]
 
 	return (
 		<WorryInput
-			key={`input-${input}`}
+			key={`input-${worryNum}-${input}`}
 			{...sharedInputProps({ name, input })}
-			question={question}
-			placeholder={placeholder}
-			nextButtonText={nextButtonText}
+			{...rest}
 		/>
 	)
 }
