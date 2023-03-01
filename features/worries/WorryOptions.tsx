@@ -7,7 +7,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import DragExpander from '~features/experiments/DragExpander'
 import Blue from '~features/monster/Blue'
 import { useFormatDate } from './useFormatDate'
-import { selectAllActive, selectLastActiveItem, updateWorry, Worry } from './worrySlice'
+import {
+	deleteWorry,
+	selectAllActive,
+	selectLastActiveItem,
+	updateWorry,
+	Worry,
+} from './worrySlice'
 const worryBags = require('../../assets/worrybags.png')
 const blueFace = require('../../assets/blueFace.png')
 const hang = require('../../assets/hang.png')
@@ -49,6 +55,10 @@ function WorryOptions() {
 				<VStack flex={1} px={4} justifyContent={'space-evenly'}>
 					{latestActive && (
 						<DragExpander
+							onDelete={() => {
+								dispatch(deleteWorry(latestActive.id))
+								router.push('/')
+							}}
 							backgroundColor={'black'}
 							borderRadius={'lg'}
 							px={4}
