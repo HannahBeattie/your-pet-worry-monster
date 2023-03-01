@@ -1,5 +1,6 @@
 // import { checkTargetForNewValues } from 'framer-motion'
 import { Entypo } from '@expo/vector-icons'
+import { useRouter } from 'expo-router'
 import {
 	Box,
 	Button,
@@ -58,6 +59,7 @@ export default function WorryInput({
 	autofocus,
 }: FormProps) {
 	const ref = useRef<any>(null)
+	const router = useRouter()
 	const monsterName = useSelector(monsterNameSelector)
 
 	const handleChange = useCallback(
@@ -72,26 +74,7 @@ export default function WorryInput({
 
 	const [error, setError] = React.useState('')
 
-	// user can continue if they've entered a value or if the field is not required
 	const canContinue = !!value?.length || !required
-	useEffect(() => {
-		if (!autofocus || !ref.current || canContinue) {
-			return
-		}
-		ref.current.focus()
-	}, [ref, autofocus, canContinue])
-
-	useEffect(() => {
-		if (!autofocus || !ref.current) {
-			return
-		}
-		if (ref.current.focus && canContinue) {
-			console.log('Autofocus!!!', name, ref.current)
-			ref.current.focus()
-		} else {
-			console.log('No focus??', name, ref.current)
-		}
-	}, [ref, autofocus, canContinue])
 
 	return (
 		<ScrollView
@@ -101,13 +84,15 @@ export default function WorryInput({
 			contentInsetAdjustmentBehavior='automatic'
 			keyboardShouldPersistTaps='handled'
 		>
-			<VStack flex={1}>
-				<HStack py={8} position={'sticky'} backgroundColor={'blueGray.100'}>
+			<VStack flex={1} justifyItems={'stretch'} alignContent={'cener'}>
+				<HStack position={'sticky'}>
 					<IconButton
 						position={'fixed'}
 						icon={<Icon as={Entypo} name='cross' />}
 						_icon={{ color: 'black' }}
-						onPress={onClose}
+						onPress={() => {
+							router.push('/monsterMenu')
+						}}
 						accessibilityLabel='exit screen'
 						variant={'unstyled'}
 					/>
@@ -123,9 +108,9 @@ export default function WorryInput({
 						extraHeight={100}
 						extraScrollHeight={100}
 					>
-						<VStack justifyContent={'space-between'} minH={height} flex={1} py={100}>
+						<VStack flex={1} pt={100} h={height}>
 							<VStack px={30}>
-								<Heading fontFamily='Poppins_300Light' color={'black'}>
+								<Heading fontFamily='Poppins_300Light' color={'black'} py={4}>
 									{question}
 								</Heading>
 

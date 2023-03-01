@@ -1,38 +1,24 @@
 import { useRouter } from 'expo-router'
 
-import {
-	Heading,
-	VStack,
-	Text,
-	Button,
-	IconButton,
-	Icon,
-	HStack,
-	Divider,
-	Center,
-	ScrollView,
-	Box,
-	Pressable,
-} from 'native-base'
-import React, { useState } from 'react'
-import { Platform, SafeAreaView, TouchableOpacity, UIManager } from 'react-native'
+import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
+import { Box, Button, Heading, HStack, Pressable, ScrollView, Text, VStack } from 'native-base'
+import React, { useEffect, useState } from 'react'
+import { LogBox, SafeAreaView, TouchableOpacity } from 'react-native'
 import DraggableFlatList, {
 	DragEndParams,
 	RenderItemParams,
 	ScaleDecorator,
 } from 'react-native-draggable-flatlist'
 import { useDispatch, useSelector } from 'react-redux'
+import { monsterNameSelector } from '~features/monster/monsterSlice'
 import { useFormatDate } from '~features/worries/useFormatDate'
 import { selectAllActive, updateWorry, Worry } from '~features/worries/worrySlice'
-import SwipeableItem, { useSwipeableItemParams, OpenDirection } from 'react-native-swipeable-item'
-import { AntDesign, Entypo, MaterialCommunityIcons } from '@expo/vector-icons'
-import { monsterNameSelector } from '~features/monster/monsterSlice'
-import SimpleHome from '~features/layout/SimpleHome'
 
 type FlatListItem = {
-	time: number
+	id: number
 	title: string
 	note?: string
+	isActive?: boolean
 }
 
 export const DraggableFlatlist = () => {
@@ -43,14 +29,16 @@ export const DraggableFlatlist = () => {
 	const router = useRouter()
 	const font = { fontFamily: 'Poppins_300Light', color: 'black', fontSize: 'sm' }
 
-	const [data, setData] = useState<FlatListItem[]>(
-		allActive.map((worry) => ({
-			time: worry.id,
-			title: worry.description,
-			note: worry.extraNote,
-			isActive: worry.isActive,
-		}))
-	)
+	const data: FlatListItem[] = allActive.map((worry) => ({
+		id: worry.id,
+		title: worry.description,
+		note: worry.extraNote,
+		isActive: worry.isActive,
+	}))
+
+	useEffect(() => {
+		LogBox.ignoreLogs(['VirtualizedLists should never be nested'])
+	}, [])
 
 	const renderItem = ({ item, drag, isActive }: RenderItemParams<FlatListItem>) => (
 		<ScaleDecorator>
@@ -85,7 +73,7 @@ export const DraggableFlatlist = () => {
 						</HStack>
 					</Button>
 					<Text px={8} {...font} color={'red.900'}>
-						{useFormatDate(item.time)}
+						{useFormatDate(item.id)}
 					</Text>
 					<Text px={8} {...font}>
 						{item.title}
@@ -125,8 +113,8 @@ export const DraggableFlatlist = () => {
 							data={data}
 							pagingEnabled
 							scrollEnabled={true}
-							onDragEnd={({ data }: DragEndParams<FlatListItem>) => setData(data)}
-							keyExtractor={(item) => `${item.time}`}
+							// onDragEnd={({ data }: DragEndParams<FlatListItem>) => setData(data)}
+							keyExtractor={(item) => `${item.id}`}
 							renderItem={renderItem}
 						/>
 					</VStack>

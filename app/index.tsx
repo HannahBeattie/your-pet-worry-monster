@@ -1,14 +1,15 @@
-import { Heading, Text } from 'native-base'
+import { Heading, Input, Text, VStack } from 'native-base'
 import React from 'react'
 import DragExpander from '~features/experiments/DragExpander'
 import WorryFeature from '~features/experiments/WorryFeature'
 import Page from '~features/layout/Page'
 import Gregory from '~features/monster/Gregory'
+import InputYourWorry from '~features/worries/InputYourWorry'
 
 export default function Home() {
 	return (
-		<>
-			{/* <Gregory /> */}
+		<VStack variant={'page'}>
+			<Gregory />
 			{/* <DragExpander
 				expanded={
 					<Text p={8}>
@@ -21,7 +22,7 @@ export default function Home() {
 			>
 				<Heading alignSelf='center'>Hello</Heading>
 			</DragExpander>  */}
-			<WorryFeature />
-		</>
+			{/* <WorryFeature /> */}
+		</VStack>
 	)
 }
