@@ -41,7 +41,12 @@ function WorryFeature() {
 				<Heading position={'absolute'} top={10} right={4} color={'teal.600'}>
 					{name}'s' food Diary
 				</Heading>
-				<ScrollView horizontal={true} scrollEnabled flex={1}>
+				<ScrollView
+					horizontal={true}
+					scrollEnabled
+					flex={1}
+					showsHorizontalScrollIndicator={'false'}
+				>
 					<ImageSlide imageArray={imageArray} />
 
 					<HStack flex={1} space={4} alignItems='center' px={4}>
