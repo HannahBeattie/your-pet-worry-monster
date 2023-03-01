@@ -38,6 +38,7 @@ type PartName =
 	| 'legR'
 	| 'armL'
 	| 'armR'
+	| 'neck'
 	| 'body'
 	| 'head'
 	| 'mouth'
@@ -50,6 +51,7 @@ const partNames = [
 	'legR',
 	'armL',
 	'armR',
+	'neck',
 	'body',
 	'head',
 	'mouth',
@@ -58,30 +60,31 @@ const partNames = [
 	'pupilR',
 ] as PartName[]
 
+const baseGain = 0.33
 const headGain = { x: 1.1, y: 1.1 } as Pos
 
 const parts: Record<PartName, Part> = {
 	legL: {
 		src: require('../../assets/monsterParts/leg-left.png'),
-		left: 0.583,
-		w: 0.213,
-		top: 0.53556,
-		h: 0.40683,
+		left: 0.53461,
+		w: 0.27582,
+		top: 0.48885,
+		h: 0.45497,
 		pivot: { x: 0.61754, y: 0.73971 },
 		doubleSpring: true,
-		gain: { x: 0.8, y: 0.3 },
-		springOpts: { stiffness: 230, damping: 12 },
+		gain: { x: 1.0, y: 0.35 },
+		springOpts: { stiffness: 230, damping: 16 },
 		look: -0.015,
 	},
 	legR: {
 		src: require('../../assets/monsterParts/leg-right.png'),
-		left: 0.304,
-		w: 0.198,
-		top: 0.52916,
-		h: 0.43101,
+		left: 0.31125,
+		w: 0.23033,
+		top: 0.50014,
+		h: 0.4567,
 		pivot: { x: 0.4249, y: 0.73331 },
 		doubleSpring: true,
-		gain: { x: 0.8, y: 0.3 },
+		gain: { x: 0.8, y: 0.35 },
 		springOpts: { stiffness: 340, damping: 16 },
 		look: -0.015,
 	},
@@ -95,7 +98,7 @@ const parts: Record<PartName, Part> = {
 		pivot: { x: 0.6146, y: 0.40139 },
 		doubleSpring: true,
 		springOpts: { stiffness: 300, damping: 18 },
-		look: -0.025,
+		look: -0.017,
 	},
 	armR: {
 		src: require('../../assets/monsterParts/arm-right.png'),
@@ -107,15 +110,23 @@ const parts: Record<PartName, Part> = {
 		pivot: { x: 0.39478, y: 0.3985 },
 		doubleSpring: true,
 		springOpts: { stiffness: 150, damping: 12 },
-		look: -0.02,
+		look: -0.014,
+	},
+	neck: {
+		src: require('../../assets/monsterParts/neck.png'),
+		left: 0.4473,
+		w: 0.11034,
+		top: 0.22805,
+		h: 0.18852,
 	},
 	body: {
 		src: require('../../assets/monsterParts/body.png'),
-		left: 0,
-		w: 1,
-		top: 0,
-		h: 1,
+		left: 0.30117,
+		w: 0.42247,
+		top: 0.27734,
+		h: 0.54863,
 		springOpts: { stiffness: 80, damping: 10 },
+		look: -0.01,
 	},
 	head: {
 		src: require('../../assets/monsterParts/head-blank.png'),
@@ -234,15 +245,15 @@ export default function Puppet() {
 		.onBegin((evt) => {
 			isPressed.value = true
 			press.value = { x: evt.x, y: evt.y }
-			originX.value = evt.translationX * 0.35 + start.value.x
-			originY.value = evt.translationY * 0.35 + start.value.y
+			originX.value = evt.translationX * baseGain + start.value.x
+			originY.value = evt.translationY * baseGain + start.value.y
 			// runOnJS(log)('onBegin')
 		})
 		.onUpdate((evt) => {
 			// runOnJS(log)('onUpdate', evt.translationX, evt.translationY)
 			press.value = { x: evt.x, y: evt.y }
-			originX.value = evt.translationX * 0.35 + start.value.x
-			originY.value = evt.translationY * 0.35 + start.value.y
+			originX.value = evt.translationX * baseGain + start.value.x
+			originY.value = evt.translationY * baseGain + start.value.y
 		})
 		.onEnd((evt) => {
 			isPressed.value = false
