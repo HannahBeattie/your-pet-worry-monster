@@ -1,6 +1,6 @@
 import React from 'react'
-import WorryFeature from '~features/experiments/WorryFeature'
+import DisplayDiary from '~features/worries/DisplayDiary'
 
-function FoodDiary() {
-	return <WorryFeature />
+export default function FoodDiary() {
+	return <DisplayDiary />
 }

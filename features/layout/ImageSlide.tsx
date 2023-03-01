@@ -8,7 +8,7 @@ export default function ImageSlide({ imageArray }: any) {
 
 	return (
 		<>
-			<HStack minW={'100%'} flex={1} alignItems={'center'}>
+			<HStack minW={'100%'} flex={1} position={'absolute'} zIndex={-2}>
 				{imageArray.map((i: ImageSourcePropType, index: number) => (
 					<Box key={index} p={100} mx={200}>
 						<Image
@@ -18,7 +18,7 @@ export default function ImageSlide({ imageArray }: any) {
 							alt='spatter'
 							maxW={width / 4}
 							source={i}
-							zIndex={0}
+							zIndex={-4}
 							key={index}
 						/>
 					</Box>

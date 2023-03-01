@@ -10,7 +10,11 @@ import InputYourWorry from '~features/worries/InputYourWorry'
 export default function Home() {
 	return (
 		<VStack backgroundColor={'gray.900'} flex={1}>
-			<Gregory />
+			<SafeAreaView style={{ flex: 1 }}>
+				<VStack px={6} backgroundColor={'gray.900'} flex={1}>
+					<Gregory />
+				</VStack>
+			</SafeAreaView>
 		</VStack>
 	)
 }

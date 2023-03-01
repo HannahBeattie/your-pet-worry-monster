@@ -1,28 +1,27 @@
-import { HStack, ScrollView, Text, VStack } from 'native-base'
+import { HStack, ScrollView, Spacer, Text, VStack } from 'native-base'
 import React from 'react'
 import { useWindowDimensions } from 'react-native'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import ImageSlide from '~features/layout/ImageSlide'
 import { monsterNameSelector } from '~features/monster/monsterSlice'
 import { useFormatDate } from '~features/worries/useFormatDate'
-import { selectAllInactive } from '~features/worries/worrySlice'
+import { deleteWorry, selectAllInactive, Worry } from '~features/worries/worrySlice'
 import DragExpander from './DragExpander'
 
-const longWorry = {
-	id: +new Date(),
-	description: `Descriptive stuff all goes here! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
-	extraNote: `Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
-	sensation: `labore et dolore magna aliqua. Ut enim ad minim`,
-	consumedAt: +new Date() - 400000,
-	isActive: false,
-}
+const spatter = require('../../assets/spatter01.png')
+const spatter2 = require('../../assets/spatter02.png')
+const spatter3 = require('../../assets/spatter03.png')
 
 function WorryFeature() {
+	const imageArray = [spatter, spatter2, spatter3, spatter, spatter2, spatter3, spatter]
 	const worryData = useSelector(selectAllInactive).reverse()
 	const monsterName = useSelector(monsterNameSelector)
 	const { width } = useWindowDimensions()
+	const dispatch = useDispatch()
 	return (
 		<VStack flex={1}>
 			<ScrollView horizontal={true} scrollEnabled flex={1}>
+				<ImageSlide imageArray={imageArray} />
 				<HStack flex={1} space={4} alignItems='center'>
 					{worryData.map((worry) => (
 						<DragExpander
@@ -37,12 +36,8 @@ function WorryFeature() {
 								</Text>
 							}
 							onDelete={() => {
-								console.log(
-									`TODO: Delete worry "${worry.description.slice(
-										0,
-										12
-									)}...", or maybe AlertDialog?`
-								)
+								console.log('deleting worry:', worry)
+								dispatch(deleteWorry(worry.id))
 							}}
 						>
 							<VStack space={4} pt={4} alignItems='stretch'>
@@ -68,6 +63,8 @@ function WorryFeature() {
 							</VStack>
 						</DragExpander>
 					))}
+
+					<ImageSlide imageArray={imageArray.reverse()} />
 				</HStack>
 			</ScrollView>
 		</VStack>

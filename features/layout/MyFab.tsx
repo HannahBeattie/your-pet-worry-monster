@@ -1,10 +1,6 @@
-import { ButtonProps } from '@chakra-ui/react'
 import { FontAwesome } from '@expo/vector-icons'
-import daysToWeeks from 'date-fns/fp/daysToWeeks'
 import { useRouter } from 'expo-router'
-import { View } from 'native-base'
-import React, { useEffect, useState } from 'react'
-import { Text } from 'react-native'
+import React, { useState } from 'react'
 
 import { FloatingAction } from 'react-native-floating-action'
 import { useSelector } from 'react-redux'
@@ -24,7 +20,7 @@ const two = [
 	{
 		text: 'Past Worries',
 		icon: <FontAwesome name='history' size={24} color='white' />,
-		name: 'history',
+		name: 'foodDiary',
 		position: 2,
 		color: '#1d4f5c',
 		textColor: 'white',
