@@ -19,12 +19,13 @@ import {
 import React, { useCallback, useRef } from 'react'
 import { Dimensions, Platform, StyleSheet, useWindowDimensions } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import Animated, { FadeInDown, FadeOutUp } from 'react-native-reanimated'
 import { useSelector } from 'react-redux'
 import { monsterNameSelector } from '~features/monster/monsterSlice'
 import { WorryField } from '~features/worries/worrySlice'
 // import HomeButton from '~features/layout/HomeButton'
 
-interface FormProps {
+export interface WorryInputProps {
 	name: WorryField
 	question: string
 	placeholder?: string
@@ -50,7 +51,7 @@ export default function WorryInput({
 	nextButtonText,
 	onNextButtonPress,
 	autofocus,
-}: FormProps) {
+}: WorryInputProps) {
 	const ref = useRef<any>(null)
 	const router = useRouter()
 	const monsterName = useSelector(monsterNameSelector)
@@ -68,6 +69,7 @@ export default function WorryInput({
 	const [error, setError] = React.useState('')
 
 	const canContinue = !!value?.length || !required
+	const hasNext = nextButtonText && onNextButtonPress
 
 	return (
 		<ScrollView
@@ -81,11 +83,10 @@ export default function WorryInput({
 				<HStack position={'sticky'}>
 					<IconButton
 						position={'fixed'}
-						icon={<Icon as={Entypo} name='cross' />}
+						p={6}
+						icon={<Icon as={Entypo} name='cross' size='lg' />}
 						_icon={{ color: 'black' }}
-						onPress={() => {
-							router.push('/monsterMenu')
-						}}
+						onPress={onClose}
 						accessibilityLabel='exit screen'
 						variant={'unstyled'}
 					/>
@@ -100,38 +101,51 @@ export default function WorryInput({
 						pagingEnabled
 						extraHeight={100}
 						extraScrollHeight={100}
+						keyboardShouldPersistTaps='handled'
 					>
 						<VStack flex={1} pt={100} h={height}>
-							<VStack px={30}>
-								<Heading fontFamily='Poppins_300Light' color={'black'} py={4}>
-									{question}
-								</Heading>
+							<Animated.View entering={FadeInDown.delay(200)} exiting={FadeOutUp}>
+								<VStack px={30}>
+									<Heading fontFamily='Poppins_300Light' color={'black'} py={4}>
+										{question}
+									</Heading>
 
-								<Input
-									maxH={290}
-									ref={ref}
-									onChangeText={handleChange}
-									multiline
-									color={'blueGray.900'}
-									placeholderTextColor={'blueGray.500'}
-									placeholder={placeholder}
-									value={value}
-									size='xl'
-									fontSize='lg'
-									fontFamily='Poppins_300Light'
-									variant={'unstyled'}
-									autoCapitalize='none'
-									mx={-2}
-									maxLength={180}
-									autoFocus={true}
-									isFocused={true}
-								/>
+									<Input
+										maxH={290}
+										ref={ref}
+										onChangeText={handleChange}
+										color={'blueGray.900'}
+										placeholderTextColor={'blueGray.500'}
+										placeholder={placeholder}
+										value={value}
+										size='xl'
+										fontSize='lg'
+										fontFamily='Poppins_300Light'
+										variant={'unstyled'}
+										autoCapitalize='none'
+										mx={-2}
+										maxLength={180}
+										multiline
+										autoFocus
+										isFocused
+										isFullWidth
+										blurOnSubmit
+										returnKeyType={hasNext ? 'next' : 'done'}
+										onSubmitEditing={() => {
+											if (!canContinue) {
+												return
+											}
+											if (hasNext) {
+												return onNextButtonPress()
+											}
+											onSubmit()
+										}}
+									/>
 
-								<Divider />
+									<Divider />
 
-								<Text color={'red.300'}>{error}</Text>
+									<Text color={'red.300'}>{error}</Text>
 
-								<>
 									<HStack>
 										<Button
 											onPress={onSubmit}
@@ -152,7 +166,7 @@ export default function WorryInput({
 											</Box>
 										</Button>
 										<Spacer />
-										{nextButtonText && onNextButtonPress ? (
+										{hasNext ? (
 											<Button
 												isFocused={false}
 												variant={'ghost'}
@@ -177,10 +191,10 @@ export default function WorryInput({
 											<Spacer />
 										)}
 									</HStack>
-								</>
 
-								<Spacer />
-							</VStack>
+									<Spacer />
+								</VStack>
+							</Animated.View>
 						</VStack>
 					</KeyboardAwareScrollView>
 				</KeyboardAvoidingView>
