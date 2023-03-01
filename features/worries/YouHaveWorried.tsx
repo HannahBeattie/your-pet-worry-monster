@@ -11,7 +11,6 @@ function toRelativeString(date: number) {
 
 export default function YouHaveWorried() {
 	let worryData = useSelector(selectAllInactive).reverse()
-	console.log('worryData', worryData)
 
 	let formatData = worryData.map(function (value) {
 		return {

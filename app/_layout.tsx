@@ -3,9 +3,16 @@ import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { persistor, store } from '~features/store'
 import { StyleProvider } from '~features/theme/StyleProvider'
-import { useFonts } from '@expo-google-fonts/inter'
+import { useFonts, Poppins_500Medium, Poppins_300Light } from '@expo-google-fonts/poppins'
+import { Miniver_400Regular } from '@expo-google-fonts/miniver'
 
 export default function Layout() {
+	const [fontsLoaded] = useFonts({
+		Poppins_500Medium,
+		Poppins_300Light,
+		Miniver_400Regular,
+	})
+
 	return (
 		<Provider store={store}>
 			<PersistGate loading={null} persistor={persistor}>
