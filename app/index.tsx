@@ -10,20 +10,7 @@ import InputYourWorry from '~features/worries/InputYourWorry'
 export default function Home() {
 	return (
 		<VStack backgroundColor={'gray.900'} flex={1}>
-			{/* <Gregory /> */}
-			{/* <DragExpander
-				expanded={
-					<Text p={8}>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat.
-					</Text>
-				}
-			>
-				<Heading alignSelf='center'>Hello</Heading>
-			</DragExpander>  */}
-			<WorryFeature />
+			<Gregory />
 		</VStack>
 	)
 }
