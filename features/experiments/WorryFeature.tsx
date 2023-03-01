@@ -33,7 +33,7 @@ function WorryFeature() {
 							_bg={{ bg: 'gray.700', borderRadius: 'lg' }}
 							header={
 								<Text fontSize={'sm'} width='100%' fontWeight='700'>
-									I worried {useFormatDate(worry.id)} that {worry.description}
+									I worried {useFormatDate(worry.id)} {worry.description}
 								</Text>
 							}
 							onDelete={() => {
@@ -47,7 +47,7 @@ function WorryFeature() {
 						>
 							<VStack space={4} pt={4} alignItems='stretch'>
 								{worry.sensation && (
-									<Text fontSize={'sm'}>I felt it in {worry.sensation}</Text>
+									<Text fontSize={'sm'}>I felt it {worry.sensation}</Text>
 								)}
 								{worry.extraNote && (
 									<Text fontSize={'sm'}>

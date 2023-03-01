@@ -1,15 +1,13 @@
 import { useRouter } from 'expo-router'
-import { Text, VStack } from 'native-base'
-import React, { useCallback, useEffect, useState } from 'react'
-import { SafeAreaView } from 'react-native'
+import React, { useCallback, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import WorryInput from '~features/layout/WorryInput'
-import { addWorry, Worry, WorryField } from './worrySlice'
+import { Worry, WorryField, addWorry } from './worrySlice'
 
 const inputItems = [
 	{
 		name: 'description' as WorryField,
-		question: 'I am worried because...',
+		question: 'I am worried...',
 		placeholder: 'very scary thing',
 		nextButtonText: 'I can feel this worry...',
 	},
@@ -54,18 +52,15 @@ export default function InputYourWorry() {
 	}, [])
 
 	const onSubmit = useCallback(() => {
-		console.log(`onSubmit (${input})`, 'TODO: Check that worry has required fields:', newWorry)
-		dispatch(addWorry(newWorry as Worry))
+		// "trim" fields to remove spaces/newlines from the start and end
+		const worryToAdd = { ...newWorry }
+		for (const { name: field } of inputItems) {
+			const value = worryToAdd[field]
+			worryToAdd[field] = value?.trim()
+		}
+		dispatch(addWorry(worryToAdd as Worry))
 		onClose()
 	}, [newWorry, onClose])
-
-	const handleNext = () => {
-		if (input === inputItems.length - 1) {
-			console.log('I am out of inputs, give me a link to rout to!')
-		} else {
-			whichInput(input + 1)
-		}
-	}
 
 	const sharedInputProps = ({ name, input }: { name: WorryField; input: number }) => ({
 		onChangeText,
@@ -81,6 +76,7 @@ export default function InputYourWorry() {
 
 	return (
 		<WorryInput
+			key={`input-${input}`}
 			{...sharedInputProps({ name, input })}
 			question={question}
 			placeholder={placeholder}
