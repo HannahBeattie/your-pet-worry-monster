@@ -16,15 +16,8 @@ import {
 	Text,
 	VStack,
 } from 'native-base'
-import React, { useCallback, useEffect, useRef } from 'react'
-import {
-	Dimensions,
-	Platform,
-	Pressable,
-	SafeAreaView,
-	StyleSheet,
-	useWindowDimensions,
-} from 'react-native'
+import React, { useCallback, useRef } from 'react'
+import { Dimensions, Platform, StyleSheet, useWindowDimensions } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useSelector } from 'react-redux'
 import { monsterNameSelector } from '~features/monster/monsterSlice'

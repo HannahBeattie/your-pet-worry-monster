@@ -1,5 +1,6 @@
 import { Heading, Input, Text, VStack } from 'native-base'
 import React from 'react'
+import { SafeAreaView } from 'react-native'
 import DragExpander from '~features/experiments/DragExpander'
 import WorryFeature from '~features/experiments/WorryFeature'
 import Page from '~features/layout/Page'
@@ -8,8 +9,8 @@ import InputYourWorry from '~features/worries/InputYourWorry'
 
 export default function Home() {
 	return (
-		<VStack variant={'page'}>
-			<Gregory />
+		<VStack backgroundColor={'gray.900'} flex={1}>
+			{/* <Gregory /> */}
 			{/* <DragExpander
 				expanded={
 					<Text p={8}>
@@ -22,7 +23,7 @@ export default function Home() {
 			>
 				<Heading alignSelf='center'>Hello</Heading>
 			</DragExpander>  */}
-			{/* <WorryFeature /> */}
+			<WorryFeature />
 		</VStack>
 	)
 }
