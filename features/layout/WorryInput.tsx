@@ -1,6 +1,5 @@
 // import { checkTargetForNewValues } from 'framer-motion'
 import { Entypo } from '@expo/vector-icons'
-import { useRouter } from 'expo-router'
 import {
 	Box,
 	Button,
@@ -10,20 +9,16 @@ import {
 	Icon,
 	IconButton,
 	Input,
-	KeyboardAvoidingView,
-	ScrollView,
 	Spacer,
 	Text,
 	VStack,
 } from 'native-base'
 import React, { useCallback, useRef } from 'react'
-import { Dimensions, Platform, StyleSheet, useWindowDimensions } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Animated, { FadeInDown, FadeOutUp } from 'react-native-reanimated'
 import { useSelector } from 'react-redux'
 import { monsterNameSelector } from '~features/monster/monsterSlice'
 import { WorryField } from '~features/worries/worrySlice'
-// import HomeButton from '~features/layout/HomeButton'
 
 export interface WorryInputProps {
 	name: WorryField
@@ -50,21 +45,16 @@ export default function WorryInput({
 	required,
 	nextButtonText,
 	onNextButtonPress,
-	autofocus,
 }: WorryInputProps) {
 	const ref = useRef<any>(null)
-	const router = useRouter()
 	const monsterName = useSelector(monsterNameSelector)
 
 	const handleChange = useCallback(
 		(text: string) => {
-			// console.log(`"${name}" changed value to: `, text)
 			onChangeText(name, text)
 		},
 		[name, onChangeText]
 	)
-
-	const { height } = useWindowDimensions()
 
 	const [error, setError] = React.useState('')
 
@@ -72,147 +62,121 @@ export default function WorryInput({
 	const hasNext = nextButtonText && onNextButtonPress
 
 	return (
-		<ScrollView
-			scrollEnabled={false}
-			snapToInterval={Dimensions.get('window').height}
-			snapToAlignment={'center'}
-			contentInsetAdjustmentBehavior='automatic'
-			keyboardShouldPersistTaps='handled'
-		>
-			<VStack flex={1} justifyItems={'stretch'} alignContent={'cener'}>
-				<HStack position={'sticky'}>
-					<IconButton
-						position={'fixed'}
-						p={6}
-						icon={<Icon as={Entypo} name='cross' size='lg' />}
-						_icon={{ color: 'black' }}
-						onPress={onClose}
-						accessibilityLabel='exit screen'
-						variant={'unstyled'}
-					/>
-				</HStack>
-				<KeyboardAvoidingView
-					flex={1}
-					minH={height}
-					behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
-				>
-					<KeyboardAwareScrollView
-						enableAutomaticScroll
-						pagingEnabled
-						extraHeight={100}
-						extraScrollHeight={100}
-						keyboardShouldPersistTaps='handled'
+		<VStack alignItems={'stretch'} flex={1}>
+			<HStack position={'sticky'}>
+				<IconButton
+					position={'fixed'}
+					p={6}
+					icon={<Icon as={Entypo} name='cross' size='lg' />}
+					_icon={{ color: 'black' }}
+					onPress={onClose}
+					accessibilityLabel='exit screen'
+					variant={'unstyled'}
+				/>
+			</HStack>
+			<KeyboardAwareScrollView
+				enableAutomaticScroll
+				keyboardShouldPersistTaps='handled'
+				extraHeight={200}
+			>
+				<VStack pt={100} pb={16} alignItems='stretch' justifyContent='center'>
+					<Animated.View
+						entering={FadeInDown.delay(200)}
+						exiting={FadeOutUp}
+						style={{
+							display: 'flex',
+							alignItems: 'stretch',
+							flexDirection: 'column',
+						}}
 					>
-						<VStack flex={1} pt={100} h={height}>
-							<Animated.View entering={FadeInDown.delay(200)} exiting={FadeOutUp}>
-								<VStack px={30}>
-									<Heading fontFamily='Poppins_300Light' color={'black'} py={4}>
-										{question}
-									</Heading>
+						<VStack px={30} alignItems='stretch'>
+							<Heading fontFamily='Poppins_300Light' color={'black'} py={4}>
+								{question}
+							</Heading>
 
-									<Input
-										maxH={290}
-										ref={ref}
-										onChangeText={handleChange}
-										color={'blueGray.900'}
-										placeholderTextColor={'blueGray.500'}
-										placeholder={placeholder}
-										value={value}
-										size='xl'
-										fontSize='lg'
-										fontFamily='Poppins_300Light'
-										variant={'unstyled'}
-										autoCapitalize='none'
-										mx={-2}
-										maxLength={180}
-										multiline
-										autoFocus
-										isFocused
-										isFullWidth
-										blurOnSubmit
-										returnKeyType={hasNext ? 'next' : 'done'}
-										onSubmitEditing={() => {
-											if (!canContinue) {
-												return
-											}
-											if (hasNext) {
-												return onNextButtonPress()
-											}
-											onSubmit()
-										}}
-									/>
+							<Input
+								ref={ref}
+								onChangeText={handleChange}
+								color={'blueGray.900'}
+								placeholderTextColor={'blueGray.500'}
+								placeholder={placeholder}
+								value={value}
+								size='xl'
+								fontSize='lg'
+								fontFamily='Poppins_300Light'
+								variant={'unstyled'}
+								autoCapitalize='none'
+								mx={-2}
+								maxLength={180}
+								multiline
+								autoFocus
+								isFocused
+								isFullWidth
+								blurOnSubmit
+								returnKeyType={hasNext ? 'next' : 'done'}
+								onSubmitEditing={() => {
+									if (!canContinue) {
+										return
+									}
+									if (hasNext) {
+										return onNextButtonPress()
+									}
+									onSubmit()
+								}}
+							/>
 
-									<Divider />
+							<Divider />
 
-									<Text color={'red.300'}>{error}</Text>
+							<Text color={'red.300'}>{error}</Text>
 
-									<HStack>
-										<Button
-											onPress={onSubmit}
-											isDisabled={!canContinue}
-											isFocused={false}
+							<HStack space={2}>
+								<Button
+									onPress={onSubmit}
+									isDisabled={!canContinue}
+									isFocused={false}
+									bg={'blueGray.900'}
+									borderRadius={'md'}
+									flex={1}
+								>
+									<Text
+										textAlign={'center'}
+										color={'white'}
+										fontSize={'sm'}
+										fontWeight={600}
+										py={2}
+									>
+										Give it to {monsterName}
+									</Text>
+								</Button>
+								{hasNext ? (
+									<Button
+										isFocused={false}
+										variant={'ghost'}
+										backgroundColor={'gray.300'}
+										onPress={onNextButtonPress}
+										isDisabled={!canContinue}
+										borderRadius={'sm'}
+										flex={1}
+									>
+										<Text
+											pr={4}
+											py={2}
+											textAlign={'center'}
+											color={'black'}
+											fontSize={'sm'}
+											fontWeight={600}
 										>
-											<Box bg={'blueGray.900'} borderRadius={'sm'}>
-												<Text
-													maxW={180}
-													textAlign={'center'}
-													color={'white'}
-													fontSize={'sm'}
-													fontWeight={600}
-													py={2}
-												>
-													Give it to {monsterName}
-												</Text>
-											</Box>
-										</Button>
-										<Spacer />
-										{hasNext ? (
-											<Button
-												isFocused={false}
-												variant={'ghost'}
-												backgroundColor={'gray.100'}
-												onPress={onNextButtonPress}
-												isDisabled={!canContinue}
-											>
-												<Box bg={''} borderRadius={'sm'}>
-													<Text
-														pr={4}
-														py={2}
-														textAlign={'center'}
-														color={'black'}
-														fontSize={'sm'}
-														fontWeight={600}
-													>
-														{nextButtonText}
-													</Text>
-												</Box>
-											</Button>
-										) : (
-											<Spacer />
-										)}
-									</HStack>
-
+											{nextButtonText}
+										</Text>
+									</Button>
+								) : (
 									<Spacer />
-								</VStack>
-							</Animated.View>
+								)}
+							</HStack>
 						</VStack>
-					</KeyboardAwareScrollView>
-				</KeyboardAvoidingView>
-			</VStack>
-		</ScrollView>
-		// </KeyboardAwareScrollView>
+					</Animated.View>
+				</VStack>
+			</KeyboardAwareScrollView>
+		</VStack>
 	)
 }
-const styles = StyleSheet.create({
-	form: {
-		flex: 1,
-		paddingHorizontal: 30,
-		pt: 100,
-		backgroundColor: '#fafafa',
-	},
-	screen: {
-		flexDirection: 'column',
-		height: Dimensions.get('window').height,
-		justifyContent: 'center',
-	},
-})
