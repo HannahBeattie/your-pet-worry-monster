@@ -71,6 +71,7 @@ const parts: Record<PartName, Part> = {
 		doubleSpring: true,
 		gain: { x: 0.8, y: 0.3 },
 		springOpts: { stiffness: 230, damping: 12 },
+		look: -0.015,
 	},
 	legR: {
 		src: require('../../assets/monsterParts/leg-right.png'),
@@ -82,6 +83,7 @@ const parts: Record<PartName, Part> = {
 		doubleSpring: true,
 		gain: { x: 0.8, y: 0.3 },
 		springOpts: { stiffness: 340, damping: 16 },
+		look: -0.015,
 	},
 	armL: {
 		src: require('../../assets/monsterParts/arm-left.png'),
@@ -93,6 +95,7 @@ const parts: Record<PartName, Part> = {
 		pivot: { x: 0.6146, y: 0.40139 },
 		doubleSpring: true,
 		springOpts: { stiffness: 300, damping: 18 },
+		look: -0.025,
 	},
 	armR: {
 		src: require('../../assets/monsterParts/arm-right.png'),
@@ -104,6 +107,7 @@ const parts: Record<PartName, Part> = {
 		pivot: { x: 0.39478, y: 0.3985 },
 		doubleSpring: true,
 		springOpts: { stiffness: 150, damping: 12 },
+		look: -0.02,
 	},
 	body: {
 		src: require('../../assets/monsterParts/body.png'),
@@ -223,8 +227,11 @@ export default function Puppet() {
 	const layout = useSharedValue({ x: 0, y: 0, width: 1, height: 1 })
 
 	const gesture = Gesture.Pan()
-		.onBegin(() => {
+		.onBegin((evt) => {
 			isPressed.value = true
+			press.value = { x: evt.x, y: evt.y }
+			originX.value = evt.translationX * 0.35 + start.value.x
+			originY.value = evt.translationY * 0.35 + start.value.y
 			// runOnJS(log)('onBegin')
 		})
 		.onUpdate((evt) => {
@@ -233,7 +240,7 @@ export default function Puppet() {
 			originX.value = evt.translationX * 0.35 + start.value.x
 			originY.value = evt.translationY * 0.35 + start.value.y
 		})
-		.onEnd(() => {
+		.onEnd((evt) => {
 			isPressed.value = false
 			// runOnJS(log)('onEnd')
 			// origin.value = { x: 0, y: 0 }
