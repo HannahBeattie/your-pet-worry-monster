@@ -127,7 +127,7 @@ export default function WorryInput({
 								ref={ref}
 								onChangeText={handleChange}
 								color={'white'}
-								placeholderTextColor={'red.500'}
+								placeholderTextColor={'blueGray.400'}
 								placeholder={placeholder}
 								value={value}
 								size='xl'
@@ -144,6 +144,7 @@ export default function WorryInput({
 								blurOnSubmit
 								returnKeyType={hasNext ? 'next' : 'done'}
 								onBlur={onBlur}
+								selectionColor={'white'}
 								onSubmitEditing={() => {
 									if (!canContinue) {
 										return
@@ -170,7 +171,7 @@ export default function WorryInput({
 									borderRadius={'md'}
 									py={4}
 									px={3}
-									_pressed={{ backgroundColor: 'cyan.600' }}
+									_pressed={{ backgroundColor: 'gray.200' }}
 								>
 									<Text
 										textAlign={'center'}
