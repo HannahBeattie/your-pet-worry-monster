@@ -84,7 +84,7 @@ export const DraggableFlatlist = () => {
 	)
 
 	return (
-		<VStack backgroundColor={'gray.300'}>
+		<VStack backgroundColor={'gray.900'} flex={1}>
 			<SafeAreaView>
 				<Box px={2}>
 					<Pressable
@@ -92,21 +92,21 @@ export const DraggableFlatlist = () => {
 							router.push('/monsterMenu')
 						}}
 					>
-						<AntDesign name='back' size={24} color='black' />
+						<AntDesign name='back' size={24} color='white' />
 					</Pressable>
 				</Box>
 				<ScrollView>
 					<VStack px={10} py={2}>
 						<Heading
 							{...font}
-							color={'black'}
+							color={'white'}
 							fontSize={'3xl'}
 							textAlign={'center'}
 							pt={4}
 						>
 							Current Worries
 						</Heading>
-						<Text {...font} fontSize={'md'} color={'black'} textAlign={'center'} pb={4}>
+						<Text {...font} fontSize={'md'} color={'white'} textAlign={'center'} pb={4}>
 							Drag to re-order
 						</Text>
 						<DraggableFlatList<FlatListItem>
