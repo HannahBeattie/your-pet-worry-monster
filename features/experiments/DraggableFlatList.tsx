@@ -50,6 +50,8 @@ export const DraggableFlatlist = () => {
 	const { height } = useWindowDimensions()
 	const spatter = require('../../assets/spatter01.png')
 	const spatter2 = require('../../assets/spatter02.png')
+	const spatter3 = require('../../assets/spatter03.png')
+	const spatter4 = require('../../assets/spatter.png')
 	const bagged = require('../../assets/bagged.jpg')
 
 	const router = useRouter()
@@ -71,7 +73,7 @@ export const DraggableFlatlist = () => {
 			<TouchableOpacity onLongPress={drag} disabled={isActive}>
 				<VStack
 					space={2}
-					backgroundColor={'#000000b7'}
+					backgroundColor={'black'}
 					pb={4}
 					borderRadius={'lg'}
 					mb={4}
@@ -87,9 +89,9 @@ export const DraggableFlatlist = () => {
 						variant={'ghost'}
 						borderTopRadius={'lg'}
 						borderRadius={'md'}
-						borderColor={'amber.600'}
+						borderColor={'cyan.300'}
 						borderWidth={1}
-						backgroundColor={'black'}
+						backgroundColor={'blueGray.900'}
 						onPress={() => {
 							dispatch(
 								updateWorry({
@@ -103,16 +105,16 @@ export const DraggableFlatlist = () => {
 								router.push('/eatingWorry')
 						}}
 					>
-						<Text fontSize={'md'} fontWeight={'600'} color={'amber.500'}>
+						<Text fontSize={'md'} fontWeight={'600'} color={'white'}>
 							Feed to {name}
 						</Text>
 					</Button>
 
-					<Container py={4}>
-						<Text px={4} color={'orange.400'}>
+					<Container py={8}>
+						<Text px={4} color={'white'} fontSize={'sm'}>
 							{useFormatDate(item.id)}
 						</Text>
-						<Text px={4} color={'orange.400'}>
+						<Text px={4} color={'white'} fontSize={'md'}>
 							{item.title}
 						</Text>
 					</Container>
@@ -122,8 +124,8 @@ export const DraggableFlatlist = () => {
 	)
 
 	return (
-		<VStack backgroundColor={'blueGray.900'} flex={1}>
-			<ImageBackground source={bagged}>
+		<VStack backgroundColor={'black'} flex={1}>
+			<ImageBackground source={spatter2}>
 				<SafeAreaView>
 					<Box px={2}>
 						<Pressable
@@ -131,29 +133,23 @@ export const DraggableFlatlist = () => {
 								router.push('/monsterMenu')
 							}}
 						>
-							<AntDesign name='back' size={24} color='pink' />
+							<AntDesign name='back' size={24} color='white' />
 						</Pressable>
 					</Box>
 					<ScrollView showsHorizontalScrollIndicator={false}>
 						<VStack px={8} pb={100}>
-							<Heading
-								color={'pink.200'}
-								fontSize={'3xl'}
-								textAlign={'center'}
-								py={4}
-							>
+							<Heading color={'white'} fontSize={'3xl'} textAlign={'center'} py={4}>
 								Current Worries
 							</Heading>
-							<Text textAlign={'center'} pb={2} color={'pink.200'}>
+							<Text textAlign={'center'} pb={2} color={'white'}>
 								drag to order
 							</Text>
 
 							<DraggableFlatList<FlatListItem>
 								data={data}
 								pagingEnabled
-								scrollEnabled={true}
+								scrollEnabled={false}
 								showsHorizontalScrollIndicator={false}
-								// onDragEnd={({ data }: DragEndParams<FlatListItem>) => setData(data)}
 								keyExtractor={(item) => `${item.id}`}
 								renderItem={renderItem}
 							/>
