@@ -27,10 +27,6 @@ function name() {
 			setError('First, I need a name')
 		} else if (value.length < 3) {
 			setError('Seems a little short for a name...')
-		} else if (value.length > 25) {
-			setError(
-				"That's little long....how about you shorten it a little and you and I can know, in our hearts what my true name is"
-			)
 		} else {
 			setError('')
 			router.push('/confirmName')
@@ -44,6 +40,7 @@ function name() {
 				<VStack px={2}>
 					<Heading>Hmm... what should I call mysef?</Heading>
 					<Input
+						maxLength={25}
 						onChangeText={handleChange}
 						value={value}
 						multiline
