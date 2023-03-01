@@ -1,64 +1,94 @@
-import { Box, Button, Fab, Heading, HStack, IconButton, Image, Text, VStack } from 'native-base'
+import {
+	Box,
+	Button,
+	Center,
+	Fab,
+	Heading,
+	HStack,
+	Icon,
+	IconButton,
+	Image,
+	Spacer,
+	Text,
+	VStack,
+} from 'native-base'
 import React from 'react'
 import HomeButton from '~features/layout/HomeButton'
 import MyFab from '~features/layout/MyFab'
 import Blue from '~features/monster/Blue'
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
-import { Pressable } from 'react-native'
+import { Fontisto, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
+import { Pressable, useWindowDimensions } from 'react-native'
 import { useRouter } from 'expo-router'
+import SimpleHome from '~features/layout/SimpleHome'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { useSelector } from 'react-redux'
+import { selectAllActive } from '~features/worries/worrySlice'
 
-const eaten = require('../assets/eaten.png')
-
-const chef = require('../assets/chef.png')
+const yummy = require('../assets/yummy.png')
 
 export default function EatingWorry() {
+	const { width } = useWindowDimensions()
 	const router = useRouter()
+	const active = useSelector(selectAllActive)
 	return (
-		<VStack variant={'page'} pt={100}>
-			<Heading textAlign={'center'}>YUMMMM!</Heading>
-			<Heading textAlign={'center'}>That Was delicious!</Heading>
-			{/* <Image alt={'blue the monster'} source={chef} flex={1} resizeMode='contain' /> */}
+		<VStack backgroundColor={'gray.900'} flex={1}>
+			<SafeAreaView style={{ flex: 1 }}>
+				<VStack pt={4}>
+					<Heading fontSize={'6xl'} textAlign={'center'}>
+						YUMMMM!
+					</Heading>
+					<Heading textAlign={'center'}>That Was delicious!</Heading>
 
-			<Image alt={'blue the monster'} source={eaten} flex={1} resizeMode='contain' />
+					<Heading textAlign={'center'}>Give me more!</Heading>
+				</VStack>
+				<VStack flex={1} px={4}>
+					<Image alt={'blue the monster'} source={yummy} flex={1} resizeMode='contain' />
+				</VStack>
 
-			<HStack
-				space={8}
-				justifyItems={'center'}
-				flexDirection={'row'}
-				alignContent={'center'}
-				justifyContent={'center'}
-			>
-				<VStack
-					textAlign={'center'}
-					justifyContent={'center'}
-					alignItems={'center'}
-					space={2}
-				>
-					<Pressable
-						onPress={() => {
-							router.push('/monsterMenu')
-						}}
-					>
-						<MaterialCommunityIcons name='home-outline' size={40} color='white' />
-					</Pressable>
-					<Text>Home</Text>
-				</VStack>
-				<VStack
-					textAlign={'center'}
-					justifyContent={'center'}
-					alignItems={'center'}
-					space={2}
-				>
-					<Pressable
-						onPress={() => {
-							router.push('/addWorry')
-						}}
-					>
-						<Ionicons name='md-add-circle' size={40} color='white' />
-					</Pressable>
-					<Text>Add More</Text>
-				</VStack>
-			</HStack>
+				<HStack justifyContent={'space-evenly'} px={50}>
+					{active.length > 0 && (
+						<VStack>
+							<IconButton
+								onPress={() => {
+									router.push('current')
+								}}
+								icon={
+									<Icon
+										size={'5xl'}
+										as={MaterialCommunityIcons}
+										name={'food-drumstick'}
+									/>
+								}
+							/>
+							<Heading fontSize={'sm'} textAlign={'center'}>
+								Eat
+							</Heading>
+						</VStack>
+					)}
+					<VStack>
+						<IconButton
+							onPress={() => {
+								router.push('/addWorry')
+							}}
+							icon={<Icon size={'5xl'} as={Ionicons} name={'add-circle-sharp'} />}
+						/>
+						<Heading fontSize={'sm'} textAlign={'center'}>
+							Add
+						</Heading>
+					</VStack>
+					<VStack>
+						<IconButton
+							onPress={() => {
+								router.push('/')
+							}}
+							icon={<Icon size={'5xl'} as={Fontisto} name={'home'} />}
+						/>
+						<Heading fontSize={'sm'} textAlign={'center'}>
+							Home
+						</Heading>
+					</VStack>
+				</HStack>
+			</SafeAreaView>
 		</VStack>
 	)
 }
