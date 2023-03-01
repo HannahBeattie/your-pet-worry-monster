@@ -11,6 +11,7 @@ import {
 	HStack,
 	Icon,
 	IconButton,
+	Image,
 	Pressable,
 	ScrollView,
 	Spacer,
@@ -49,7 +50,7 @@ export const DraggableFlatlist = () => {
 	const { height } = useWindowDimensions()
 	const spatter = require('../../assets/spatter01.png')
 	const spatter2 = require('../../assets/spatter02.png')
-	const spatter3 = require('../../assets/spatter03.png')
+	const worryBag = require('../../assets/aWorry.png')
 
 	const router = useRouter()
 	const font = { fontFamily: 'Poppins_300Light', color: 'black', fontSize: 'sm' }
@@ -70,12 +71,15 @@ export const DraggableFlatlist = () => {
 			<TouchableOpacity onLongPress={drag} disabled={isActive}>
 				<VStack
 					space={2}
-					backgroundColor={'#0000008f'}
+					backgroundColor={'#000000b7'}
 					pb={4}
 					borderRadius={'lg'}
 					mb={4}
 					px={2}
 					pt={2}
+					outlineColor={'black'}
+					borderWidth={1}
+					borderColor={'black'}
 				>
 					<Button
 						flex={1}
@@ -83,7 +87,10 @@ export const DraggableFlatlist = () => {
 						variant={'ghost'}
 						borderTopRadius={'lg'}
 						borderRadius={'md'}
-						backgroundColor={'#088797'}
+						borderColor={'teal.300'}
+						outlineColor={'teal.400'}
+						borderWidth={1}
+						backgroundColor={'black'}
 						onPress={() => {
 							dispatch(
 								updateWorry({
@@ -97,16 +104,16 @@ export const DraggableFlatlist = () => {
 								router.push('/eatingWorry')
 						}}
 					>
-						<Text fontSize={'md'} color={'white'}>
+						<Text fontSize={'md'} fontWeight={'600'} color={'teal.400'}>
 							Feed to {name}
 						</Text>
 					</Button>
 
 					<Container py={4}>
-						<Text px={4} {...font} color={'white'}>
+						<Text px={4} color={'white'}>
 							{useFormatDate(item.id)}
 						</Text>
-						<Text px={4} {...font} color={'white'}>
+						<Text px={4} color={'white'}>
 							{item.title}
 						</Text>
 					</Container>
@@ -116,8 +123,8 @@ export const DraggableFlatlist = () => {
 	)
 
 	return (
-		<VStack backgroundColor={'black'} flex={1}>
-			<ImageBackground source={spatter}>
+		<VStack backgroundColor={'blueGray.900'} flex={1}>
+			<ImageBackground source={spatter2}>
 				<SafeAreaView>
 					<Box px={2}>
 						<Pressable
@@ -129,7 +136,7 @@ export const DraggableFlatlist = () => {
 						</Pressable>
 					</Box>
 					<ScrollView showsHorizontalScrollIndicator={false}>
-						<VStack px={10} pb={100}>
+						<VStack px={8} pb={100}>
 							<Heading
 								{...font}
 								color={'white'}
