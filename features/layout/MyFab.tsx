@@ -39,7 +39,7 @@ const two = [
 		textBackground: 'black',
 	},
 ]
-function MyFab({ props }: any) {
+function MyFab({ props, position }: any) {
 	const currentWorries = useSelector(selectAllActive)
 	const [active, setActive] = useState(false)
 	const handleClick = () => {
@@ -52,7 +52,7 @@ function MyFab({ props }: any) {
 			overlayColor='none'
 			color={active ? '#956786' : '#3e8a96'}
 			actions={two}
-			position={'left'}
+			position={position ? position : 'left'}
 			distanceToEdge={{ horizontal: 0, vertical: 0 }}
 			onOpen={handleClick}
 			onClose={handleClick}

@@ -15,6 +15,7 @@ import {
 	VStack,
 } from 'native-base'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { TouchableOpacity } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Animated, { FadeInDown, FadeOutUp } from 'react-native-reanimated'
 import { useSelector } from 'react-redux'
@@ -87,17 +88,20 @@ export default function WorryInput({
 	}, [error, validationError])
 
 	return (
-		<VStack alignItems={'stretch'} flex={1}>
+		<VStack alignItems={'stretch'} flex={1} backgroundColor={'gray.900'}>
 			<HStack position={'sticky'}>
-				<IconButton
-					position={'fixed'}
-					p={6}
-					icon={<Icon as={Entypo} name='cross' size='lg' />}
-					_icon={{ color: 'black' }}
-					onPress={onClose}
-					accessibilityLabel='exit screen'
-					variant={'unstyled'}
-				/>
+				<Spacer />
+				<TouchableOpacity>
+					<IconButton
+						pt={8}
+						position={'fixed'}
+						icon={<Icon as={Entypo} name='cross' size='xl' />}
+						_icon={{ color: 'white' }}
+						onPress={onClose}
+						accessibilityLabel='exit screen'
+						variant={'unstyled'}
+					/>
+				</TouchableOpacity>
 			</HStack>
 			<KeyboardAwareScrollView
 				enableAutomaticScroll
@@ -115,15 +119,15 @@ export default function WorryInput({
 						}}
 					>
 						<VStack px={30} alignItems='stretch'>
-							<Heading fontFamily='Poppins_300Light' color={'black'} py={4}>
+							<Heading fontFamily='Poppins_300Light' color={'white'} py={4}>
 								{question}
 							</Heading>
 
 							<Input
 								ref={ref}
 								onChangeText={handleChange}
-								color={'blueGray.900'}
-								placeholderTextColor={'blueGray.500'}
+								color={'white'}
+								placeholderTextColor={'blueGray.400'}
 								placeholder={placeholder}
 								value={value}
 								size='xl'
@@ -132,7 +136,7 @@ export default function WorryInput({
 								variant={'unstyled'}
 								autoCapitalize='none'
 								mx={-2}
-								maxLength={180}
+								maxLength={160}
 								multiline
 								autoFocus
 								isFocused
@@ -140,6 +144,7 @@ export default function WorryInput({
 								blurOnSubmit
 								returnKeyType={hasNext ? 'next' : 'done'}
 								onBlur={onBlur}
+								selectionColor={'white'}
 								onSubmitEditing={() => {
 									if (!canContinue) {
 										return
@@ -162,15 +167,15 @@ export default function WorryInput({
 									onPress={onSubmit}
 									isDisabled={!canContinue}
 									isFocused={false}
-									bg={'blueGray.900'}
+									bg={'white'}
 									borderRadius={'md'}
-									// flex={0.8}
 									py={4}
 									px={3}
+									_pressed={{ backgroundColor: 'gray.200' }}
 								>
 									<Text
 										textAlign={'center'}
-										color={'white'}
+										color={'black'}
 										fontSize={'sm'}
 										fontWeight={600}
 									>
@@ -184,12 +189,12 @@ export default function WorryInput({
 										backgroundColor={'transparent'}
 										onPress={onNextButtonPress}
 										isDisabled={!canContinue}
-										borderColor={'blueGray.400'}
+										borderColor={'gray.700'}
 										py={4}
 										px={2}
 										flex={1}
 									>
-										<Text color={'black'} fontSize={'sm'} fontWeight={600}>
+										<Text color={'white'} fontSize={'sm'} fontWeight={600}>
 											{nextButtonText}
 										</Text>
 									</Button>

@@ -1,9 +1,30 @@
 import { useRouter } from 'expo-router'
 
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
-import { Box, Button, Heading, HStack, Pressable, ScrollView, Text, VStack } from 'native-base'
+import {
+	Box,
+	Button,
+	Center,
+	Container,
+	Divider,
+	Heading,
+	HStack,
+	Icon,
+	IconButton,
+	Pressable,
+	ScrollView,
+	Spacer,
+	Text,
+	VStack,
+} from 'native-base'
 import React, { useEffect, useState } from 'react'
-import { LogBox, SafeAreaView, TouchableOpacity } from 'react-native'
+import {
+	ImageBackground,
+	LogBox,
+	SafeAreaView,
+	TouchableOpacity,
+	useWindowDimensions,
+} from 'react-native'
 import DraggableFlatList, {
 	DragEndParams,
 	RenderItemParams,
@@ -25,6 +46,10 @@ export const DraggableFlatlist = () => {
 	const allActive: Worry[] = [...useSelector(selectAllActive)].reverse()
 	const dispatch = useDispatch()
 	const name = useSelector(monsterNameSelector)
+	const { height } = useWindowDimensions()
+	const spatter = require('../../assets/spatter01.png')
+	const spatter2 = require('../../assets/spatter02.png')
+	const spatter3 = require('../../assets/spatter03.png')
 
 	const router = useRouter()
 	const font = { fontFamily: 'Poppins_300Light', color: 'black', fontSize: 'sm' }
@@ -43,14 +68,22 @@ export const DraggableFlatlist = () => {
 	const renderItem = ({ item, drag, isActive }: RenderItemParams<FlatListItem>) => (
 		<ScaleDecorator>
 			<TouchableOpacity onLongPress={drag} disabled={isActive}>
-				<VStack space={2} backgroundColor={'gray.100'} pb={4} borderRadius={'lg'} mb={4}>
+				<VStack
+					space={2}
+					backgroundColor={'#0000008f'}
+					pb={4}
+					borderRadius={'lg'}
+					mb={4}
+					px={2}
+					pt={2}
+				>
 					<Button
 						flex={1}
-						px={6}
 						py={4}
-						backgroundColor={'gray.900'}
+						variant={'ghost'}
 						borderTopRadius={'lg'}
-						borderBottomRadius={0}
+						borderRadius={'md'}
+						backgroundColor={'#088797'}
 						onPress={() => {
 							dispatch(
 								updateWorry({
@@ -64,62 +97,71 @@ export const DraggableFlatlist = () => {
 								router.push('/eatingWorry')
 						}}
 					>
-						<HStack flex={1} alignItems={'stretch'}>
-							<MaterialCommunityIcons name='food-drumstick' size={24} color='white' />
-
-							<Text {...font} fontSize={'sm'} px={8} color='white'>
-								Feed this worry to {name}
-							</Text>
-						</HStack>
+						<Text fontSize={'md'} color={'white'}>
+							Feed to {name}
+						</Text>
 					</Button>
-					<Text px={8} {...font} color={'red.900'}>
-						{useFormatDate(item.id)}
-					</Text>
-					<Text px={8} {...font}>
-						{item.title}
-					</Text>
+
+					<Container py={4}>
+						<Text px={4} {...font} color={'white'}>
+							{useFormatDate(item.id)}
+						</Text>
+						<Text px={4} {...font} color={'white'}>
+							{item.title}
+						</Text>
+					</Container>
 				</VStack>
 			</TouchableOpacity>
 		</ScaleDecorator>
 	)
 
 	return (
-		<VStack backgroundColor={'gray.900'} flex={1}>
-			<SafeAreaView>
-				<Box px={2}>
-					<Pressable
-						onPress={() => {
-							router.push('/monsterMenu')
-						}}
-					>
-						<AntDesign name='back' size={24} color='white' />
-					</Pressable>
-				</Box>
-				<ScrollView>
-					<VStack px={10} py={2}>
-						<Heading
-							{...font}
-							color={'white'}
-							fontSize={'3xl'}
-							textAlign={'center'}
-							pt={4}
+		<VStack backgroundColor={'black'} flex={1}>
+			<ImageBackground source={spatter}>
+				<SafeAreaView>
+					<Box px={2}>
+						<Pressable
+							onPress={() => {
+								router.push('/monsterMenu')
+							}}
 						>
-							Current Worries
-						</Heading>
-						<Text {...font} fontSize={'md'} color={'white'} textAlign={'center'} pb={4}>
-							Drag to re-order
-						</Text>
-						<DraggableFlatList<FlatListItem>
-							data={data}
-							pagingEnabled
-							scrollEnabled={true}
-							// onDragEnd={({ data }: DragEndParams<FlatListItem>) => setData(data)}
-							keyExtractor={(item) => `${item.id}`}
-							renderItem={renderItem}
-						/>
-					</VStack>
-				</ScrollView>
-			</SafeAreaView>
+							<AntDesign name='back' size={24} color='white' />
+						</Pressable>
+					</Box>
+					<ScrollView showsHorizontalScrollIndicator={false}>
+						<VStack px={10} pb={100}>
+							<Heading
+								{...font}
+								color={'white'}
+								fontSize={'3xl'}
+								textAlign={'center'}
+								pt={4}
+							>
+								Current Worries
+							</Heading>
+							<Text
+								{...font}
+								fontSize={'md'}
+								color={'white'}
+								textAlign={'center'}
+								pb={10}
+							>
+								Drag to re-order
+							</Text>
+
+							<DraggableFlatList<FlatListItem>
+								data={data}
+								pagingEnabled
+								scrollEnabled={true}
+								showsHorizontalScrollIndicator={false}
+								// onDragEnd={({ data }: DragEndParams<FlatListItem>) => setData(data)}
+								keyExtractor={(item) => `${item.id}`}
+								renderItem={renderItem}
+							/>
+						</VStack>
+					</ScrollView>
+				</SafeAreaView>
+			</ImageBackground>
 		</VStack>
 	)
 }
