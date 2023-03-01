@@ -7,6 +7,7 @@ function SimpleHome() {
 	const router = useRouter()
 	return (
 		<Pressable
+			accessibilityLabel='home button'
 			onPress={() => {
 				router.push('/monsterMenu')
 			}}
