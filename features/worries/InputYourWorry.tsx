@@ -55,8 +55,7 @@ export default function InputYourWorry() {
 		[newWorry]
 	)
 
-	const onClose = useCallback(() => {
-		router.push('/monsterMenu')
+	const resetInputs = useCallback(() => {
 		// Wait a second for the new route to render, then reset the inputs
 		// (we need to wait because otherwise the inputs onBlur functions get called)
 		setTimeout(() => {
@@ -66,6 +65,11 @@ export default function InputYourWorry() {
 		}, 100)
 	}, [worryNum])
 
+	const onClose = useCallback(() => {
+		router.push('/monsterMenu')
+		resetInputs()
+	}, [resetInputs])
+
 	const onSubmit = useCallback(() => {
 		// "trim" fields to remove spaces/newlines from the start and end
 		const worryToAdd = { ...newWorry }
@@ -74,7 +78,8 @@ export default function InputYourWorry() {
 			worryToAdd[field] = value?.trim()
 		}
 		dispatch(addWorry(worryToAdd as Worry))
-		onClose()
+		router.push('/savingWorry')
+		resetInputs()
 	}, [newWorry, onClose])
 
 	const sharedInputProps = ({ name, input }: { name: WorryField; input: number }) => ({
