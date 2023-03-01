@@ -2,11 +2,14 @@ import { Image } from 'native-base'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { selectAllActive } from '../worries/worrySlice'
+import Puppet from './Puppet'
 
 const noWorries = require('../../assets/blue.png')
 const someWorries = require('../../assets/worrybags.png')
 
 function Blue() {
+	return <Puppet />
+
 	const currentWorries = useSelector(selectAllActive)
 	return (
 		<>
