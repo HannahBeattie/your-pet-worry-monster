@@ -11,7 +11,7 @@ import {
 	Text,
 	VStack,
 } from 'native-base'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Pressable, SafeAreaView, useWindowDimensions } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import ImageSlide from '~features/layout/ImageSlide'
@@ -27,11 +27,20 @@ const spatter3 = require('../../assets/spatter03.png')
 
 function WorryFeature() {
 	const imageArray = [spatter, spatter2, spatter3, spatter, spatter2, spatter3, spatter]
-	const worryData = useSelector(selectAllInactive).reverse()
+	const worryData = useSelector(selectAllInactive)
 	const name = useSelector(monsterNameSelector)
 	const { width } = useWindowDimensions()
 	const dispatch = useDispatch()
-	const router = useRouter()
+
+	// re-render every minute so that the times stay updated
+	const [rerender, setRerender] = useState(0)
+	useEffect(() => {
+		const timer = setInterval(() => {
+			setRerender(+new Date())
+		}, 60 * 1000)
+		return () => clearInterval(timer)
+	}, [])
+
 	return (
 		<VStack flex={1}>
 			<SafeAreaView style={{ flex: 1 }}>
@@ -39,7 +48,7 @@ function WorryFeature() {
 					<SimpleHome />
 				</VStack>
 				<Heading position={'absolute'} top={10} right={4} color={'teal.600'}>
-					{name}'s food Diary
+					{name}'s Food Diary
 				</Heading>
 				<ScrollView
 					horizontal={true}
@@ -49,16 +58,21 @@ function WorryFeature() {
 				>
 					<ImageSlide imageArray={imageArray} />
 
-					<HStack flex={1} space={4} alignItems='center' px={4}>
+					<HStack flex={1} space={4} alignItems='center' px={4} flexDir='row-reverse'>
 						{worryData.map((worry) => (
 							<DragExpander
-								key={worry.id}
+								key={`${worry.id}`}
 								p={10}
 								px={8}
 								maxW={width * 0.7}
 								_bg={{ bg: 'gray.800', borderRadius: 'lg' }}
 								header={
-									<Text fontSize={'sm'} width='100%' fontWeight='700'>
+									<Text
+										key={`desc-${worry.id}-${rerender}`}
+										fontSize={'sm'}
+										width='100%'
+										fontWeight='700'
+									>
 										I worried {useFormatDate(worry.id)} {worry.description}
 									</Text>
 								}
@@ -78,6 +92,7 @@ function WorryFeature() {
 									)}
 									{worry.consumedAt && (
 										<Text
+											key={`eaten-${worry.id}-${rerender}`}
 											fontSize={'xs'}
 											fontStyle='italic'
 											color='gray.200'

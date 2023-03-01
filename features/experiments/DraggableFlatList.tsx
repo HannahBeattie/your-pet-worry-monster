@@ -22,7 +22,7 @@ type FlatListItem = {
 }
 
 export const DraggableFlatlist = () => {
-	const allActive: Worry[] = useSelector(selectAllActive).reverse()
+	const allActive: Worry[] = [...useSelector(selectAllActive)].reverse()
 	const dispatch = useDispatch()
 	const name = useSelector(monsterNameSelector)
 
