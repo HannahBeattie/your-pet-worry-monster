@@ -21,7 +21,7 @@ function WorryFeature() {
 	const monsterName = useSelector(monsterNameSelector)
 	const { width } = useWindowDimensions()
 	return (
-		<VStack variant={'page'}>
+		<VStack flex={1}>
 			<ScrollView horizontal={true} scrollEnabled flex={1}>
 				<HStack flex={1} space={4} alignItems='center'>
 					{worryData.map((worry) => (
