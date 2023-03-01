@@ -50,7 +50,7 @@ export const DraggableFlatlist = () => {
 	const { height } = useWindowDimensions()
 	const spatter = require('../../assets/spatter01.png')
 	const spatter2 = require('../../assets/spatter02.png')
-	const worryBag = require('../../assets/aWorry.png')
+	const bagged = require('../../assets/bagged.jpg')
 
 	const router = useRouter()
 	const font = { fontFamily: 'Poppins_300Light', color: 'black', fontSize: 'sm' }
@@ -87,8 +87,7 @@ export const DraggableFlatlist = () => {
 						variant={'ghost'}
 						borderTopRadius={'lg'}
 						borderRadius={'md'}
-						borderColor={'teal.300'}
-						outlineColor={'teal.400'}
+						borderColor={'amber.600'}
 						borderWidth={1}
 						backgroundColor={'black'}
 						onPress={() => {
@@ -104,7 +103,7 @@ export const DraggableFlatlist = () => {
 								router.push('/eatingWorry')
 						}}
 					>
-						<Text fontSize={'md'} fontWeight={'600'} color={'teal.400'}>
+						<Text fontSize={'md'} fontWeight={'600'} color={'amber.500'}>
 							Feed to {name}
 						</Text>
 					</Button>
@@ -124,7 +123,7 @@ export const DraggableFlatlist = () => {
 
 	return (
 		<VStack backgroundColor={'blueGray.900'} flex={1}>
-			<ImageBackground source={spatter2}>
+			<ImageBackground source={bagged}>
 				<SafeAreaView>
 					<Box px={2}>
 						<Pressable
