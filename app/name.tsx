@@ -1,6 +1,18 @@
 import { Feather } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
-import { Button, Divider, Heading, HStack, Image, Input, Spacer, Text, VStack } from 'native-base'
+import {
+	Button,
+	Divider,
+	Heading,
+	HStack,
+	Icon,
+	IconButton,
+	Image,
+	Input,
+	Spacer,
+	Text,
+	VStack,
+} from 'native-base'
 import React from 'react'
 import { Keyboard, TouchableWithoutFeedback } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
@@ -59,9 +71,15 @@ function name() {
 					<Text color={'red.500'} fontSize={'sm'}>
 						{error}
 					</Text>
-					<ButtonLight handlePress={handlePress}>
-						<Feather name='check' size={10} color='black' />
-					</ButtonLight>
+					<HStack>
+						<Spacer />
+						<IconButton
+							onPress={handlePress}
+							backgroundColor={'white'}
+							borderRadius={'200'}
+							icon={<Icon color={'black'} as={Feather} name={'check'} />}
+						/>
+					</HStack>
 				</VStack>
 				<Image
 					alt={'blue the monster'}

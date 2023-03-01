@@ -19,35 +19,36 @@ export default function ConfirmMyName() {
 	const name = useSelector(monsterNameSelector)
 	return (
 		<VStack variant={'intro'} px={0} py={10}>
-			<VStack>
-				<Heading>I...I...I LOVE it!</Heading>
-				<Heading>How did you get so GOOD at thinking up names?</Heading>
-				<Heading>I am...{name}!</Heading>
+			<VStack px={4}>
+				<Heading fontSize={'5xl'}>I...I...I LOVE it !</Heading>
+				<Heading>How did you get so GOOD at monster names?</Heading>
 			</VStack>
 
 			<Image alt={'blue the monster'} source={chef} flex={1} resizeMode='contain' />
-
-			<HStack>
+			<Heading textAlign={'center'} color={'violet.500'} pb={4}>
+				{name}
+			</Heading>
+			<HStack space={4} justifyContent={'center'}>
 				<TouchableOpacity
 					onPress={() => {
 						no()
 					}}
 				>
 					<HStack space={2}>
-						<Button backgroundColor={'gray.900'}>
-							<Text color={'white'}>Oops!</Text>
+						<Button outlineColor={'purple.500'} borderColor={'purple.500'}>
+							<Text color={'purple.500'}>Oops!</Text>
 						</Button>
 					</HStack>
 				</TouchableOpacity>
-				<Spacer />
+
 				<TouchableOpacity
 					onPress={() => {
 						yes()
 					}}
 				>
 					<HStack space={2} alignItems={'flex-end'}>
-						<Button backgroundColor={'gray.100'}>
-							<Text color={'black'}>Yay!</Text>
+						<Button backgroundColor={'purple.500'}>
+							<Text color={'white'}>Yay!</Text>
 						</Button>
 					</HStack>
 				</TouchableOpacity>
