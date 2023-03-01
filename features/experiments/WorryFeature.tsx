@@ -45,7 +45,7 @@ function WorryFeature() {
 					horizontal={true}
 					scrollEnabled
 					flex={1}
-					showsHorizontalScrollIndicator={'false'}
+					showsHorizontalScrollIndicator={false}
 				>
 					<ImageSlide imageArray={imageArray} />
 
