@@ -19,9 +19,11 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useDispatch } from 'react-redux'
 import { setName } from '~features/monster/monsterSlice'
 import { ButtonLight } from '~features/theme/buttons'
+import MonsterVoice from '~features/styledComponents/MonsterVoice'
 
 function name() {
 	const gregoryBlue = require('../assets/blue.png')
+	// const thinkingGreg = require('../assets/.png')
 	const [value, setValue] = React.useState('')
 	const [error, setError] = React.useState('')
 	const dispatch = useDispatch()
@@ -50,7 +52,7 @@ function name() {
 		<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
 			<VStack variant={'intro'}>
 				<VStack px={2} space={2}>
-					<Heading fontFamily={'monsterBold'}>Hmm... what should I call mysef?</Heading>
+					<MonsterVoice>Hmm... what should I call mysef?</MonsterVoice>
 					<Input
 						maxLength={25}
 						onChangeText={handleChange}

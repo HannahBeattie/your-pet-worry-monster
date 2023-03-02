@@ -2,7 +2,7 @@ import { useRouter } from 'expo-router'
 import { Button, Heading, Image, VStack } from 'native-base'
 import React, { useEffect, useRef, useState } from 'react'
 import { Animated, TouchableOpacity } from 'react-native'
-import ZoomOut from '~features/layout/animation/ZoomOut'
+import ZoomOut from '~features/styledComponents/animation/ZoomOut'
 
 export default function Intro(): JSX.Element {
 	const imageAnim = useRef(new Animated.Value(0)).current

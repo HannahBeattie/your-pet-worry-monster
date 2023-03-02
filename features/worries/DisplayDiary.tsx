@@ -1,7 +1,7 @@
 import { VStack } from 'native-base'
 import React from 'react'
 import WorryFeature from '~features/experiments/WorryFeature'
-import ImageSlide from '~features/layout/ImageSlide'
+import ImageSlide from '~features/styledComponents/ImageSlide'
 const spatter = require('../../assets/spatter01.png')
 const spatter2 = require('../../assets/spatter02.png')
 const spatter3 = require('../../assets/spatter03.png')

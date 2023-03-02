@@ -1,4 +1,4 @@
-import { VStack, Heading } from 'native-base'
+import { VStack, Heading, Text } from 'native-base'
 import React from 'react'
 import { View, StyleSheet, SafeAreaView, useWindowDimensions } from 'react-native'
 import Animated, {
@@ -36,6 +36,7 @@ export default function Slide() {
 		<VStack flex={1} backgroundColor={'gray.900'}>
 			<SafeAreaView>
 				<Heading p={8}>Hello </Heading>
+				<Text variant={'blueVoice'}>Test</Text>
 			</SafeAreaView>
 		</VStack>
 	)

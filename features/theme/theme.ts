@@ -7,14 +7,14 @@ export const theme = extendTheme({
 
 	fontConfig: {
 		monster: {
-			100: 'monsterLight',
-			400: 'monsterFont',
-			600: 'monsterBold',
+			monsterLight: 'monsterLight',
+			monsterFont: 'monsterFont',
+			monsterBold: 'monsterBold',
 		},
 		poppins: {
-			100: 'poppinsLight',
-			400: 'poppinsMedium',
-			600: 'poppinsBold',
+			poppinsLight: 'poppinsLight',
+			poppinsMedium: 'poppinsMedium',
+			poppinsBold: 'poppinsBold',
 		},
 	},
 	fonts: {
@@ -25,6 +25,12 @@ export const theme = extendTheme({
 
 	colors: {
 		primary: defaultTheme.colors.violet,
+	},
+	textStyles: {
+		blueSpeaks: {
+			fontFamily: 'monsterFont',
+			color: 'violet.500',
+		},
 	},
 
 	components: {
@@ -126,12 +132,20 @@ export const theme = extendTheme({
 				fontSize: '2xl',
 				fontWeight: '300',
 			},
+			blueVoice: {
+				fontFamily: 'monsterFont',
+				color: 'violet.400',
+			},
 		},
 
 		Text: {
 			defaultProps: {
 				color: 'white',
 				fontSize: 'xl',
+			},
+			blueVoice: {
+				fontFamily: 'monsterFont',
+				color: 'violet.400',
 			},
 			variants: {
 				btn: {

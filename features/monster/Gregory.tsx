@@ -1,19 +1,14 @@
-import { Heading, Image, Spacer, Text, VStack } from 'native-base'
+import { VStack } from 'native-base'
 import React from 'react'
-import { useSelector } from 'react-redux'
-import FloatingButton from '~features/layout/MyFab'
-import { monsterNameSelector } from '~features/monster/monsterSlice'
+import FloatingButton from '~features/styledComponents/MyFab'
+import NameLabel from '~features/styledComponents/NameLabel'
+
 import Blue from './Blue'
 
-const gregoryBlue = require('../../assets/blue.png')
-
 function Gregory() {
-	const name = useSelector(monsterNameSelector)
 	return (
-		<VStack alignItems={'stretch'} flex={'1'}>
-			<Heading color={'blue.300'} textAlign={'center'} pt={8}>
-				{name}
-			</Heading>
+		<VStack alignItems={'stretch'} flex={'1'} pt={4}>
+			<NameLabel />
 			<Blue />
 			<FloatingButton />
 		</VStack>

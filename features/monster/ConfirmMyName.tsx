@@ -5,6 +5,7 @@ import React from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useSelector } from 'react-redux'
 import { monsterNameSelector } from '~features/monster/monsterSlice'
+import MonsterVoice from '~features/styledComponents/MonsterVoice'
 
 const chef = require('../../assets/blue.png')
 
@@ -18,16 +19,18 @@ export default function ConfirmMyName() {
 	}
 	const name = useSelector(monsterNameSelector)
 	return (
-		<VStack variant={'intro'} px={0} py={10}>
-			<VStack px={4}>
-				<Heading fontSize={'5xl'}>I...I...I LOVE it !</Heading>
-				<Heading>How did you get so GOOD at monster names?</Heading>
+		<VStack flex={1}>
+			<VStack alignItems={'stretch'} space={0}>
+				<MonsterVoice sizeVal={'5xl'} props={{ textAlign: 'start' }}>
+					I...I...Love it!
+				</MonsterVoice>
 			</VStack>
 
 			<Image alt={'blue the monster'} source={chef} flex={1} resizeMode='contain' />
-			<Heading textAlign={'center'} color={'violet.500'} pb={4}>
-				{name}
-			</Heading>
+
+			<MonsterVoice sizeVal={'2xl'}>
+				How did you get so great at thinking up monster names?
+			</MonsterVoice>
 			<HStack space={4} justifyContent={'center'}>
 				<TouchableOpacity
 					onPress={() => {
