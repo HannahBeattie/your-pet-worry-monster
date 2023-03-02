@@ -48,13 +48,13 @@ export const DraggableFlatlist = () => {
 	const dispatch = useDispatch()
 	const name = useSelector(monsterNameSelector)
 	const { height } = useWindowDimensions()
+	const router = useRouter()
 	const spatter = require('../../assets/spatter01.png')
 	const spatter2 = require('../../assets/spatter02.png')
 	const spatter3 = require('../../assets/spatter03.png')
 	const spatter4 = require('../../assets/spatter.png')
 	const bagged = require('../../assets/bagged.jpg')
 
-	const router = useRouter()
 	const font = { fontFamily: 'Poppins_300Light', color: 'black', fontSize: 'sm' }
 
 	const data: FlatListItem[] = allActive.map((worry) => ({

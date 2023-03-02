@@ -5,6 +5,24 @@ export const theme = extendTheme({
 		initialColorMode: 'dark',
 	},
 
+	fontConfig: {
+		monster: {
+			100: 'monsterLight',
+			400: 'monsterFont',
+			600: 'monsterBold',
+		},
+		poppins: {
+			100: 'poppinsLight',
+			400: 'poppinsMedium',
+			600: 'poppinsBold',
+		},
+	},
+	fonts: {
+		heading: 'poppins',
+		body: 'poppins',
+		mono: 'monsterLight',
+	},
+
 	colors: {
 		primary: defaultTheme.colors.violet,
 	},

@@ -49,8 +49,8 @@ function name() {
 	return (
 		<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
 			<VStack variant={'intro'}>
-				<VStack px={2}>
-					<Heading>Hmm... what should I call mysef?</Heading>
+				<VStack px={2} space={2}>
+					<Heading fontFamily={'monsterBold'}>Hmm... what should I call mysef?</Heading>
 					<Input
 						maxLength={25}
 						onChangeText={handleChange}
@@ -61,7 +61,7 @@ function name() {
 						placeholder={placeHolderText}
 						size='2xl'
 						fontSize='2xl'
-						fontFamily='Poppins_300Light'
+						fontFamily='poppinsLight'
 						variant={'unstyled'}
 						autoCapitalize='none'
 						mb={-2}

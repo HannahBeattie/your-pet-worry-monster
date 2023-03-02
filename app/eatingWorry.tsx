@@ -34,12 +34,16 @@ export default function EatingWorry() {
 		<VStack backgroundColor={'gray.900'} flex={1}>
 			<SafeAreaView style={{ flex: 1 }}>
 				<VStack pt={4}>
-					<Heading fontSize={'6xl'} textAlign={'center'}>
+					<Heading fontSize={'6xl'} textAlign={'center'} fontFamily={'mono'}>
 						YUMMMM!
 					</Heading>
-					<Heading textAlign={'center'}>That Was delicious!</Heading>
+					<Heading textAlign={'center'} fontFamily={'mono'}>
+						That Was delicious!
+					</Heading>
 
-					<Heading textAlign={'center'}>Give me more!</Heading>
+					<Heading textAlign={'center'} fontFamily={'mono'}>
+						Give me more!
+					</Heading>
 				</VStack>
 				<VStack flex={1} px={4}>
 					<Image alt={'blue the monster'} source={yummy} flex={1} resizeMode='contain' />

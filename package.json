@@ -8,6 +8,7 @@
     "build-dev": "eas build -e development -p ios --non-interactive"
   },
   "dependencies": {
+    "@expo-google-fonts/gaegu": "^0.2.3",
     "@expo-google-fonts/gloria-hallelujah": "^0.2.3",
     "@expo-google-fonts/miniver": "^0.2.3",
     "@expo-google-fonts/mynerve": "^0.2.3",
