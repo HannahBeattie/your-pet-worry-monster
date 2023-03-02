@@ -1,9 +1,11 @@
 import { Entypo } from '@expo/vector-icons'
 import { Box, Icon, IconButton, VStack } from 'native-base'
 import { ComponentProps, FC, ReactElement } from 'react'
+import { TouchableOpacity } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import Animated, {
 	Extrapolation,
+	FadeOutUp,
 	interpolate,
 	runOnUI,
 	useAnimatedRef,
@@ -160,7 +162,10 @@ const DragExpander: FC<DragExpanderProps> = ({
 
 	return (
 		<GestureDetector gesture={gesture}>
-			<Animated.View style={[animStyle, { display: 'flex', alignItems: 'stretch' }]}>
+			<Animated.View
+				exiting={FadeOutUp}
+				style={[animStyle, { display: 'flex', alignItems: 'stretch' }]}
+			>
 				<VStack
 					alignItems='stretch'
 					justifyContent='center'
@@ -178,11 +183,18 @@ const DragExpander: FC<DragExpanderProps> = ({
 						right={0}
 					>
 						<Animated.View style={[animStyleDelete]}>
-							<IconButton
-								icon={<Icon as={Entypo} name='circle-with-cross' />}
-								_icon={{ color: 'red.500', size: '4xl' }}
+							<TouchableOpacity
 								onPress={onDelete}
-							/>
+								accessibilityRole='button'
+								accessibilityLabel='delete'
+							>
+								<Icon
+									as={Entypo}
+									name='circle-with-cross'
+									color='red.500'
+									size='4xl'
+								/>
+							</TouchableOpacity>
 						</Animated.View>
 					</VStack>
 

@@ -1,24 +1,12 @@
-import { AntDesign } from '@expo/vector-icons'
-import { useRouter } from 'expo-router'
-import {
-	Box,
-	Heading,
-	HStack,
-	Icon,
-	IconButton,
-	ScrollView,
-	Spacer,
-	Text,
-	VStack,
-} from 'native-base'
+import { Heading, HStack, ScrollView, Text, VStack } from 'native-base'
 import React, { useEffect, useState } from 'react'
-import { Pressable, SafeAreaView, useWindowDimensions } from 'react-native'
+import { SafeAreaView, useWindowDimensions } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import ImageSlide from '~features/layout/ImageSlide'
 import SimpleHome from '~features/layout/SimpleHome'
 import { monsterNameSelector } from '~features/monster/monsterSlice'
 import { useFormatDate } from '~features/worries/useFormatDate'
-import { deleteWorry, selectAllInactive, Worry } from '~features/worries/worrySlice'
+import { deleteWorry, selectAllInactive } from '~features/worries/worrySlice'
 import DragExpander from './DragExpander'
 
 const spatter = require('../../assets/spatter01.png')
@@ -71,10 +59,12 @@ function WorryFeature() {
 								p={10}
 								px={8}
 								maxW={width * 0.7}
-								_bg={{ bg: 'gray.900', borderRadius: 'lg' }}
-								borderWidth={1}
-								borderColor={'gray.800'}
-								borderRadius={'md'}
+								_bg={{
+									bg: 'gray.900',
+									borderRadius: 'lg',
+									borderColor: 'gray.800',
+									borderWidth: 1,
+								}}
 								header={
 									<Text
 										key={`desc-${worry.id}-${rerender}`}
