@@ -31,9 +31,12 @@ type Part = {
 	gain?: Pos
 	look?: number
 	springOpts?: WithSpringConfig
+	minWorries?: number
 }
 
 type PartName =
+	| 'worriesL'
+	| 'worriesR'
 	| 'legL'
 	| 'legR'
 	| 'armL'
@@ -47,6 +50,8 @@ type PartName =
 	| 'pupilR'
 
 const partNames = [
+	'worriesL',
+	'worriesR',
 	'legL',
 	'legR',
 	'armL',
@@ -111,6 +116,30 @@ const parts: Record<PartName, Part> = {
 		doubleSpring: true,
 		springOpts: { stiffness: 150, damping: 12 },
 		look: -0.014,
+	},
+	worriesL: {
+		src: require('../../assets/monsterParts/worries-left.png'),
+		left: 0.69918,
+		w: 0.23566,
+		top: 0.54156,
+		h: 0.19867,
+		pivot: { x: 0.6146, y: 0.40139 },
+		doubleSpring: true,
+		springOpts: { stiffness: 300, damping: 18 },
+		look: -0.017,
+		minWorries: 2,
+	},
+	worriesR: {
+		src: require('../../assets/monsterParts/worries-right.png'),
+		left: 0.01959,
+		w: 0.35328,
+		top: 0.53752,
+		h: 0.28555,
+		pivot: { x: 0.39478, y: 0.3985 },
+		doubleSpring: true,
+		springOpts: { stiffness: 150, damping: 12 },
+		look: -0.014,
+		minWorries: 1,
 	},
 	neck: {
 		src: require('../../assets/monsterParts/neck.png'),
@@ -224,7 +253,11 @@ function log(...args: any[]) {
 	console.log(...args)
 }
 
-export default function Puppet() {
+type PuppetProps = {
+	numWorries?: number
+}
+
+export default function Puppet({ numWorries }: PuppetProps) {
 	const [rerender, setRerender] = useState(0)
 
 	const start = useSharedValue({ x: 0, y: 0 })
@@ -303,25 +336,9 @@ export default function Puppet() {
 					})(imgLayout)
 				}}
 			>
-				{/* {!golive && (
-				<Image
-					position='absolute'
-					width='full'
-					height='full'
-					left={0}
-					top={0}
-					right={0}
-					bottom={0}
-					// opacity={0.1}
-					alt={'blue the monster'}
-					source={noWorries}
-					flex={1}
-					resizeMode='contain'
-					zIndex={10}
-				/>
-			)} */}
 				{partNames.map((partName) => {
-					const { src } = parts[partName]
+					const { src, minWorries } = parts[partName]
+					const hasEnoughWorries = (numWorries ?? 0) >= (minWorries ?? 0)
 					return (
 						<Animated.View
 							key={`part-${partName}`}
@@ -333,6 +350,7 @@ export default function Puppet() {
 								source={src}
 								flex={1}
 								resizeMode='contain'
+								opacity={hasEnoughWorries ? 1 : 0}
 							/>
 						</Animated.View>
 					)
