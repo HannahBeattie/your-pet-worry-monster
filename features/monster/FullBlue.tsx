@@ -8,6 +8,7 @@ const sleepy = require('../../assets/fullBlue/sleepy.png')
 const upset = require('../../assets/fullBlue/upset.png')
 const verySad = require('../../assets/fullBlue/verySad.png')
 const yummy = require('../../assets/fullBlue/yummy.png')
+const fuzzle = require('../../assets/fullBlue/fuzzle.png')
 
 interface Props {
 	monsterMood: string
@@ -36,6 +37,9 @@ const FullBlue: React.FC<Props> = ({ monsterMood }) => {
 			break
 		case 'yummy':
 			src = yummy
+			break
+		case 'fuzzle':
+			src = fuzzle
 			break
 		default:
 			src = happy

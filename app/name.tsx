@@ -1,18 +1,15 @@
 import { Feather } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
-import { Divider, HStack, Icon, IconButton, Image, Input, Spacer, Text } from 'native-base'
+import { Divider, HStack, Icon, IconButton, Input, Spacer, Text } from 'native-base'
 import React from 'react'
 import { Keyboard, TouchableWithoutFeedback } from 'react-native'
 import { useDispatch } from 'react-redux'
 import FullBlue from '~features/monster/FullBlue'
 import { setName } from '~features/monster/monsterSlice'
-
 import MonsterVoice from '~features/styledComponents/MonsterVoice'
 import PageWrapper from '~features/styledComponents/PageWrapper'
 
 function name() {
-	const gregoryBlue = require('../assets/blue.png')
-	// const thinkingGreg = require('../assets/.png')
 	const [value, setValue] = React.useState('')
 	const [error, setError] = React.useState('')
 	const dispatch = useDispatch()

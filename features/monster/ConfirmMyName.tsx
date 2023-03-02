@@ -9,8 +9,6 @@ import MonsterVoice from '~features/styledComponents/MonsterVoice'
 import PageWrapper from '~features/styledComponents/PageWrapper'
 import FullBlue from './FullBlue'
 
-const chef = require('../../assets/blue.png')
-
 export default function ConfirmMyName() {
 	const router = useRouter()
 	const no = () => {

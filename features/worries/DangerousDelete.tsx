@@ -20,7 +20,7 @@ export default function DangerousDelete() {
 					wipeWorryData()
 				}}
 			>
-				Danger! Deleting all worry data!!
+				Delete Data
 			</Button>
 			{/* {worryData.map((worry, idx) => (
 				<Text key={idx} color={'white'}>
