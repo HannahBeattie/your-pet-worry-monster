@@ -21,6 +21,7 @@ import Animated, { FadeInDown, FadeOutUp } from 'react-native-reanimated'
 import { useSelector } from 'react-redux'
 import { monsterNameSelector } from '~features/monster/monsterSlice'
 import { WorryField } from '~features/worries/worrySlice'
+import PageWrapper from './PageWrapper'
 
 export interface WorryInputProps {
 	name: WorryField
@@ -88,21 +89,17 @@ export default function WorryInput({
 	}, [error, validationError])
 
 	return (
-		<VStack alignItems={'stretch'} flex={1} backgroundColor={'gray.900'}>
-			<HStack position={'sticky'}>
-				<Spacer />
-				<TouchableOpacity>
-					<IconButton
-						pt={8}
-						position={'fixed'}
-						icon={<Icon as={Entypo} name='cross' size='xl' />}
-						_icon={{ color: 'white' }}
-						onPress={onClose}
-						accessibilityLabel='exit screen'
-						variant={'unstyled'}
-					/>
-				</TouchableOpacity>
-			</HStack>
+		<PageWrapper>
+			{/* <TouchableOpacity>
+				<IconButton
+					icon={<Icon as={Entypo} name='cross' size='xl' />}
+					_icon={{ color: 'white' }}
+					onPress={onClose}
+					accessibilityLabel='exit screen'
+					variant={'unstyled'}
+				/>
+			</TouchableOpacity> */}
+
 			<KeyboardAwareScrollView
 				enableAutomaticScroll
 				keyboardShouldPersistTaps='handled'
@@ -207,6 +204,6 @@ export default function WorryInput({
 					</Animated.View>
 				</VStack>
 			</KeyboardAwareScrollView>
-		</VStack>
+		</PageWrapper>
 	)
 }

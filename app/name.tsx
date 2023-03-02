@@ -1,25 +1,14 @@
 import { Feather } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
-import {
-	Button,
-	Divider,
-	Heading,
-	HStack,
-	Icon,
-	IconButton,
-	Image,
-	Input,
-	Spacer,
-	Text,
-	VStack,
-} from 'native-base'
+import { Divider, HStack, Icon, IconButton, Image, Input, Spacer, Text } from 'native-base'
 import React from 'react'
 import { Keyboard, TouchableWithoutFeedback } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useDispatch } from 'react-redux'
+import FullBlue from '~features/monster/FullBlue'
 import { setName } from '~features/monster/monsterSlice'
-import { ButtonLight } from '~features/theme/buttons'
+
 import MonsterVoice from '~features/styledComponents/MonsterVoice'
+import PageWrapper from '~features/styledComponents/PageWrapper'
 
 function name() {
 	const gregoryBlue = require('../assets/blue.png')
@@ -50,46 +39,40 @@ function name() {
 
 	return (
 		<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-			<VStack variant={'intro'}>
-				<VStack px={2} space={2}>
-					<MonsterVoice>Hmm... what should I call mysef?</MonsterVoice>
-					<Input
-						maxLength={25}
-						onChangeText={handleChange}
-						value={value}
-						multiline
-						color={'white'}
-						placeholderTextColor={'blueGray.500'}
-						placeholder={placeHolderText}
-						size='2xl'
-						fontSize='2xl'
-						fontFamily='poppinsLight'
-						variant={'unstyled'}
-						autoCapitalize='none'
-						mb={-2}
-						mx={-2}
-					/>
-					<Divider color={'white'} />
-					<Text color={'red.500'} fontSize={'sm'}>
-						{error}
-					</Text>
-					<HStack>
-						<Spacer />
-						<IconButton
-							onPress={handlePress}
-							backgroundColor={'white'}
-							borderRadius={'200'}
-							icon={<Icon color={'black'} as={Feather} name={'check'} />}
-						/>
-					</HStack>
-				</VStack>
-				<Image
-					alt={'blue the monster'}
-					source={gregoryBlue}
-					flex={1}
-					resizeMode='contain'
+			<PageWrapper>
+				<MonsterVoice>Hmm... what should I call mysef?</MonsterVoice>
+				<Input
+					maxLength={25}
+					onChangeText={handleChange}
+					value={value}
+					multiline
+					color={'white'}
+					placeholderTextColor={'blueGray.500'}
+					placeholder={placeHolderText}
+					size='2xl'
+					fontSize='2xl'
+					fontFamily='poppinsLight'
+					variant={'unstyled'}
+					autoCapitalize='none'
+					mb={-2}
+					mx={-2}
 				/>
-			</VStack>
+				<Divider color={'white'} />
+				<Text color={'red.500'} fontSize={'sm'}>
+					{error}
+				</Text>
+				<HStack>
+					<Spacer />
+					<IconButton
+						onPress={handlePress}
+						backgroundColor={'white'}
+						borderRadius={'200'}
+						icon={<Icon color={'black'} as={Feather} name={'check'} />}
+					/>
+				</HStack>
+
+				<FullBlue monsterMood='happy' />
+			</PageWrapper>
 		</TouchableWithoutFeedback>
 	)
 }

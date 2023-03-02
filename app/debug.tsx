@@ -2,10 +2,8 @@ import { Drawer } from 'expo-router/drawer'
 import { Text, VStack } from 'native-base'
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
 import { useSelector } from 'react-redux'
-import HomeButton from '~features/styledComponents/HomeButton'
 import Page from '~features/styledComponents/Page'
 import DangerousDelete from '~features/worries/DangerousDelete'
-import ListAllWorries from '~features/worries/ListAllWorries'
 import { worriesSelectors } from '~features/worries/worrySlice'
 
 export default function DebugPage() {
@@ -26,8 +24,6 @@ export default function DebugPage() {
 						</VStack>
 					</TouchableOpacity>
 				))}
-
-				<HomeButton />
 			</Page>
 		</ScrollView>
 	)
