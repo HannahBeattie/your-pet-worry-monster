@@ -329,7 +329,7 @@ export default function Puppet({ numWorries }: PuppetProps) {
 						imgLayout.height = ll.width / aspect
 						imgLayout.y = (ll.height - imgLayout.height) / 2
 					}
-					setTimeout(() => setRerender(+new Date()), 150) // we need to double render because the images look wrong on the first one
+					setTimeout(() => setRerender(+new Date()), 1000) // we need to double render because the images look wrong on the first one
 					// console.log(layoutAspect, aspect, nativeEvent.layout, imgLayout)
 					runOnUI((layoutVals) => {
 						'worklet'
