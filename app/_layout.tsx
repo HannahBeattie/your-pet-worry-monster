@@ -1,6 +1,6 @@
 import {
 	Poppins_300Light as poppinsLight,
-	Poppins_500Medium as poppinsMedium,
+	Poppins_500Medium as poppins,
 	Poppins_700Bold as poppinsBold,
 	useFonts,
 } from '@expo-google-fonts/poppins'
@@ -27,7 +27,7 @@ export default function Layout() {
 	const [fontsLoaded] = useFonts({
 		poppinsBold,
 		poppinsLight,
-		poppinsMedium,
+		poppins,
 		monsterFont,
 		monsterLight,
 		monsterBold,

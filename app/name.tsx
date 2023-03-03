@@ -1,6 +1,6 @@
 import { Feather } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
-import { Divider, HStack, Icon, IconButton, Input, Spacer, Text, VStack } from 'native-base'
+import { Center, Divider, HStack, Icon, IconButton, Input, Spacer, Text, VStack } from 'native-base'
 import React from 'react'
 import { Keyboard, Touchable, TouchableWithoutFeedback } from 'react-native'
 import { useDispatch } from 'react-redux'
@@ -48,7 +48,7 @@ export default function Name() {
 			>
 				<VStack>
 					<VStack px={4} space={4} mb={-2}>
-						<MonsterVoice sizeVal={'4xl'}>
+						<MonsterVoice sizeVal={'3xl'}>
 							Hmm... what should I call mysef?
 						</MonsterVoice>
 

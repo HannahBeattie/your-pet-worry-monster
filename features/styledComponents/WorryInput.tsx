@@ -92,7 +92,7 @@ export default function WorryInput({
 
 	return (
 		<PageWrapper py={-4} px={-1}>
-			<ExitPage onClose={onClose} />
+			<ExitPage close={onClose} />
 			<KeyboardAwareScrollView
 				enableAutomaticScroll
 				keyboardShouldPersistTaps='handled'
@@ -109,7 +109,7 @@ export default function WorryInput({
 						}}
 					>
 						<VStack px={30} alignItems='stretch'>
-							<Heading fontFamily='poppins' color={'white'} py={4}>
+							<Heading fontFamily='poppinsLight' color={'white'} py={4}>
 								{question}
 							</Heading>
 
@@ -122,7 +122,7 @@ export default function WorryInput({
 								value={value}
 								size='xl'
 								fontSize='lg'
-								fontFamily='Poppins'
+								fontFamily='poppinsLight'
 								variant={'unstyled'}
 								autoCapitalize='none'
 								mx={-2}

@@ -1,11 +1,17 @@
+import { useRouter } from 'expo-router'
 import { HStack, Spacer } from 'native-base'
 import React from 'react'
 import CircleIconButton from './CircleIconButton'
 
 interface Props {
-	onClose: () => void
+	close?: () => void
 }
-function ExitPage({ onClose }: Props) {
+
+function ExitPage({ close }: Props) {
+	const router = useRouter()
+	const handleClose = React.useCallback(() => {
+		router.push('/')
+	}, [router])
 	return (
 		<HStack>
 			<Spacer />
@@ -14,7 +20,7 @@ function ExitPage({ onClose }: Props) {
 				size={'lg'}
 				tag='exit'
 				arealabel='exit'
-				handlePress={onClose}
+				handlePress={close ? close : handleClose}
 			/>
 		</HStack>
 	)
