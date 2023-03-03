@@ -86,20 +86,22 @@ const SwipeableButton = ({ onSwipe, text, children, isLoading = false }: SwipeBu
 	}
 
 	return (
-		<PanGestureHandler enabled={!isLoading} onGestureEvent={animatedGestureHandler}>
-			<Animated.View style={[styles.swipeButtonContainer, AnimatedStyles.swipeButton]}>
-				<HStack flex={1} justifyItems={'center'} space={2}>
-					<Text fontSize={'sm'} color={'gray.500'}>
-						{text ? text : `Slide to feed ${name}`}
-					</Text>
-					<Center>
-						<FontAwesome name='angle-right' size={20} color='#ffffff3a' />
-					</Center>
-				</HStack>
+		<>
+			<PanGestureHandler enabled={!isLoading} onGestureEvent={animatedGestureHandler}>
+				<Animated.View style={[styles.swipeButtonContainer, AnimatedStyles.swipeButton]}>
+					<HStack flex={1} justifyItems={'center'} space={2}>
+						<Text fontSize={'sm'} color={'gray.500'}>
+							{text ? text : `Slide to feed ${name}`}
+						</Text>
+						<Center>
+							<FontAwesome name='angle-right' size={20} color='#ffffff3a' />
+						</Center>
+					</HStack>
 
-				<Animated.Text style={AnimatedStyles.swipeText}>{children}</Animated.Text>
-			</Animated.View>
-		</PanGestureHandler>
+					<Animated.Text style={AnimatedStyles.swipeText}>{children}</Animated.Text>
+				</Animated.View>
+			</PanGestureHandler>
+		</>
 	)
 }
 

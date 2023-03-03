@@ -1,5 +1,5 @@
 import { useRouter } from 'expo-router'
-import { Center, Text, VStack } from 'native-base'
+import { Center, Divider, ScrollView, Text, VStack } from 'native-base'
 import React, { useState } from 'react'
 import { useWindowDimensions } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
@@ -34,39 +34,44 @@ export default function CurrentContent() {
 	}
 
 	const { width, height } = useWindowDimensions()
-	const w = width - 48
+	const w = width - 60
 	return (
 		<>
-			<VStack py={10}>
-				{allActive.map((worry) => (
-					<VStack key={worry.id}>
-						<SwipeableButton
-							text={text}
-							onSwipe={() => handleSwipe(worry.id)}
-							isLoading={isLoading}
-						>
-							<VStack pt={3}>
-								<Center
-									backgroundColor={'#111111a0'}
-									justifyItems={'center'}
-									justifyContent={'center'}
-									borderColor={'#ffffff14'}
-									borderWidth={1}
-									py={8}
-									px={8}
-									width={w}
-									borderBottomRadius={'md'}
-								>
-									<Text fontSize={'md'} color={'gray.400'}>
-										I started worrying {useFormatDate(worry.id)}{' '}
-										{worry.description}
-									</Text>
-								</Center>
-							</VStack>
-						</SwipeableButton>
-					</VStack>
-				))}
-			</VStack>
+			{allActive.map((worry) => (
+				<VStack key={worry.id} py={2}>
+					<SwipeableButton
+						text={text}
+						onSwipe={() => handleSwipe(worry.id)}
+						isLoading={isLoading}
+					>
+						<VStack pt={3}>
+							<Center
+								backgroundColor={'#111111a0'}
+								justifyItems={'center'}
+								justifyContent={'center'}
+								borderColor={'#ffffff14'}
+								borderWidth={1}
+								py={8}
+								px={8}
+								width={w}
+								borderRadius={'md'}
+								alignItems={'stretch'}
+							>
+								<Text fontSize={'md'} color={'gray.400'}>
+									I started worrying {useFormatDate(worry.id)} {worry.description}
+								</Text>
+								{worry.extraNote && (
+									<>
+										<Text fontSize={'sm'} color={'gray.400'} pt={4}>
+											The scariest bit is{worry.extraNote}
+										</Text>
+									</>
+								)}
+							</Center>
+						</VStack>
+					</SwipeableButton>
+				</VStack>
+			))}
 		</>
 	)
 }
