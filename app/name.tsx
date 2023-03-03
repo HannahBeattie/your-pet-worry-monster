@@ -50,6 +50,7 @@ export default function Name() {
 
 						<Input
 							maxLength={25}
+							autoFocus={false}
 							onChangeText={handleChange}
 							value={value}
 							color={'white'}
@@ -81,7 +82,7 @@ export default function Name() {
 					</VStack>
 				</VStack>
 			</TouchableWithoutFeedback>
-			<FullBlue monsterMood='happy' />
+			<FullBlue monsterMood='sleepy' />
 		</PageWrapper>
 	)
 }

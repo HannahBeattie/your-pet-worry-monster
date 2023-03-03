@@ -1,17 +1,11 @@
-import { VStack, Heading, Text } from 'native-base'
-import React from 'react'
-import { View, StyleSheet, SafeAreaView, useWindowDimensions } from 'react-native'
-import Animated, {
-	useAnimatedGestureHandler,
-	useSharedValue,
-	useAnimatedStyle,
-	withSpring,
-} from 'react-native-reanimated'
-import { PanGestureHandler } from 'react-native-gesture-handler'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectAllActive, updateWorry, Worry } from '~features/worries/worrySlice'
-import { monsterNameSelector } from '~features/monster/monsterSlice'
 import { useRouter } from 'expo-router'
+import { Heading, VStack } from 'native-base'
+import React from 'react'
+import { SafeAreaView, useWindowDimensions } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
+import { monsterNameSelector } from '~features/monster/monsterSlice'
+import CircleIconButton from '~features/styledComponents/CircleIconButton'
+import { selectAllActive, Worry } from '~features/worries/worrySlice'
 
 // onPress={() => {
 // 	dispatch(
@@ -36,7 +30,11 @@ export default function Slide() {
 		<VStack flex={1} backgroundColor={'gray.900'}>
 			<SafeAreaView>
 				<Heading p={8}>Hello </Heading>
-				<Text variant={'blueVoice'}>Test</Text>
+				<CircleIconButton
+					name='food-drumstick-off'
+					label='Check'
+					arealabel='Check Button'
+				/>
 			</SafeAreaView>
 		</VStack>
 	)
