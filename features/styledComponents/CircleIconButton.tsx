@@ -74,13 +74,7 @@ const CircleIconButton: React.FC<Props> = ({
 			</Center>
 			{label && (
 				<Center>
-					<Text
-						fontSize={'lg'}
-						color={'gray.500'}
-						textAlign={'center'}
-						mt={-2}
-						{...labelProps}
-					>
+					<Text fontSize={'lg'} color={'gray.500'} textAlign={'center'} {...labelProps}>
 						{label}
 					</Text>
 				</Center>

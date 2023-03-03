@@ -17,6 +17,7 @@ import React from 'react'
 import { SafeAreaView, useWindowDimensions } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import DragExpander from '~features/experiments/DragExpander'
+import CircleIconButton from '~features/styledComponents/CircleIconButton'
 import PageWrapper from '~features/styledComponents/PageWrapper'
 import { useFormatDate } from './useFormatDate'
 import { deleteWorry, selectLastActiveItem, updateWorry } from './worrySlice'
@@ -95,53 +96,32 @@ function WorryOptions() {
 					</Text>
 				</VStack>
 
-				<HStack justifyContent={'space-evenly'} px={50}>
-					<VStack>
-						<IconButton
-							onPress={() => {
-								dispatch(
-									updateWorry({
-										id: latestActive.id,
-										changes: {
-											isActive: !latestActive.isActive,
-											consumedAt: +new Date(),
-										},
-									})
-								),
-									router.push('/eatingWorry')
-							}}
-							icon={
-								<Icon
-									size={'5xl'}
-									as={MaterialCommunityIcons}
-									name={'food-drumstick'}
-								/>
-							}
-						/>
-						<VStack>
-							<Heading fontSize={'sm'} textAlign={'center'}>
-								Gobble
-							</Heading>
-						</VStack>
-					</VStack>
-
-					<VStack>
-						<IconButton
-							onPress={() => {
-								router.push('/')
-							}}
-							icon={
-								<Icon
-									size={'5xl'}
-									as={MaterialCommunityIcons}
-									name={'food-drumstick-off'}
-								/>
-							}
-						/>
-						<Heading fontSize={'sm'} textAlign={'center'}>
-							Save
-						</Heading>
-					</VStack>
+				<HStack alignItems={'stretch'} justifyContent={'space-between'}>
+					<CircleIconButton
+						tag={'!feed'}
+						handlePress={() => {
+							router.push('/')
+						}}
+						arealabel={'do not feed to monster'}
+						label={'save'}
+					/>
+					<CircleIconButton
+						tag='feed'
+						arealabel='eat worry'
+						label='Gobble'
+						handlePress={() => {
+							dispatch(
+								updateWorry({
+									id: latestActive.id,
+									changes: {
+										isActive: !latestActive.isActive,
+										consumedAt: +new Date(),
+									},
+								})
+							),
+								router.push('/eatingWorry')
+						}}
+					/>
 				</HStack>
 			</PageWrapper>
 		</VStack>
