@@ -1,6 +1,6 @@
 import { Feather } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
-import { Divider, HStack, Icon, IconButton, Input, Spacer, Text } from 'native-base'
+import { Divider, HStack, Icon, IconButton, Input, Spacer, Text, VStack } from 'native-base'
 import React from 'react'
 import { Keyboard, TouchableWithoutFeedback } from 'react-native'
 import { useDispatch } from 'react-redux'
@@ -9,7 +9,7 @@ import { setName } from '~features/monster/monsterSlice'
 import MonsterVoice from '~features/styledComponents/MonsterVoice'
 import PageWrapper from '~features/styledComponents/PageWrapper'
 
-function name() {
+export default function Name() {
 	const [value, setValue] = React.useState('')
 	const [error, setError] = React.useState('')
 	const dispatch = useDispatch()
@@ -19,13 +19,13 @@ function name() {
 		setValue(value)
 	}
 
-	const placeHolderText = 'name'
+	const placeHolderText = 'a good monster name'
 
 	const handlePress = () => {
 		dispatch(setName(value))
 		if (value.length < 1) {
 			setError('First, I need a name')
-		} else if (value.length < 3) {
+		} else if (value.length < 2) {
 			setError('Seems a little short for a name...')
 		} else {
 			setError('')
@@ -33,27 +33,28 @@ function name() {
 			setValue('')
 		}
 	}
+	const checkColor = value.length > 2 ? 'violet.400' : 'black'
 
 	return (
 		<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
 			<PageWrapper>
-				<MonsterVoice>Hmm... what should I call mysef?</MonsterVoice>
+				<VStack px={4} py={4}>
+					<MonsterVoice>Hmm... what should I call mysef?</MonsterVoice>
+				</VStack>
 				<Input
 					maxLength={25}
 					onChangeText={handleChange}
 					value={value}
-					multiline
 					color={'white'}
 					placeholderTextColor={'blueGray.500'}
 					placeholder={placeHolderText}
-					size='2xl'
-					fontSize='2xl'
+					fontSize='xl'
 					fontFamily='poppinsLight'
 					variant={'unstyled'}
 					autoCapitalize='none'
 					mb={-2}
-					mx={-2}
 				/>
+
 				<Divider color={'white'} />
 				<Text color={'red.500'} fontSize={'sm'}>
 					{error}
@@ -62,16 +63,13 @@ function name() {
 					<Spacer />
 					<IconButton
 						onPress={handlePress}
-						backgroundColor={'white'}
+						backgroundColor={'gray.800'}
 						borderRadius={'200'}
-						icon={<Icon color={'black'} as={Feather} name={'check'} />}
+						icon={<Icon color={checkColor} as={Feather} name={'check'} />}
 					/>
 				</HStack>
-
 				<FullBlue monsterMood='happy' />
 			</PageWrapper>
 		</TouchableWithoutFeedback>
 	)
 }
-
-export default name

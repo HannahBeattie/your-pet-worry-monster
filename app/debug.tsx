@@ -1,4 +1,4 @@
-import { Center, Divider, Heading, Image, ScrollView, Spacer, Text, VStack } from 'native-base'
+import { Box, Center, Divider, Heading, Image, ScrollView, Spacer, Text, VStack } from 'native-base'
 import { TouchableOpacity } from 'react-native'
 import { useSelector } from 'react-redux'
 import FullBlue from '~features/monster/FullBlue'
@@ -11,6 +11,7 @@ const fuzzle = require('../assets/fullBlue/fuzzle.png')
 export default function DebugPage() {
 	const smallDataText = {
 		fontSize: 'sm',
+		color: 'gray.300',
 	}
 	const worryData = useSelector(worriesSelectors.selectAll)
 	return (
@@ -30,29 +31,32 @@ export default function DebugPage() {
 					</VStack>
 
 					<VStack maxH={400} pt={8}>
-						<Image h={400} source={fuzzle} alt={'fuzzle, a fuzzy-pink monster'} />
+						<Image
+							maxH={400}
+							resizeMode={'contain'}
+							source={fuzzle}
+							alt={'fuzzle, a fuzzy-pink monster'}
+						/>
 					</VStack>
 					<DangerousDelete />
 					<Spacer />
 					<Divider />
 					<Heading>Worry Data</Heading>
-					<Text color={'white'} fontSize={'sm'}>
+					<Text color={'red.400'} fontSize={'sm'}>
 						For debugging purposes
 					</Text>
 					{worryData.map((worry, idx) => (
-						<TouchableOpacity key={`worry-${idx}`}>
-							<VStack py={4} bg='gray.900' my='2'>
-								<Text color={'white'} fontSize={'sm'}>
-									consumed at: {worry.consumedAt}
-								</Text>
-								<Text {...smallDataText}>description: {worry.description}</Text>
-								<Text {...smallDataText}>extra note: {worry.extraNote}</Text>
-								<Text {...smallDataText}>sensation: {worry.sensation}</Text>
-								<Text {...smallDataText}>
-									is active? {worry.isActive ? 'Active' : 'Inactive'}
-								</Text>
-							</VStack>
-						</TouchableOpacity>
+						<VStack bg='gray.900' my='2' key={`worry-${idx}`}>
+							<Text color={'white'} fontSize={'sm'}>
+								consumed at: {worry.consumedAt}
+							</Text>
+							<Text {...smallDataText}>description: {worry.description}</Text>
+							<Text {...smallDataText}>extra note: {worry.extraNote}</Text>
+							<Text {...smallDataText}>sensation: {worry.sensation}</Text>
+							<Text {...smallDataText}>
+								is active? {worry.isActive ? 'Active' : 'Inactive'}
+							</Text>
+						</VStack>
 					))}
 				</PageWrapper>
 			</ScrollView>
