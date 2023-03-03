@@ -1,15 +1,13 @@
-import { Heading, HStack, ScrollView, Spacer, Text, VStack } from 'native-base'
+import { HStack, ScrollView, Text, VStack } from 'native-base'
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, useWindowDimensions } from 'react-native'
+import { useWindowDimensions } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import ImageSlide from '~features/styledComponents/ImageSlide'
-import SimpleHome from '~features/styledComponents/SimpleHome'
 import { monsterNameSelector } from '~features/monster/monsterSlice'
+import ExitPage from '~features/styledComponents/ExitPage'
+import ImageSlide from '~features/styledComponents/ImageSlide'
 import { useFormatDate } from '~features/worries/useFormatDate'
 import { deleteWorry, selectAllInactive } from '~features/worries/worrySlice'
 import DragExpander from './DragExpander'
-import Home from 'app/monsterMenu'
-import ExitPage from '~features/styledComponents/ExitPage'
 
 const spatter = require('../../assets/spatter01.png')
 const spatter2 = require('../../assets/spatter02.png')

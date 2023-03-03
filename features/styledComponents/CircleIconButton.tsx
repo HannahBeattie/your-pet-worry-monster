@@ -5,7 +5,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 
 import { Icon, IconButton, StyledProps, VStack, Text, Center } from 'native-base'
 import React from 'react'
-import { AntDesign, Entypo } from '@expo/vector-icons'
+import { AntDesign, Entypo, FontAwesome } from '@expo/vector-icons'
 
 interface Props {
 	props?: StyledProps
@@ -29,6 +29,7 @@ const icons = [
 	{ tag: '!feed', icon: MaterialCommunityIcons, name: 'food-drumstick-off' },
 	{ tag: 'no', icon: Entypo, name: 'cross' },
 	{ tag: 'right', icon: AntDesign, name: 'arrowright' },
+	{ tag: 'chevRight', icon: FontAwesome, name: 'chevron-right' },
 ]
 
 const CircleIconButton: React.FC<Props> = ({
