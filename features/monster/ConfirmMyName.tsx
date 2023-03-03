@@ -5,6 +5,7 @@ import React from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useSelector } from 'react-redux'
 import { monsterNameSelector } from '~features/monster/monsterSlice'
+import CircleIconButton from '~features/styledComponents/CircleIconButton'
 import MonsterVoice from '~features/styledComponents/MonsterVoice'
 import NameLabel from '~features/styledComponents/NameLabel'
 import PageWrapper from '~features/styledComponents/PageWrapper'
@@ -30,29 +31,25 @@ export default function ConfirmMyName() {
 			<FullBlue monsterMood='excited' />
 
 			<HStack space={4} justifyContent={'center'}>
-				<TouchableOpacity
-					onPress={() => {
+				<CircleIconButton
+					tag='no'
+					arealabel={'no'}
+					handlePress={() => {
 						no()
 					}}
-				>
-					<HStack space={2}>
-						<Button outlineColor={'purple.500'} borderColor={'purple.500'}>
-							<Text color={'purple.500'}>Oops!</Text>
-						</Button>
-					</HStack>
-				</TouchableOpacity>
-
-				<TouchableOpacity
-					onPress={() => {
+					label={'oops!'}
+					color={'gray.600'}
+				/>
+				<Spacer />
+				<CircleIconButton
+					tag='right'
+					arealabel={'yes'}
+					handlePress={() => {
 						yes()
 					}}
-				>
-					<HStack space={2} alignItems={'flex-end'}>
-						<Button backgroundColor={'purple.500'}>
-							<Text color={'white'}>Yay!</Text>
-						</Button>
-					</HStack>
-				</TouchableOpacity>
+					label={'yay!'}
+					color={'gray.400'}
+				/>
 			</HStack>
 		</PageWrapper>
 	)

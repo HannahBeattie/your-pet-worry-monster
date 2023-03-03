@@ -5,7 +5,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 
 import { Icon, IconButton, StyledProps, VStack, Text, Center } from 'native-base'
 import React from 'react'
-import { Entypo } from '@expo/vector-icons'
+import { AntDesign, Entypo } from '@expo/vector-icons'
 
 interface Props {
 	props?: StyledProps
@@ -21,12 +21,14 @@ interface Props {
 }
 
 const icons = [
-	{ tag: 'no', icon: Entypo, name: 'circle-with-cross' },
+	{ tag: 'exit', icon: Entypo, name: 'circle-with-cross' },
 	{ tag: 'yes', icon: Feather, name: 'check' },
 	{ tag: 'home', icon: Fontisto, name: 'home' },
 	{ tag: 'add', icon: Ionicons, name: 'add-circle-sharp' },
 	{ tag: 'feed', icon: MaterialCommunityIcons, name: 'food-drumstick' },
 	{ tag: '!feed', icon: MaterialCommunityIcons, name: 'food-drumstick-off' },
+	{ tag: 'no', icon: Entypo, name: 'cross' },
+	{ tag: 'right', icon: AntDesign, name: 'arrowright' },
 ]
 
 const CircleIconButton: React.FC<Props> = ({
@@ -59,7 +61,7 @@ const CircleIconButton: React.FC<Props> = ({
 				accessibilityLabel={arealabel}
 			/>
 			{label && (
-				<Text textAlign={'center'} mt={-2} {...labelProps}>
+				<Text color={'gray.500'} textAlign={'center'} mt={-2} {...labelProps}>
 					{label}
 				</Text>
 			)}
