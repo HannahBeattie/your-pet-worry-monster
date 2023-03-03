@@ -43,38 +43,42 @@ export default function Name() {
 				accessible={false}
 			>
 				<VStack>
-					<VStack px={4} py={10}>
-						<MonsterVoice>Hmm... what should I call mysef?</MonsterVoice>
-					</VStack>
-					<Input
-						maxLength={25}
-						onChangeText={handleChange}
-						value={value}
-						color={'white'}
-						placeholderTextColor={'blueGray.500'}
-						placeholder={placeHolderText}
-						fontSize='xl'
-						fontFamily='poppinsLight'
-						variant={'unstyled'}
-						autoCapitalize='none'
-						mb={-2}
-						px={-2}
-					/>
+					<VStack px={4} space={4} mb={-2}>
+						<MonsterVoice sizeVal={'4xl'}>
+							Hmm... what should I call mysef?
+						</MonsterVoice>
 
+						<Input
+							maxLength={25}
+							onChangeText={handleChange}
+							value={value}
+							color={'white'}
+							placeholderTextColor={'blueGray.500'}
+							placeholder={placeHolderText}
+							fontSize='xl'
+							fontFamily='poppinsLight'
+							variant={'unstyled'}
+							autoCapitalize='none'
+							mx={-5}
+						/>
+					</VStack>
 					<Divider color={'white'} />
 
-					<Text color={'red.500'} fontSize={'sm'}>
-						{error}
-					</Text>
-					<HStack>
-						<Spacer />
-						<IconButton
-							onPress={handlePress}
-							backgroundColor={'gray.800'}
-							borderRadius={'200'}
-							icon={<Icon color={checkColor} as={Feather} name={'check'} />}
-						/>
-					</HStack>
+					<VStack>
+						<Text color={'red.500'} fontSize={'sm'} mt={0} p={2}>
+							{error}
+						</Text>
+
+						<HStack>
+							<Spacer />
+							<IconButton
+								onPress={handlePress}
+								backgroundColor={'gray.800'}
+								borderRadius={'200'}
+								icon={<Icon color={checkColor} as={Feather} name={'check'} />}
+							/>
+						</HStack>
+					</VStack>
 				</VStack>
 			</TouchableWithoutFeedback>
 			<FullBlue monsterMood='happy' />
