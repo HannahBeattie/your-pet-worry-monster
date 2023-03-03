@@ -21,6 +21,8 @@ import Animated, { FadeInDown, FadeOutUp } from 'react-native-reanimated'
 import { useSelector } from 'react-redux'
 import { monsterNameSelector } from '~features/monster/monsterSlice'
 import { WorryField } from '~features/worries/worrySlice'
+import CircleIconButton from './CircleIconButton'
+import ExitPage from './ExitPage'
 import PageWrapper from './PageWrapper'
 
 export interface WorryInputProps {
@@ -89,17 +91,8 @@ export default function WorryInput({
 	}, [error, validationError])
 
 	return (
-		<PageWrapper>
-			{/* <TouchableOpacity>
-				<IconButton
-					icon={<Icon as={Entypo} name='cross' size='xl' />}
-					_icon={{ color: 'white' }}
-					onPress={onClose}
-					accessibilityLabel='exit screen'
-					variant={'unstyled'}
-				/>
-			</TouchableOpacity> */}
-
+		<PageWrapper py={-4} px={-1}>
+			<ExitPage onClose={onClose} />
 			<KeyboardAwareScrollView
 				enableAutomaticScroll
 				keyboardShouldPersistTaps='handled'
@@ -116,7 +109,7 @@ export default function WorryInput({
 						}}
 					>
 						<VStack px={30} alignItems='stretch'>
-							<Heading fontFamily='Poppins_300Light' color={'white'} py={4}>
+							<Heading fontFamily='poppins' color={'white'} py={4}>
 								{question}
 							</Heading>
 
@@ -129,7 +122,7 @@ export default function WorryInput({
 								value={value}
 								size='xl'
 								fontSize='lg'
-								fontFamily='Poppins_300Light'
+								fontFamily='Poppins'
 								variant={'unstyled'}
 								autoCapitalize='none'
 								mx={-2}
@@ -164,7 +157,7 @@ export default function WorryInput({
 									onPress={onSubmit}
 									isDisabled={!canContinue}
 									isFocused={false}
-									bg={'white'}
+									bg={'gray.300'}
 									borderRadius={'md'}
 									py={4}
 									px={3}
@@ -176,6 +169,7 @@ export default function WorryInput({
 										color={'black'}
 										fontSize={'sm'}
 										fontWeight={600}
+										fontFamily={'poppins'}
 									>
 										Give it to {monsterName}
 									</Text>
@@ -192,7 +186,12 @@ export default function WorryInput({
 										px={2}
 										flex={1}
 									>
-										<Text color={'white'} fontSize={'sm'} fontWeight={600}>
+										<Text
+											color={'white'}
+											fontSize={'sm'}
+											fontWeight={600}
+											fontFamily={'poppins'}
+										>
 											{nextButtonText}
 										</Text>
 									</Button>
