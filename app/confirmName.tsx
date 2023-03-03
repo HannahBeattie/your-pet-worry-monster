@@ -4,9 +4,5 @@ import Page from '~features/styledComponents/Page'
 import ConfirmMyName from '~features/monster/ConfirmMyName'
 
 export default function ConfirmName() {
-	return (
-		<Page>
-			<ConfirmMyName />
-		</Page>
-	)
+	return <ConfirmMyName />
 }

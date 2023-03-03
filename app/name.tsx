@@ -2,7 +2,7 @@ import { Feather } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
 import { Divider, HStack, Icon, IconButton, Input, Spacer, Text, VStack } from 'native-base'
 import React from 'react'
-import { Keyboard, TouchableWithoutFeedback } from 'react-native'
+import { Keyboard, Touchable, TouchableWithoutFeedback } from 'react-native'
 import { useDispatch } from 'react-redux'
 import FullBlue from '~features/monster/FullBlue'
 import { setName } from '~features/monster/monsterSlice'
@@ -19,7 +19,7 @@ export default function Name() {
 		setValue(value)
 	}
 
-	const placeHolderText = 'a good monster name'
+	const placeHolderText = 'name'
 
 	const handlePress = () => {
 		dispatch(setName(value))
@@ -36,40 +36,48 @@ export default function Name() {
 	const checkColor = value.length > 2 ? 'violet.400' : 'black'
 
 	return (
-		<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-			<PageWrapper>
-				<VStack px={4} py={4}>
-					<MonsterVoice>Hmm... what should I call mysef?</MonsterVoice>
-				</VStack>
-				<Input
-					maxLength={25}
-					onChangeText={handleChange}
-					value={value}
-					color={'white'}
-					placeholderTextColor={'blueGray.500'}
-					placeholder={placeHolderText}
-					fontSize='xl'
-					fontFamily='poppinsLight'
-					variant={'unstyled'}
-					autoCapitalize='none'
-					mb={-2}
-				/>
-
-				<Divider color={'white'} />
-				<Text color={'red.500'} fontSize={'sm'}>
-					{error}
-				</Text>
-				<HStack>
-					<Spacer />
-					<IconButton
-						onPress={handlePress}
-						backgroundColor={'gray.800'}
-						borderRadius={'200'}
-						icon={<Icon color={checkColor} as={Feather} name={'check'} />}
+		<PageWrapper>
+			<TouchableWithoutFeedback
+				style={{ flex: 1 }}
+				onPress={Keyboard.dismiss}
+				accessible={false}
+			>
+				<VStack>
+					<VStack px={4} py={10}>
+						<MonsterVoice>Hmm... what should I call mysef?</MonsterVoice>
+					</VStack>
+					<Input
+						maxLength={25}
+						onChangeText={handleChange}
+						value={value}
+						color={'white'}
+						placeholderTextColor={'blueGray.500'}
+						placeholder={placeHolderText}
+						fontSize='xl'
+						fontFamily='poppinsLight'
+						variant={'unstyled'}
+						autoCapitalize='none'
+						mb={-2}
+						px={-2}
 					/>
-				</HStack>
-				<FullBlue monsterMood='happy' />
-			</PageWrapper>
-		</TouchableWithoutFeedback>
+
+					<Divider color={'white'} />
+
+					<Text color={'red.500'} fontSize={'sm'}>
+						{error}
+					</Text>
+					<HStack>
+						<Spacer />
+						<IconButton
+							onPress={handlePress}
+							backgroundColor={'gray.800'}
+							borderRadius={'200'}
+							icon={<Icon color={checkColor} as={Feather} name={'check'} />}
+						/>
+					</HStack>
+				</VStack>
+			</TouchableWithoutFeedback>
+			<FullBlue monsterMood='happy' />
+		</PageWrapper>
 	)
 }
