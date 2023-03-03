@@ -20,7 +20,6 @@ export default function Slide() {
 
 	const handleSwipe = (worryId: number) => {
 		setIsLoading(true)
-
 		dispatch(
 			updateWorry({
 				id: worryId,
@@ -44,31 +43,26 @@ export default function Slide() {
 			<ScrollView style={{ flex: 1 }}>
 				<VStack space={8} py={10}>
 					{allActive.map((worry) => (
-						<VStack
-							key={worry.id}
-							width={w}
-							backgroundColor={'#000000c1'}
-							borderRadius={'sm'}
-						>
+						<VStack key={worry.id} width={w}>
 							<SwipableButton
 								text={text}
 								onSwipe={() => handleSwipe(worry.id)}
 								isLoading={isLoading}
 							/>
-
-							<VStack minH={100}>
-								<Center
-									justifyItems={'center'}
-									justifyContent={'center'}
-									px={4}
-									py={8}
-								>
-									<Text>
-										I started worrying {useFormatDate(worry.id)}{' '}
-										{worry.description}
-									</Text>
-								</Center>
-							</VStack>
+							<Center
+								backgroundColor={'#111111a0'}
+								justifyItems={'center'}
+								justifyContent={'center'}
+								borderColor={'#ffffff14'}
+								borderWidth={1}
+								py={8}
+								px={8}
+								borderBottomRadius={'md'}
+							>
+								<Text fontSize={'md'} color={'gray.400'}>
+									I started worrying {useFormatDate(worry.id)} {worry.description}
+								</Text>
+							</Center>
 						</VStack>
 					))}
 				</VStack>

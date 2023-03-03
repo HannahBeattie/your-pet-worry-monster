@@ -1,6 +1,6 @@
 import { FontAwesome } from '@expo/vector-icons'
 import { ChevronRightIcon, HStack, Text, VStack } from 'native-base'
-import React, { ReactComponentElement, useEffect } from 'react'
+import React, { ReactComponentElement, ReactNode, useEffect } from 'react'
 import { ActivityIndicator, Dimensions, StyleSheet, View } from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
 import Animated, {
@@ -24,9 +24,10 @@ type SwipeButtonPropsType = {
 	onSwipe: () => void
 	isLoading?: boolean
 	text?: string
+	children?: ReactNode
 }
 
-const SwipeableButton = ({ onSwipe, text, isLoading = false }: SwipeButtonPropsType) => {
+const SwipeableButton = ({ onSwipe, text, children, isLoading = false }: SwipeButtonPropsType) => {
 	const name = useSelector(monsterNameSelector)
 	const X = useSharedValue(0)
 
@@ -39,7 +40,6 @@ const SwipeableButton = ({ onSwipe, text, isLoading = false }: SwipeButtonPropsT
 	const animatedGestureHandler = useAnimatedGestureHandler({
 		onActive: (e) => {
 			const newValue = e.translationX
-
 			if (newValue >= 0 && newValue <= SWIPE_RANGE) {
 				X.value = newValue
 			}
@@ -90,10 +90,10 @@ const SwipeableButton = ({ onSwipe, text, isLoading = false }: SwipeButtonPropsT
 			<PanGestureHandler enabled={!isLoading} onGestureEvent={animatedGestureHandler}>
 				<Animated.View style={[styles.swipeButton, AnimatedStyles.swipeButton]}>
 					{isLoading ? (
-						<CircleIconButton tag='chevRight' arealabel='slide right' color={'white'} />
+						<FontAwesome name='chevron-right' size={36} color={'#ffffff67'} />
 					) : (
 						<HStack>
-							<FontAwesome name='chevron-right' size={36} color={'white'} />
+							<FontAwesome name='chevron-right' size={36} color={'#ffffff59'} />
 						</HStack>
 					)}
 				</Animated.View>
@@ -104,8 +104,12 @@ const SwipeableButton = ({ onSwipe, text, isLoading = false }: SwipeButtonPropsT
 					justifyContent={'center'}
 					alignContent={'center'}
 					pl={8}
+					py={4}
 				>
-					<Text color={'white'}> {text ? text : `Slide to feed ${name}`}</Text>
+					<Text fontSize={'sm'} color={'gray.400'}>
+						{' '}
+						{text ? text : `Slide to feed ${name}`}
+					</Text>
 				</HStack>
 			</Animated.Text>
 		</View>
@@ -114,15 +118,15 @@ const SwipeableButton = ({ onSwipe, text, isLoading = false }: SwipeButtonPropsT
 
 const styles = StyleSheet.create({
 	swipeButtonContainer: {
-		borderRadius: 10,
 		justifyContent: 'center',
 		alignItems: 'center',
 		flexDirection: 'row',
 		width: BUTTON_WIDTH,
+		backgroundColor: '#00000057',
 	},
 	swipeButton: {
 		position: 'absolute',
-		left: 8,
+		left: 30,
 		borderRadius: 200,
 		zIndex: 3,
 		alignItems: 'center',
