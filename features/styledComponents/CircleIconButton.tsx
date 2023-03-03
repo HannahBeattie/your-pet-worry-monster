@@ -5,6 +5,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 
 import { Icon, IconButton, StyledProps, VStack, Text, Center } from 'native-base'
 import React from 'react'
+import { Entypo } from '@expo/vector-icons'
 
 interface Props {
 	props?: StyledProps
@@ -15,14 +16,16 @@ interface Props {
 	arealabel: string
 	labelProps?: any
 	tag?: string
+	stackProps?: StyledProps
 }
 
 const icons = [
-	{ tag: 'tick', icon: Feather, name: 'check' },
+	{ tag: 'no', icon: Entypo, name: 'circle-with-cross' },
+	{ tag: 'yes', icon: Feather, name: 'check' },
 	{ tag: 'home', icon: Fontisto, name: 'home' },
 	{ tag: 'add', icon: Ionicons, name: 'add-circle-sharp' },
 	{ tag: 'feed', icon: MaterialCommunityIcons, name: 'food-drumstick' },
-	{ tag: 'dontFeed', icon: MaterialCommunityIcons, name: 'food-drumstick-off' },
+	{ tag: '!feed', icon: MaterialCommunityIcons, name: 'food-drumstick-off' },
 ]
 
 const CircleIconButton: React.FC<Props> = ({
@@ -33,6 +36,7 @@ const CircleIconButton: React.FC<Props> = ({
 	label,
 	arealabel,
 	labelProps,
+	stackProps,
 }) => {
 	const checkColor = color ? color : 'violet.400'
 	const checkBg = bg ? bg : 'transparent'
@@ -42,7 +46,7 @@ const CircleIconButton: React.FC<Props> = ({
 	const iconName = selectedIcon?.name || 'check'
 
 	return (
-		<Center>
+		<VStack space={0} {...stackProps}>
 			<IconButton
 				onPress={handlePress}
 				backgroundColor={checkBg}
@@ -50,8 +54,12 @@ const CircleIconButton: React.FC<Props> = ({
 				icon={<Icon size={'xl'} color={checkColor} as={IconComponent} name={iconName} />}
 				accessibilityLabel={arealabel}
 			/>
-			{label && <Text {...labelProps}>{label}</Text>}
-		</Center>
+			{label && (
+				<Text textAlign={'center'} mt={-2} {...labelProps}>
+					{label}
+				</Text>
+			)}
+		</VStack>
 	)
 }
 

@@ -30,11 +30,7 @@ export default function Slide() {
 		<VStack flex={1} backgroundColor={'gray.900'}>
 			<SafeAreaView>
 				<Heading p={8}>Hello </Heading>
-				<CircleIconButton
-					name='food-drumstick-off'
-					label='Check'
-					arealabel='Check Button'
-				/>
+				<CircleIconButton tag='no' label='no' arealabel='Check Button' />
 			</SafeAreaView>
 		</VStack>
 	)
