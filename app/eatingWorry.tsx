@@ -5,12 +5,12 @@ import React from 'react'
 import { useWindowDimensions } from 'react-native'
 import { useSelector } from 'react-redux'
 import FullBlue from '~features/monster/FullBlue'
+import CircleIconButton from '~features/styledComponents/CircleIconButton'
 import MonsterVoice from '~features/styledComponents/MonsterVoice'
 import PageWrapper from '~features/styledComponents/PageWrapper'
 import { selectAllActive } from '~features/worries/worrySlice'
 
 export default function EatingWorry() {
-	const { width } = useWindowDimensions()
 	const router = useRouter()
 	const active = useSelector(selectAllActive)
 	return (
@@ -22,48 +22,33 @@ export default function EatingWorry() {
 			</Center>
 			<FullBlue monsterMood={'yummy'} />
 
-			<HStack justifyContent={'space-evenly'} px={50}>
+			<HStack justifyContent={'space-evenly'}>
 				{active.length > 0 && (
-					<VStack>
-						<IconButton
-							onPress={() => {
-								router.push('current')
-							}}
-							icon={
-								<Icon
-									size={'5xl'}
-									as={MaterialCommunityIcons}
-									name={'food-drumstick'}
-								/>
-							}
-						/>
-						<Heading fontSize={'sm'} textAlign={'center'}>
-							Eat
-						</Heading>
-					</VStack>
+					<CircleIconButton
+						handlePress={() => {
+							router.push('current')
+						}}
+						tag='feed'
+						arealabel='feed worry to monster'
+						label='eat'
+					/>
 				)}
-				<VStack>
-					<IconButton
-						onPress={() => {
-							router.push('/addWorry')
-						}}
-						icon={<Icon size={'5xl'} as={Ionicons} name={'add-circle-sharp'} />}
-					/>
-					<Heading fontSize={'sm'} textAlign={'center'}>
-						Add
-					</Heading>
-				</VStack>
-				<VStack>
-					<IconButton
-						onPress={() => {
-							router.push('/')
-						}}
-						icon={<Icon size={'5xl'} as={Fontisto} name={'home'} />}
-					/>
-					<Heading fontSize={'sm'} textAlign={'center'}>
-						Home
-					</Heading>
-				</VStack>
+				<CircleIconButton
+					arealabel='add worry'
+					handlePress={() => {
+						router.push('/addWorry')
+					}}
+					tag={'add'}
+					label={'add'}
+				/>
+				<CircleIconButton
+					arealabel='home'
+					handlePress={() => {
+						router.push('/')
+					}}
+					tag={'home'}
+					label={'go'}
+				/>
 			</HStack>
 		</PageWrapper>
 	)

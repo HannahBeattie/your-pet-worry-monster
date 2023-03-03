@@ -12,6 +12,7 @@ import PageWrapper from '~features/styledComponents/PageWrapper'
 import FullBlue from './FullBlue'
 
 export default function ConfirmMyName() {
+	const name = useSelector(monsterNameSelector)
 	const router = useRouter()
 	const no = () => {
 		router.push('/name')
@@ -19,7 +20,6 @@ export default function ConfirmMyName() {
 	const yes = () => {
 		router.push('/monsterMenu')
 	}
-	const name = useSelector(monsterNameSelector)
 	return (
 		<PageWrapper>
 			<Center px={4}>
@@ -27,9 +27,7 @@ export default function ConfirmMyName() {
 					{name}? I...I...Love it!
 				</MonsterVoice>
 			</Center>
-
 			<FullBlue monsterMood='excited' />
-
 			<HStack space={4} justifyContent={'center'}>
 				<CircleIconButton
 					tag='no'

@@ -50,20 +50,40 @@ const CircleIconButton: React.FC<Props> = ({
 	const iconName = selectedIcon?.name || 'check'
 
 	return (
-		<VStack space={0} {...stackProps}>
-			<IconButton
-				onPress={handlePress}
-				backgroundColor={checkBg}
-				borderRadius={'200'}
-				icon={
-					<Icon size={checkSize} color={checkColor} as={IconComponent} name={iconName} />
-				}
-				accessibilityLabel={arealabel}
-			/>
+		<VStack
+			alignItems={'stretch'}
+			justifyContent={'center'}
+			justifyItems={'center'}
+			{...stackProps}
+		>
+			<Center>
+				<IconButton
+					onPress={handlePress}
+					backgroundColor={checkBg}
+					borderRadius={'200'}
+					icon={
+						<Icon
+							size={checkSize}
+							color={checkColor}
+							as={IconComponent}
+							name={iconName}
+						/>
+					}
+					accessibilityLabel={arealabel}
+				/>
+			</Center>
 			{label && (
-				<Text color={'gray.500'} textAlign={'center'} mt={-2} {...labelProps}>
-					{label}
-				</Text>
+				<Center>
+					<Text
+						fontSize={'lg'}
+						color={'gray.500'}
+						textAlign={'center'}
+						mt={-2}
+						{...labelProps}
+					>
+						{label}
+					</Text>
+				</Center>
 			)}
 		</VStack>
 	)
