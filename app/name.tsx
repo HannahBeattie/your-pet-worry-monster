@@ -26,7 +26,7 @@ export default function Name() {
 	const placeHolderText = 'name'
 
 	const handlePress = () => {
-		dispatch(setName(value))
+		dispatch(setName(value.trimEnd()))
 		if (value.length < 1) {
 			setError('First, I need a name')
 		} else if (value.length < 2) {
@@ -88,7 +88,7 @@ export default function Name() {
 					</VStack>
 				</VStack>
 			</TouchableWithoutFeedback>
-			<FullBlue monsterMood='sleepy' />
+			<FullBlue monsterMood='happy' />
 		</PageWrapper>
 	)
 }
