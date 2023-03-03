@@ -1,94 +1,55 @@
-import {
-	Box,
-	Button,
-	Center,
-	Fab,
-	Heading,
-	HStack,
-	Icon,
-	IconButton,
-	Image,
-	Spacer,
-	Text,
-	VStack,
-} from 'native-base'
-import React from 'react'
-import HomeButton from '~features/layout/HomeButton'
-import MyFab from '~features/layout/MyFab'
-import Blue from '~features/monster/Blue'
 import { Fontisto, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
-import { Pressable, useWindowDimensions } from 'react-native'
 import { useRouter } from 'expo-router'
-import SimpleHome from '~features/layout/SimpleHome'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { Center, Heading, HStack, Icon, IconButton, VStack } from 'native-base'
+import React from 'react'
+import { useWindowDimensions } from 'react-native'
 import { useSelector } from 'react-redux'
+import FullBlue from '~features/monster/FullBlue'
+import CircleIconButton from '~features/styledComponents/CircleIconButton'
+import MonsterVoice from '~features/styledComponents/MonsterVoice'
+import PageWrapper from '~features/styledComponents/PageWrapper'
 import { selectAllActive } from '~features/worries/worrySlice'
 
-const yummy = require('../assets/yummy.png')
-
 export default function EatingWorry() {
-	const { width } = useWindowDimensions()
 	const router = useRouter()
 	const active = useSelector(selectAllActive)
 	return (
-		<VStack backgroundColor={'gray.900'} flex={1}>
-			<SafeAreaView style={{ flex: 1 }}>
-				<VStack pt={4}>
-					<Heading fontSize={'6xl'} textAlign={'center'}>
-						YUMMMM!
-					</Heading>
-					<Heading textAlign={'center'}>That Was delicious!</Heading>
+		<PageWrapper>
+			<Center>
+				<MonsterVoice sizeVal={'5xl'}> YUMMMM!</MonsterVoice>
+				<MonsterVoice> That Was delicious!!</MonsterVoice>
+				<MonsterVoice> Give me more!</MonsterVoice>
+			</Center>
+			<FullBlue monsterMood={'yummy'} />
 
-					<Heading textAlign={'center'}>Give me more!</Heading>
-				</VStack>
-				<VStack flex={1} px={4}>
-					<Image alt={'blue the monster'} source={yummy} flex={1} resizeMode='contain' />
-				</VStack>
-
-				<HStack justifyContent={'space-evenly'} px={50}>
-					{active.length > 0 && (
-						<VStack>
-							<IconButton
-								onPress={() => {
-									router.push('current')
-								}}
-								icon={
-									<Icon
-										size={'5xl'}
-										as={MaterialCommunityIcons}
-										name={'food-drumstick'}
-									/>
-								}
-							/>
-							<Heading fontSize={'sm'} textAlign={'center'}>
-								Eat
-							</Heading>
-						</VStack>
-					)}
-					<VStack>
-						<IconButton
-							onPress={() => {
-								router.push('/addWorry')
-							}}
-							icon={<Icon size={'5xl'} as={Ionicons} name={'add-circle-sharp'} />}
-						/>
-						<Heading fontSize={'sm'} textAlign={'center'}>
-							Add
-						</Heading>
-					</VStack>
-					<VStack>
-						<IconButton
-							onPress={() => {
-								router.push('/')
-							}}
-							icon={<Icon size={'5xl'} as={Fontisto} name={'home'} />}
-						/>
-						<Heading fontSize={'sm'} textAlign={'center'}>
-							Home
-						</Heading>
-					</VStack>
-				</HStack>
-			</SafeAreaView>
-		</VStack>
+			<HStack justifyContent={'space-evenly'}>
+				{active.length > 0 && (
+					<CircleIconButton
+						handlePress={() => {
+							router.push('current')
+						}}
+						tag='feed'
+						arealabel='feed worry to monster'
+						label='eat'
+					/>
+				)}
+				<CircleIconButton
+					arealabel='add worry'
+					handlePress={() => {
+						router.push('/addWorry')
+					}}
+					tag={'add'}
+					label={'add'}
+				/>
+				<CircleIconButton
+					arealabel='home'
+					handlePress={() => {
+						router.push('/')
+					}}
+					tag={'home'}
+					label={'go'}
+				/>
+			</HStack>
+		</PageWrapper>
 	)
 }

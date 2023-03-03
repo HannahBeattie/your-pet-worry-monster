@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router'
 import React, { useCallback, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import WorryInput from '~features/layout/WorryInput'
+import WorryInput from '~features/styledComponents/WorryInput'
 import { Worry, WorryField, addWorry } from './worrySlice'
 
 const inputItems = [

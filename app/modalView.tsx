@@ -1,7 +1,7 @@
 import { Text, View } from 'native-base'
-import React, { useState } from 'react'
+import React from 'react'
 import { StyleSheet } from 'react-native'
-import Collapsible from '~features/layout/Collapsable'
+import Collapsible from '~features/styledComponents/Collapsable'
 
 export default function modalView() {
 	return (

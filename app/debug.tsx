@@ -1,34 +1,65 @@
-import { Drawer } from 'expo-router/drawer'
-import { Text, VStack } from 'native-base'
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
+import { Box, Center, Divider, Heading, Image, ScrollView, Spacer, Text, VStack } from 'native-base'
+import { TouchableOpacity } from 'react-native'
 import { useSelector } from 'react-redux'
-import HomeButton from '~features/layout/HomeButton'
-import Page from '~features/layout/Page'
+import FullBlue from '~features/monster/FullBlue'
+import PageWrapper from '~features/styledComponents/PageWrapper'
 import DangerousDelete from '~features/worries/DangerousDelete'
-import ListAllWorries from '~features/worries/ListAllWorries'
 import { worriesSelectors } from '~features/worries/worrySlice'
 
+const fuzzle = require('../assets/fullBlue/fuzzle.png')
+
 export default function DebugPage() {
+	const smallDataText = {
+		fontSize: 'sm',
+		color: 'gray.300',
+	}
 	const worryData = useSelector(worriesSelectors.selectAll)
 	return (
-		<ScrollView>
-			<Page>
-				<Drawer.Screen options={{ title: 'Debug Page', headerShown: true }} />
-				<DangerousDelete />
-				{worryData.map((worry, idx) => (
-					<TouchableOpacity key={`worry-${idx}`}>
-						<VStack p='4' bg='gray.700' my='2'>
-							<Text color={'red'}>{worry.consumedAt}</Text>
-							<Text color={'white'}>{worry.description}</Text>
-							<Text color={'gray.500'}>{worry.extraNote}</Text>
-							<Text color={'gray.500'}>{worry.sensation}</Text>
-							<Text color={'white'}>{worry.isActive ? 'Active' : 'Inactive'}</Text>
-						</VStack>
-					</TouchableOpacity>
-				))}
+		<PageWrapper>
+			<ScrollView>
+				<PageWrapper spacing={4}>
+					<Heading fontSize={'2xl'} color={'red.600'} textAlign={'center'}>
+						WARNING
+					</Heading>
+					<VStack>
+						<Text textAlign={'center'} {...smallDataText}>
+							This is mr Fuzzles secret area.
+						</Text>
+						<Text textAlign={'center'} {...smallDataText}>
+							He will delete all the worry data from your phone
+						</Text>
+					</VStack>
 
-				<HomeButton />
-			</Page>
-		</ScrollView>
+					<VStack maxH={400} pt={8}>
+						<Image
+							maxH={400}
+							resizeMode={'contain'}
+							source={fuzzle}
+							alt={'fuzzle, a fuzzy-pink monster'}
+						/>
+					</VStack>
+					<DangerousDelete />
+					<Spacer />
+					<Divider />
+					<Heading>Worry Data</Heading>
+					<Text color={'red.400'} fontSize={'sm'}>
+						For debugging purposes
+					</Text>
+					{worryData.map((worry, idx) => (
+						<VStack bg='gray.900' my='2' key={`worry-${idx}`}>
+							<Text color={'white'} fontSize={'sm'}>
+								consumed at: {worry.consumedAt}
+							</Text>
+							<Text {...smallDataText}>description: {worry.description}</Text>
+							<Text {...smallDataText}>extra note: {worry.extraNote}</Text>
+							<Text {...smallDataText}>sensation: {worry.sensation}</Text>
+							<Text {...smallDataText}>
+								is active? {worry.isActive ? 'Active' : 'Inactive'}
+							</Text>
+						</VStack>
+					))}
+				</PageWrapper>
+			</ScrollView>
+		</PageWrapper>
 	)
 }

@@ -5,8 +5,32 @@ export const theme = extendTheme({
 		initialColorMode: 'dark',
 	},
 
+	fontConfig: {
+		monster: {
+			monsterLight: 'monsterLight',
+			monsterFont: 'monsterFont',
+			monsterBold: 'monsterBold',
+		},
+		poppins: {
+			poppinsLight: 'poppinsLight',
+			poppinsMedium: 'poppinsMedium',
+			poppinsBold: 'poppinsBold',
+		},
+	},
+	fonts: {
+		heading: 'poppins',
+		body: 'poppins',
+		mono: 'monsterLight',
+	},
+
 	colors: {
 		primary: defaultTheme.colors.violet,
+	},
+	textStyles: {
+		blueSpeaks: {
+			fontFamily: 'monsterFont',
+			color: 'violet.500',
+		},
 	},
 
 	components: {
@@ -108,12 +132,20 @@ export const theme = extendTheme({
 				fontSize: '2xl',
 				fontWeight: '300',
 			},
+			blueVoice: {
+				fontFamily: 'monsterFont',
+				color: 'violet.400',
+			},
 		},
 
 		Text: {
 			defaultProps: {
 				color: 'white',
 				fontSize: 'xl',
+			},
+			blueVoice: {
+				fontFamily: 'monsterFont',
+				color: 'violet.400',
 			},
 			variants: {
 				btn: {
