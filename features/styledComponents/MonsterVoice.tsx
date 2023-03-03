@@ -17,7 +17,13 @@ const MonsterVoice: React.FC<Props> = ({ children, props, reg, light, sizeVal, c
 	const sizePropsOr = sizeVal ? sizeVal : '3xl'
 	const weightPropsOr = reg ? 'monsterFont' : light ? 'monsterLight' : 'monsterBold'
 	return (
-		<Text fontSize={sizePropsOr} fontFamily={weightPropsOr} color={colorPropsOr} {...props}>
+		<Text
+			textTransform={'capitalize'}
+			fontSize={sizePropsOr}
+			fontFamily={weightPropsOr}
+			color={colorPropsOr}
+			{...props}
+		>
 			{children}
 		</Text>
 	)
