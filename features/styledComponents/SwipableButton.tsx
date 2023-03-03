@@ -1,7 +1,7 @@
 import { FontAwesome } from '@expo/vector-icons'
-import { ChevronRightIcon, HStack, Text, VStack } from 'native-base'
-import React, { ReactComponentElement, ReactNode, useEffect } from 'react'
-import { ActivityIndicator, Dimensions, StyleSheet, View } from 'react-native'
+import { Center, HStack, Text, VStack } from 'native-base'
+import React, { ReactNode, useEffect } from 'react'
+import { Dimensions, StyleSheet, View } from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
 import Animated, {
 	Extrapolate,
@@ -15,7 +15,7 @@ import Animated, {
 } from 'react-native-reanimated'
 import { useSelector } from 'react-redux'
 import { monsterNameSelector } from '~features/monster/monsterSlice'
-import CircleIconButton from './CircleIconButton'
+import CurrentContent from '~features/worries/CurrentContent'
 
 const BUTTON_WIDTH = Dimensions.get('screen').width - 48
 const SWIPE_RANGE = BUTTON_WIDTH - 74
@@ -45,7 +45,7 @@ const SwipeableButton = ({ onSwipe, text, children, isLoading = false }: SwipeBu
 			}
 		},
 		onEnd: () => {
-			if (X.value < SWIPE_RANGE - 20) {
+			if (X.value < SWIPE_RANGE - 40) {
 				X.value = withSpring(0)
 			} else {
 				runOnJS(onSwipe)()
@@ -90,47 +90,35 @@ const SwipeableButton = ({ onSwipe, text, children, isLoading = false }: SwipeBu
 			<PanGestureHandler enabled={!isLoading} onGestureEvent={animatedGestureHandler}>
 				<Animated.View style={[styles.swipeButton, AnimatedStyles.swipeButton]}>
 					{isLoading ? (
-						<FontAwesome name='chevron-right' size={36} color={'#ffffff67'} />
+						<FontAwesome name='chevron-right' size={36} color={'#ffffff79'} />
 					) : (
-						<HStack>
-							<FontAwesome name='chevron-right' size={36} color={'#ffffff59'} />
+						<HStack flex={1} justifyItems={'center'} p={2}>
+							<Text fontSize={'sm'} color={'gray.500'} pr={2}>
+								{text ? text : `Slide to feed ${name}`}
+							</Text>
+							<Center>
+								<FontAwesome name='angle-right' size={20} color='#ffffff3a' />
+							</Center>
 						</HStack>
 					)}
 				</Animated.View>
 			</PanGestureHandler>
-			<Animated.Text style={AnimatedStyles.swipeText}>
-				<HStack
-					width={BUTTON_WIDTH}
-					justifyContent={'center'}
-					alignContent={'center'}
-					pl={8}
-					py={4}
-				>
-					<Text fontSize={'sm'} color={'gray.400'}>
-						{' '}
-						{text ? text : `Slide to feed ${name}`}
-					</Text>
-				</HStack>
-			</Animated.Text>
+			<Animated.Text style={AnimatedStyles.swipeText}>{children}</Animated.Text>
 		</View>
 	)
 }
 
 const styles = StyleSheet.create({
 	swipeButtonContainer: {
-		justifyContent: 'center',
-		alignItems: 'center',
 		flexDirection: 'row',
+		alignContent: 'center',
+		alignSelf: 'center',
 		width: BUTTON_WIDTH,
-		backgroundColor: '#00000057',
 	},
 	swipeButton: {
 		position: 'absolute',
-		left: 30,
-		borderRadius: 200,
+		top: 0,
 		zIndex: 3,
-		alignItems: 'center',
-		justifyContent: 'center',
 	},
 	swipeButtonDisabled: {
 		backgroundColor: 'gray',
