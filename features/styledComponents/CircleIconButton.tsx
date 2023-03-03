@@ -17,6 +17,7 @@ interface Props {
 	labelProps?: any
 	tag?: string
 	stackProps?: StyledProps
+	size?: string | number
 }
 
 const icons = [
@@ -37,10 +38,11 @@ const CircleIconButton: React.FC<Props> = ({
 	arealabel,
 	labelProps,
 	stackProps,
+	size,
 }) => {
 	const checkColor = color ? color : 'violet.400'
 	const checkBg = bg ? bg : 'transparent'
-
+	const checkSize = size ? size : '5xl'
 	const selectedIcon = icons.find((iconObj) => iconObj.tag === tag)
 	const IconComponent = selectedIcon?.icon || Feather
 	const iconName = selectedIcon?.name || 'check'
@@ -51,7 +53,9 @@ const CircleIconButton: React.FC<Props> = ({
 				onPress={handlePress}
 				backgroundColor={checkBg}
 				borderRadius={'200'}
-				icon={<Icon size={'xl'} color={checkColor} as={IconComponent} name={iconName} />}
+				icon={
+					<Icon size={checkSize} color={checkColor} as={IconComponent} name={iconName} />
+				}
 				accessibilityLabel={arealabel}
 			/>
 			{label && (

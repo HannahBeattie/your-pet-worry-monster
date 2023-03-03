@@ -6,17 +6,21 @@ import { Keyboard, Touchable, TouchableWithoutFeedback } from 'react-native'
 import { useDispatch } from 'react-redux'
 import FullBlue from '~features/monster/FullBlue'
 import { setName } from '~features/monster/monsterSlice'
+import CircleIconButton from '~features/styledComponents/CircleIconButton'
 import MonsterVoice from '~features/styledComponents/MonsterVoice'
 import PageWrapper from '~features/styledComponents/PageWrapper'
 
 export default function Name() {
 	const [value, setValue] = React.useState('')
-	const [error, setError] = React.useState('')
+	const [error, setError] = React.useState(' ')
 	const dispatch = useDispatch()
 	const router = useRouter()
 
 	const handleChange = (value: string) => {
 		setValue(value)
+		if (value.length > 2) {
+			setError(' ')
+		}
 	}
 
 	const placeHolderText = 'name'
@@ -70,13 +74,15 @@ export default function Name() {
 							{error}
 						</Text>
 
-						<HStack>
+						<HStack mt={-6}>
 							<Spacer />
-							<IconButton
-								onPress={handlePress}
-								backgroundColor={'gray.800'}
-								borderRadius={'200'}
-								icon={<Icon color={checkColor} as={Feather} name={'check'} />}
+							<CircleIconButton
+								color={checkColor}
+								handlePress={handlePress}
+								arealabel='check for yess'
+								tag='check'
+								bg={'gray.800'}
+								size={'xl'}
 							/>
 						</HStack>
 					</VStack>
