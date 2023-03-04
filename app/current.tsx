@@ -51,7 +51,7 @@ function Current() {
 					<VStack alignItems={'center'} pt={90} pb={100}>
 						<VStack space={2}>
 							<Heading textAlign={'center'} fontFamily={'poppins'} opacity={80}>
-								{hasWorries ? `Current Worries` : `No Worries`}
+								{hasWorries ? `Current Worries` : ` `}
 							</Heading>
 							<Text fontSize={'sm'} opacity={70} textAlign={'center'} px={10}>
 								{hasWorries ? `Swipe worry right to feed ${monsterName}` : ``}
