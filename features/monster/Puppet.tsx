@@ -18,7 +18,7 @@ const baseGain = 0.33
 const minOffX = -130
 const maxOffX = 130
 const minOffY = -170
-const maxOffY = 130
+const maxOffY = 70
 function clamp(val: number, min: number, max: number) {
 	'worklet'
 	return Math.min(max, Math.max(min, val))
@@ -30,10 +30,6 @@ function clampOffX(val: number) {
 function clampOffY(val: number) {
 	'worklet'
 	return clamp(val, minOffY, maxOffY)
-}
-
-function log(...args: any[]) {
-	console.log(...args)
 }
 
 type PuppetProps = {
