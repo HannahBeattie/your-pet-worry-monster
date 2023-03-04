@@ -13,7 +13,7 @@ function ExitPage({ close }: Props) {
 		router.push('/')
 	}, [router])
 	return (
-		<HStack>
+		<HStack zIndex={3}>
 			<Spacer />
 			<CircleIconButton
 				color='gray.500'
