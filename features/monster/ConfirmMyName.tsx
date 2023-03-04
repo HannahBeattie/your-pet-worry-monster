@@ -27,7 +27,8 @@ export default function ConfirmMyName() {
 					{name}? I...I...Love it!
 				</MonsterVoice>
 			</Center>
-			<FullBlue monsterMood='excited' />
+			<FullBlue monsterMood='great' />
+
 			<HStack space={4} justifyContent={'center'}>
 				<CircleIconButton
 					tag='no'

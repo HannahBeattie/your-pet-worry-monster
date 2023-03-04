@@ -64,14 +64,14 @@ export default function Name() {
 							fontFamily='poppinsLight'
 							variant={'unstyled'}
 							autoCapitalize='none'
-							px={4}
+							px={2}
 							mx={-5}
 						/>
 					</VStack>
 					<Divider color={'white'} />
 
 					<VStack>
-						<Text color={'red.500'} fontSize={'sm'} mt={0} p={2} px={4}>
+						<Text color={'red.500'} fontSize={'sm'} mt={0} p={2} px={1}>
 							{error}
 						</Text>
 
@@ -89,7 +89,8 @@ export default function Name() {
 					</VStack>
 				</VStack>
 			</TouchableWithoutFeedback>
-			<FullBlue monsterMood='happy' />
+
+			<FullBlue monsterMood='hmmm' />
 		</PageWrapper>
 	)
 }
