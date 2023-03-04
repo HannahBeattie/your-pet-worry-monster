@@ -59,7 +59,7 @@ function WorryOptions() {
 			<PageWrapper>
 				<Spacer />
 				<Center>
-					{latestActive && (
+					{latestActive?.id && (
 						<DragExpander
 							px={4}
 							space={2}
