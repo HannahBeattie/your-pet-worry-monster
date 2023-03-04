@@ -18,9 +18,11 @@ const imageSources = {
 	great: require('../../assets/fullBlue/great.png'),
 	wantMore: require('../../assets/fullBlue/wantMore.png'),
 	want: require('../../assets/fullBlue/want.png'),
+	sleepyHappy: require('../../assets/fullBlue/sleepyHappy.png'),
 }
 type FullBlueProps = {
 	monsterMood:
+		| 'sleepyHappy'
 		| 'sneak'
 		| 'want'
 		| 'excited'

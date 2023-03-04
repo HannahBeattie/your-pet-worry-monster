@@ -18,7 +18,7 @@ export default function ConfirmMyName() {
 		router.push('/name')
 	}
 	const yes = () => {
-		router.push('/monsterMenu')
+		router.push('/intro')
 	}
 	return (
 		<PageWrapper>

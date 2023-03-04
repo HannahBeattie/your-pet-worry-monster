@@ -47,11 +47,10 @@ export default function Name() {
 				accessible={false}
 			>
 				<VStack>
-					<VStack px={4} space={4} mb={-2}>
-						<MonsterVoice sizeVal={'3xl'}>
-							Hmm... what should I call mysef?
-						</MonsterVoice>
-
+					<VStack space={4} mb={-2}>
+						<VStack py={2} alignSelf={'center'}>
+							<MonsterVoice sizeVal={'27'}>What should I call mysef?</MonsterVoice>
+						</VStack>
 						<Input
 							maxLength={25}
 							autoFocus={false}
@@ -64,7 +63,7 @@ export default function Name() {
 							fontFamily='poppinsLight'
 							variant={'unstyled'}
 							autoCapitalize='none'
-							px={2}
+							px={10}
 							mx={-5}
 						/>
 					</VStack>

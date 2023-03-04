@@ -35,14 +35,6 @@ function WorryOptions() {
 		color: 'white',
 		fontSize: 'sm',
 	}
-	const buttonProps = {
-		backgroundColor: '#151516',
-		fontSize: 'lg',
-		px: 4,
-		py: 2,
-		color: 'gray.200',
-		borderRadius: 'md',
-	}
 
 	return (
 		<VStack flex={1} backgroundColor={'gray.900'}>
