@@ -3,9 +3,7 @@ import { useState } from 'react'
 import { LayoutRectangle } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import Animated, {
-	FadeIn,
 	WithSpringConfig,
-	runOnJS,
 	runOnUI,
 	useAnimatedStyle,
 	useDerivedValue,
@@ -35,21 +33,146 @@ type Part = {
 	minWorries?: number
 }
 
-type PartName =
-	| 'worriesL'
-	| 'worriesR'
-	| 'legL'
-	| 'legR'
-	| 'armL'
-	| 'armR'
-	| 'neck'
-	| 'body'
-	| 'head'
-	| 'mouth'
-	| 'eyes'
-	| 'pupilL'
-	| 'pupilR'
+const baseGain = 0.33
+const headGain = { x: 1.1, y: 1.1 } as Pos
 
+const parts = {
+	legL: {
+		src: require('../../assets/monsterParts/leg-left.png'),
+		left: 0.53461,
+		w: 0.27582,
+		top: 0.48885,
+		h: 0.45497,
+		pivot: { x: 0.61754, y: 0.73971 },
+		doubleSpring: true,
+		gain: { x: 1.0, y: 0.35 },
+		springOpts: { stiffness: 230, damping: 16 },
+		look: -0.015,
+	} as Part,
+	legR: {
+		src: require('../../assets/monsterParts/leg-right.png'),
+		left: 0.31125,
+		w: 0.23033,
+		top: 0.50014,
+		h: 0.4567,
+		pivot: { x: 0.4249, y: 0.73331 },
+		doubleSpring: true,
+		gain: { x: 0.8, y: 0.35 },
+		springOpts: { stiffness: 340, damping: 16 },
+		look: -0.015,
+	} as Part,
+	armL: {
+		src: require('../../assets/monsterParts/arm-left.png'),
+		left: 0.445,
+		w: 0.48,
+		top: 0.4,
+		h: 0.22262,
+		rot: 180,
+		pivot: { x: 0.6146, y: 0.40139 },
+		doubleSpring: true,
+		springOpts: { stiffness: 300, damping: 18 },
+		look: -0.017,
+	} as Part,
+	armR: {
+		src: require('../../assets/monsterParts/arm-right.png'),
+		left: 0.0,
+		w: 0.58,
+		top: 0.41681,
+		h: 0.20368,
+		rot: 164,
+		pivot: { x: 0.39478, y: 0.3985 },
+		doubleSpring: true,
+		springOpts: { stiffness: 150, damping: 12 },
+		look: -0.014,
+	} as Part,
+	worriesL: {
+		src: require('../../assets/monsterParts/worries-left.png'),
+		left: 0.69918,
+		w: 0.23566,
+		top: 0.54156,
+		h: 0.19867,
+		pivot: { x: 0.6146, y: 0.40139 },
+		doubleSpring: true,
+		springOpts: { stiffness: 300, damping: 18 },
+		look: -0.017,
+		minWorries: 2,
+	} as Part,
+	worriesR: {
+		src: require('../../assets/monsterParts/worries-right.png'),
+		left: 0.01959,
+		w: 0.35328,
+		top: 0.53752,
+		h: 0.28555,
+		pivot: { x: 0.39478, y: 0.3985 },
+		doubleSpring: true,
+		springOpts: { stiffness: 150, damping: 12 },
+		look: -0.014,
+		minWorries: 1,
+	} as Part,
+	neck: {
+		src: require('../../assets/monsterParts/neck.png'),
+		left: 0.4473,
+		w: 0.11034,
+		top: 0.22805,
+		h: 0.18852,
+	} as Part,
+	body: {
+		src: require('../../assets/monsterParts/body.png'),
+		left: 0.30117,
+		w: 0.42247,
+		top: 0.27734,
+		h: 0.54863,
+		springOpts: { stiffness: 80, damping: 10 },
+		look: -0.01,
+	} as Part,
+	head: {
+		src: require('../../assets/monsterParts/head-blank.png'),
+		left: 0.20873,
+		w: 0.56611,
+		top: 0.04731,
+		h: 0.33746,
+		gain: headGain,
+	} as Part,
+	mouth: {
+		src: require('../../assets/monsterParts/mouth-pleased.png'),
+		left: 0.32051,
+		w: 0.38061,
+		top: 0.27618,
+		h: 0.10289,
+		gain: headGain,
+	} as Part,
+	eyes: {
+		src: require('../../assets/monsterParts/eyes-blank.png'),
+		left: 0.26482,
+		w: 0.44311,
+		top: 0.14479,
+		h: 0.14564,
+		gain: headGain,
+	} as Part,
+	pupilL: {
+		src: require('../../assets/monsterParts/pupil-left.png'),
+		left: 0.59736,
+		w: 0.05689,
+		top: 0.19125,
+		h: 0.04019,
+		look: 0.02,
+		gain: headGain,
+	} as Part,
+	pupilR: {
+		src: require('../../assets/monsterParts/pupil-right.png'),
+		left: 0.33854,
+		w: 0.0625,
+		top: 0.20607,
+		h: 0.04275,
+		look: 0.02,
+		gain: headGain,
+	} as Part,
+}
+
+type Parts = typeof parts
+type PartName = keyof Parts
+
+// partNames determines the layering order for the different parts
 const partNames = [
 	'worriesL',
 	'worriesR',
@@ -65,142 +188,6 @@ const partNames = [
 	'pupilL',
 	'pupilR',
 ] as PartName[]
-
-const baseGain = 0.33
-const headGain = { x: 1.1, y: 1.1 } as Pos
-
-const parts: Record<PartName, Part> = {
-	legL: {
-		src: require('../../assets/monsterParts/leg-left.png'),
-		left: 0.53461,
-		w: 0.27582,
-		top: 0.48885,
-		h: 0.45497,
-		pivot: { x: 0.61754, y: 0.73971 },
-		doubleSpring: true,
-		gain: { x: 1.0, y: 0.35 },
-		springOpts: { stiffness: 230, damping: 16 },
-		look: -0.015,
-	},
-	legR: {
-		src: require('../../assets/monsterParts/leg-right.png'),
-		left: 0.31125,
-		w: 0.23033,
-		top: 0.50014,
-		h: 0.4567,
-		pivot: { x: 0.4249, y: 0.73331 },
-		doubleSpring: true,
-		gain: { x: 0.8, y: 0.35 },
-		springOpts: { stiffness: 340, damping: 16 },
-		look: -0.015,
-	},
-	armL: {
-		src: require('../../assets/monsterParts/arm-left.png'),
-		left: 0.445,
-		w: 0.48,
-		top: 0.4,
-		h: 0.22262,
-		rot: 180,
-		pivot: { x: 0.6146, y: 0.40139 },
-		doubleSpring: true,
-		springOpts: { stiffness: 300, damping: 18 },
-		look: -0.017,
-	},
-	armR: {
-		src: require('../../assets/monsterParts/arm-right.png'),
-		left: 0.0,
-		w: 0.58,
-		top: 0.41681,
-		h: 0.20368,
-		rot: 164,
-		pivot: { x: 0.39478, y: 0.3985 },
-		doubleSpring: true,
-		springOpts: { stiffness: 150, damping: 12 },
-		look: -0.014,
-	},
-	worriesL: {
-		src: require('../../assets/monsterParts/worries-left.png'),
-		left: 0.69918,
-		w: 0.23566,
-		top: 0.54156,
-		h: 0.19867,
-		pivot: { x: 0.6146, y: 0.40139 },
-		doubleSpring: true,
-		springOpts: { stiffness: 300, damping: 18 },
-		look: -0.017,
-		minWorries: 2,
-	},
-	worriesR: {
-		src: require('../../assets/monsterParts/worries-right.png'),
-		left: 0.01959,
-		w: 0.35328,
-		top: 0.53752,
-		h: 0.28555,
-		pivot: { x: 0.39478, y: 0.3985 },
-		doubleSpring: true,
-		springOpts: { stiffness: 150, damping: 12 },
-		look: -0.014,
-		minWorries: 1,
-	},
-	neck: {
-		src: require('../../assets/monsterParts/neck.png'),
-		left: 0.4473,
-		w: 0.11034,
-		top: 0.22805,
-		h: 0.18852,
-	},
-	body: {
-		src: require('../../assets/monsterParts/body.png'),
-		left: 0.30117,
-		w: 0.42247,
-		top: 0.27734,
-		h: 0.54863,
-		springOpts: { stiffness: 80, damping: 10 },
-		look: -0.01,
-	},
-	head: {
-		src: require('../../assets/monsterParts/head-blank.png'),
-		left: 0.20873,
-		w: 0.56611,
-		top: 0.04731,
-		h: 0.33746,
-		gain: headGain,
-	},
-	mouth: {
-		src: require('../../assets/monsterParts/mouth-pleased.png'),
-		left: 0.32051,
-		w: 0.38061,
-		top: 0.27618,
-		h: 0.10289,
-		gain: headGain,
-	},
-	eyes: {
-		src: require('../../assets/monsterParts/eyes-blank.png'),
-		left: 0.26482,
-		w: 0.44311,
-		top: 0.14479,
-		h: 0.14564,
-		gain: headGain,
-	},
-	pupilL: {
-		src: require('../../assets/monsterParts/pupil-left.png'),
-		left: 0.59736,
-		w: 0.05689,
-		top: 0.19125,
-		h: 0.04019,
-		look: 0.02,
-		gain: headGain,
-	},
-	pupilR: {
-		src: require('../../assets/monsterParts/pupil-right.png'),
-		left: 0.33854,
-		w: 0.0625,
-		top: 0.20607,
-		h: 0.04275,
-		look: 0.02,
-		gain: headGain,
-	},
-}
 
 function animStyleForPart({
 	layout,
@@ -250,6 +237,8 @@ function animStyleForPart({
 	}
 }
 
+type AnimStyleForPart = ReturnType<typeof animStyleForPart>
+
 function log(...args: any[]) {
 	console.log(...args)
 }
@@ -259,7 +248,8 @@ type PuppetProps = {
 }
 
 export default function Puppet({ numWorries }: PuppetProps) {
-	const [rerender, setRerender] = useState(0)
+	const [didLayout, setDidLayout] = useState(false)
+	const [imgsLoaded, setImgsLoaded] = useState(0)
 
 	const start = useSharedValue({ x: 0, y: 0 })
 	const originX = useSharedValue(0)
@@ -297,7 +287,7 @@ export default function Puppet({ numWorries }: PuppetProps) {
 			originY.value = 0
 		})
 
-	const animStyles: Partial<Record<PartName, any>> = {}
+	const animStyles: Partial<Record<PartName, AnimStyleForPart>> = {}
 	for (const partName of partNames) {
 		const part = parts[partName]
 		animStyles[partName] = useAnimatedStyle(() => {
@@ -329,33 +319,37 @@ export default function Puppet({ numWorries }: PuppetProps) {
 						imgLayout.height = ll.width / aspect
 						imgLayout.y = (ll.height - imgLayout.height) / 2
 					}
-					setTimeout(() => setRerender(+new Date()), 1000) // we need to double render because the images look wrong on the first one
 					// console.log(layoutAspect, aspect, nativeEvent.layout, imgLayout)
+					setDidLayout(true)
 					runOnUI((layoutVals) => {
 						'worklet'
 						layout.value = layoutVals
 					})(imgLayout)
 				}}
 			>
-				{partNames.map((partName) => {
-					const { src, minWorries } = parts[partName]
-					const hasEnoughWorries = (numWorries ?? 0) >= (minWorries ?? 0)
-					return (
-						<Animated.View
-							key={`part-${partName}`}
-							style={[animStyles[partName], { position: 'absolute' }]}
-						>
-							<Image
-								key={`img-part-${partName}-${rerender}`}
-								alt={`blue's ${partName}`}
-								source={src}
-								flex={1}
-								resizeMode='contain'
-								opacity={hasEnoughWorries ? 1 : 0}
-							/>
-						</Animated.View>
-					)
-				})}
+				{didLayout &&
+					partNames.map((partName) => {
+						const { src, minWorries } = parts[partName]
+						const allLoaded = imgsLoaded >= partNames.length ? 1 : 0
+						const hasEnoughWorries = (numWorries ?? 0) >= (minWorries ?? 0)
+						const opacity = allLoaded * (hasEnoughWorries ? 1 : 0)
+						return (
+							<Animated.View
+								key={`part-${partName}`}
+								style={[animStyles[partName], { position: 'absolute' }]}
+							>
+								<Image
+									key={`img-part-${partName}`}
+									alt={`blue's ${partName}`}
+									source={src}
+									flex={1}
+									resizeMode='contain'
+									onLoad={() => setImgsLoaded((prev) => prev + 1)}
+									opacity={opacity}
+								/>
+							</Animated.View>
+						)
+					})}
 			</VStack>
 		</GestureDetector>
 	)
