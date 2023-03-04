@@ -30,6 +30,8 @@ const icons = [
 	{ tag: 'no', icon: Entypo, name: 'cross' },
 	{ tag: 'right', icon: AntDesign, name: 'arrowright' },
 	{ tag: 'chevRight', icon: FontAwesome, name: 'chevron-right' },
+	{ tag: 'knifeFork', icon: MaterialCommunityIcons, name: 'silverware-fork-knife' },
+	{ tag: 'bag', icon: Fontisto, name: 'shopping-bag-1' },
 ]
 
 const CircleIconButton: React.FC<Props> = ({
@@ -77,7 +79,7 @@ const CircleIconButton: React.FC<Props> = ({
 				/>
 			</Center>
 			{label && (
-				<Center>
+				<Center mt={-1}>
 					<Text fontSize={'lg'} color={'gray.500'} textAlign={'center'} {...labelProps}>
 						{label}
 					</Text>

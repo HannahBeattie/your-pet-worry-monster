@@ -98,30 +98,38 @@ function WorryOptions() {
 
 				<HStack alignItems={'stretch'} justifyContent={'space-between'}>
 					<CircleIconButton
-						tag={'!feed'}
+						tag={'bag'}
+						size={'xl'}
+						color={'gray.500'}
 						handlePress={() => {
 							router.push('/')
 						}}
 						arealabel={'do not feed to monster'}
 						label={'save'}
 					/>
-					<CircleIconButton
-						tag='feed'
-						arealabel='eat worry'
-						label='Gobble'
-						handlePress={() => {
-							dispatch(
-								updateWorry({
-									id: latestActive.id,
-									changes: {
-										isActive: !latestActive.isActive,
-										consumedAt: +new Date(),
-									},
-								})
-							),
-								router.push('/eatingWorry')
-						}}
-					/>
+					{latestActive?.id && (
+						<>
+							<CircleIconButton
+								tag='knifeFork'
+								size={'xl'}
+								color={'gray.500'}
+								arealabel='eat worry'
+								label='Gobble'
+								handlePress={() => {
+									dispatch(
+										updateWorry({
+											id: latestActive?.id,
+											changes: {
+												isActive: !latestActive?.isActive,
+												consumedAt: +new Date(),
+											},
+										})
+									),
+										router.push('/eatingWorry')
+								}}
+							/>
+						</>
+					)}
 				</HStack>
 			</PageWrapper>
 		</VStack>
