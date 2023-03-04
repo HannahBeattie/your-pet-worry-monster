@@ -7,6 +7,7 @@ import Animated, {
 	Extrapolation,
 	FadeOutUp,
 	interpolate,
+	Layout,
 	runOnUI,
 	useAnimatedRef,
 	useAnimatedStyle,
@@ -69,6 +70,7 @@ const DragExpander: FC<DragExpanderProps> = ({
 		.activeOffsetY([-5, 5])
 		.onBegin(() => {
 			isPressed.value = true
+			startY.value = offY.value
 		})
 		.onUpdate((e) => {
 			// update y offset based on how far the user has dragged since the start of the gesture
@@ -164,6 +166,7 @@ const DragExpander: FC<DragExpanderProps> = ({
 		<GestureDetector gesture={gesture}>
 			<Animated.View
 				exiting={FadeOutUp}
+				layout={Layout.delay(200).duration(300)}
 				style={[animStyle, { display: 'flex', alignItems: 'stretch' }]}
 			>
 				<VStack
