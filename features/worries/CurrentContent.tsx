@@ -33,9 +33,8 @@ export default function CurrentContent() {
 			{allActive.map((worry) => (
 				<VStack key={worry.id} py={2}>
 					<SwipeableButton onSwipe={() => handleSwipe(worry.id)}>
-						<VStack pt={3} z-zIndex={0}>
+						<VStack pt={3}>
 							<Center
-								z-zIndex={-3}
 								backgroundColor={'#29292930'}
 								justifyItems={'center'}
 								justifyContent={'center'}
