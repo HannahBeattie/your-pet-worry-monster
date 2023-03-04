@@ -9,6 +9,7 @@ import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { persistor, store } from '~features/store'
 import { StyleProvider } from '~features/theme/StyleProvider'
+import * as SplashScreen from 'expo-splash-screen'
 
 import {
 	Gaegu_300Light as monsterLight,
@@ -22,6 +23,9 @@ import {
 	Karla_700Bold as readBold,
 	Karla_800ExtraBold as readDaddyBold,
 } from '@expo-google-fonts/karla'
+import { useEffect } from 'react'
+
+SplashScreen.preventAutoHideAsync()
 
 export default function Layout() {
 	const [fontsLoaded] = useFonts({
@@ -37,6 +41,16 @@ export default function Layout() {
 		read,
 		readBold,
 	})
+
+	useEffect(() => {
+		if (fontsLoaded) {
+			SplashScreen.hideAsync()
+		}
+	}, [fontsLoaded])
+
+	if (!fontsLoaded) {
+		return null
+	}
 
 	return (
 		<Provider store={store}>
