@@ -184,7 +184,7 @@ const DragExpander: FC<DragExpanderProps> = ({
 	return (
 		<GestureDetector gesture={gesture}>
 			<Animated.View
-				exiting={FadeOutUp}
+				exiting={FadeOutUp.duration(200)}
 				layout={Layout.delay(200).duration(300)}
 				style={[animStyle, { display: 'flex', alignItems: 'stretch' }]}
 			>
