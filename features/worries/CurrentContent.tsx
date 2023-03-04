@@ -47,7 +47,7 @@ export default function CurrentContent() {
 						<VStack pt={3} z-zIndex={0}>
 							<Center
 								z-zIndex={-3}
-								backgroundColor={'#111111a0'}
+								backgroundColor={'#29292930'}
 								justifyItems={'center'}
 								justifyContent={'center'}
 								borderColor={'#ffffff14'}

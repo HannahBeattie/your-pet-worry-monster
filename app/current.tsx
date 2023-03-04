@@ -53,20 +53,11 @@ function Current() {
 							<Heading textAlign={'center'} fontFamily={'poppins'} opacity={80}>
 								{hasWorries ? `Current Worries` : `No Worries`}
 							</Heading>
-							<Text fontSize={'sm'} opacity={70} textAlign={'center'} px={10} pb={8}>
-								{hasWorries
-									? `that ${monsterName} promises not to eat without permission.`
-									: `${monsterName} has no worries.`}
+							<Text fontSize={'sm'} opacity={70} textAlign={'center'} px={10}>
+								{hasWorries ? `Swipe worry right to feed ${monsterName}` : ``}
 							</Text>
-
 							<CurrentContent />
 						</VStack>
-
-						{!hasWorries && (
-							<VStack position={'absolute'} top={200} right={-60} opacity={50}>
-								<Image resizeMode='contain' h={300} source={arm} alt={'arm'} />
-							</VStack>
-						)}
 					</VStack>
 				</ScrollView>
 			</SafeAreaView>
