@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import monsterSliceReducer, { monsterSliceName } from './monster/monsterSlice'
 import worrySliceReducer, { worrySliceName } from './worries/worrySlice'
+import introSliceReducer, { introSliceName } from './intro/introSlice'
 import {
 	persistStore,
 	persistReducer,
@@ -16,6 +17,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 const rootReducer = combineReducers({
 	[worrySliceName]: worrySliceReducer,
 	[monsterSliceName]: monsterSliceReducer,
+	[introSliceName]: introSliceReducer,
 })
 
 const persistedReducer = persistReducer(
