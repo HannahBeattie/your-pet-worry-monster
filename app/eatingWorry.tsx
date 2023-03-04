@@ -1,8 +1,6 @@
-import { Fontisto, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
-import { Center, Heading, HStack, Icon, IconButton, VStack } from 'native-base'
+import { Center, HStack } from 'native-base'
 import React from 'react'
-import { useWindowDimensions } from 'react-native'
 import { useSelector } from 'react-redux'
 import FullBlue from '~features/monster/FullBlue'
 import CircleIconButton from '~features/styledComponents/CircleIconButton'
@@ -43,7 +41,7 @@ export default function EatingWorry() {
 					handlePress={() => {
 						router.push('/addWorry')
 					}}
-					size={'xl'}
+					size={'2xl'}
 					tag={'add'}
 					label={'add worry'}
 				/>

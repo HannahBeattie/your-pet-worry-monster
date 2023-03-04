@@ -95,19 +95,19 @@ function WorryOptions() {
 						Should I gobble this worry up or save it for later ?
 					</Text>
 				</VStack>
+				{latestActive?.id && (
+					<HStack alignItems={'stretch'} justifyContent={'space-between'}>
+						<CircleIconButton
+							tag={'bag'}
+							size={'xl'}
+							color={'gray.500'}
+							handlePress={() => {
+								router.push('/')
+							}}
+							arealabel={'do not feed to monster'}
+							label={'save'}
+						/>
 
-				<HStack alignItems={'stretch'} justifyContent={'space-between'}>
-					<CircleIconButton
-						tag={'bag'}
-						size={'xl'}
-						color={'gray.500'}
-						handlePress={() => {
-							router.push('/')
-						}}
-						arealabel={'do not feed to monster'}
-						label={'save'}
-					/>
-					{latestActive?.id && (
 						<>
 							<CircleIconButton
 								tag='knifeFork'
@@ -129,8 +129,8 @@ function WorryOptions() {
 								}}
 							/>
 						</>
-					)}
-				</HStack>
+					</HStack>
+				)}
 			</PageWrapper>
 		</VStack>
 	)
