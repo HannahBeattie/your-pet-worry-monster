@@ -15,9 +15,9 @@ const aspect = 1.0 / 1.406 // width-to-height ratio for the full puppet
 
 const baseGain = 0.33
 
-const minOffX = -130
-const maxOffX = 130
-const minOffY = -170
+const minOffX = -70
+const maxOffX = 70
+const minOffY = -70
 const maxOffY = 70
 function clamp(val: number, min: number, max: number) {
 	'worklet'
