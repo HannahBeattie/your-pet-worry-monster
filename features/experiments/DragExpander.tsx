@@ -66,7 +66,24 @@ const DragExpander: FC<DragExpanderProps> = ({
 	) // springy upUp
 	const snapUpUp = useDerivedValue(() => -deleteH.value) // y offset when expanded
 
-	const gesture = Gesture.Pan()
+	const tapGesture = Gesture.Tap().onStart(() => {
+		// Toggle isUp (unless we're in delete mode, in which case hide delete)
+		isUp.value = isUpUp.value || !isUp.value
+
+		// Hide delete
+		isUpUp.value = false
+		upUp.value = 0
+
+		// Choose our snap target based on the updated value of isUp
+		const snapTo = isUp.value ? snapUp.value : snapDown.value
+		// Update our 0-to-1 "expanded" value
+		expanded.value = isUp.value ? 1 : 0
+		// Spring to our snap target!
+		offY.value = withSpring(snapTo)
+		startY.value = withSpring(snapTo)
+	})
+
+	const panGesture = Gesture.Pan()
 		.activeOffsetY([-5, 5])
 		.onBegin(() => {
 			isPressed.value = true
@@ -119,6 +136,8 @@ const DragExpander: FC<DragExpanderProps> = ({
 		.onFinalize(() => {
 			isPressed.value = false
 		})
+
+	const gesture = Gesture.Race(tapGesture, panGesture)
 
 	// animStyle moves the whole component
 	const animStyle = useAnimatedStyle(() => {
