@@ -1,5 +1,6 @@
 import { useRouter } from 'expo-router'
 import { Heading, HStack, Image, ScrollView, Spacer, Text, VStack } from 'native-base'
+import { background } from 'native-base/lib/typescript/theme/styled-system'
 import React, { useEffect, useState } from 'react'
 import { ImageBackground, SafeAreaView, useWindowDimensions } from 'react-native'
 import { useSelector } from 'react-redux'
@@ -13,6 +14,8 @@ const arm = require('../assets/arm.png')
 const gummyBoo = require('../assets/gummyBoo.png')
 const top = require('../assets/top.png')
 const drk = require('../assets/drk.jpg')
+const aspectTop = 1500 / 326
+const aspectBottom = 980 / 221
 
 function Current() {
 	const monsterName = useSelector(monsterNameSelector)
@@ -41,13 +44,14 @@ function Current() {
 			</HStack>
 			<VStack
 				position={'absolute'}
-				top={-100}
+				top={0}
 				left={0}
 				right={0}
+				height={width / aspectTop}
 				zIndex={2}
 				pointerEvents='none'
 			>
-				<Image resizeMode='contain' source={top} alt={'teeth'} />
+				<Image flex={1} resizeMode='contain' source={top} alt={'teeth'} />
 			</VStack>
 			<SafeAreaView style={{ flex: 1 }}>
 				<ScrollView
@@ -71,20 +75,15 @@ function Current() {
 
 			<VStack
 				maxW={width}
-				margin={0}
-				padding={0}
 				position={'absolute'}
-				bottom={-70}
+				bottom={0}
+				left={0}
+				right={0}
+				height={width / aspectBottom}
 				zIndex={2}
 				pointerEvents='none'
 			>
-				<Image
-					opacity={90}
-					padding={0}
-					resizeMode='contain'
-					source={gummyBoo}
-					alt={'teeth'}
-				/>
+				<Image resizeMode='contain' source={gummyBoo} alt={'teeth'} flex={1} />
 			</VStack>
 		</ImageBackground>
 	)
