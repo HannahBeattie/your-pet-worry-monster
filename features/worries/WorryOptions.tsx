@@ -64,7 +64,7 @@ function WorryOptions() {
 							px={4}
 							space={2}
 							onDelete={() => {
-								dispatch(deleteWorry(latestActive.id))
+								dispatch(deleteWorry(latestActive?.id))
 								router.push('/')
 							}}
 							header={
@@ -107,25 +107,28 @@ function WorryOptions() {
 						label={'save'}
 						size={'2xl'}
 					/>
-					<CircleIconButton
-						tag='knifeFork'
-						size={'xl'}
-						color={'gray.500'}
-						arealabel='eat worry'
-						label='Gobble'
-						handlePress={() => {
-							dispatch(
-								updateWorry({
-									id: latestActive.id,
-									changes: {
-										isActive: !latestActive.isActive,
-										consumedAt: +new Date(),
-									},
-								})
-							),
-								router.push('/eatingWorry')
-						}}
-					/>
+
+					{latestActive?.id && (
+						<CircleIconButton
+							tag='knifeFork'
+							size={'xl'}
+							color={'gray.500'}
+							arealabel='eat worry'
+							label='Gobble'
+							handlePress={() => {
+								dispatch(
+									updateWorry({
+										id: latestActive?.id,
+										changes: {
+											isActive: !latestActive?.isActive,
+											consumedAt: +new Date(),
+										},
+									})
+								),
+									router.push('/eatingWorry')
+							}}
+						/>
+					)}
 				</HStack>
 			</PageWrapper>
 		</VStack>

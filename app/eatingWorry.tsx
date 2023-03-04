@@ -43,7 +43,7 @@ export default function EatingWorry() {
 					handlePress={() => {
 						router.push('/addWorry')
 					}}
-					size={'xl'}
+					size={'3xl'}
 					tag={'add'}
 					label={'add worry'}
 				/>
