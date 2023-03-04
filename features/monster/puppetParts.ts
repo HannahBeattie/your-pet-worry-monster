@@ -225,3 +225,15 @@ export function animStyleForPart({
 }
 
 export type AnimStyleForPart = ReturnType<typeof animStyleForPart>
+
+// const WW = 1080
+// const HH = WW * 1.406 // width-to-height ratio for the full puppet
+// let mogrify = ''
+// for (const name of partNames) {
+// 	const { w, h, src } = parts[name]
+// 	const newW = Math.ceil(w * WW)
+// 	const newH = Math.ceil(h * HH)
+// 	const newWH = `${newW}x${newH}`
+// 	mogrify += `mogrify -scale ${newWH} ${src.replace(/..\/..\/assets\/monsterParts\//, '')}\n`
+// }
+// console.log(mogrify)
