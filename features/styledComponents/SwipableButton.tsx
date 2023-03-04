@@ -1,5 +1,5 @@
 import { FontAwesome } from '@expo/vector-icons'
-import { Center, Divider, HStack, Text, VStack } from 'native-base'
+import { Center, Divider, HStack, Image, Text, VStack } from 'native-base'
 import React, { ReactNode, useEffect } from 'react'
 import { Dimensions, StyleSheet, View } from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
@@ -26,6 +26,7 @@ type SwipeButtonPropsType = {
 	text?: string
 	children?: ReactNode
 }
+const arm = require('../../assets/a.png')
 
 const SwipeableButton = ({ onSwipe, text, children, isLoading = false }: SwipeButtonPropsType) => {
 	const name = useSelector(monsterNameSelector)

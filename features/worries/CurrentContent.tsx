@@ -1,5 +1,5 @@
 import { useRouter } from 'expo-router'
-import { Center, Divider, ScrollView, Text, VStack } from 'native-base'
+import { Center, Divider, Image, ScrollView, Text, VStack } from 'native-base'
 import React, { useState } from 'react'
 import { useWindowDimensions } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
@@ -44,8 +44,9 @@ export default function CurrentContent() {
 						onSwipe={() => handleSwipe(worry.id)}
 						isLoading={isLoading}
 					>
-						<VStack pt={3}>
+						<VStack pt={3} z-zIndex={0}>
 							<Center
+								z-zIndex={-3}
 								backgroundColor={'#111111a0'}
 								justifyItems={'center'}
 								justifyContent={'center'}
