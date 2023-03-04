@@ -105,23 +105,27 @@ function WorryOptions() {
 						arealabel={'do not feed to monster'}
 						label={'save'}
 					/>
-					<CircleIconButton
-						tag='feed'
-						arealabel='eat worry'
-						label='Gobble'
-						handlePress={() => {
-							dispatch(
-								updateWorry({
-									id: latestActive.id,
-									changes: {
-										isActive: !latestActive.isActive,
-										consumedAt: +new Date(),
-									},
-								})
-							),
-								router.push('/eatingWorry')
-						}}
-					/>
+					{latestActive.id && (
+						<>
+							<CircleIconButton
+								tag='feed'
+								arealabel='eat worry'
+								label='Gobble'
+								handlePress={() => {
+									dispatch(
+										updateWorry({
+											id: latestActive.id,
+											changes: {
+												isActive: !latestActive.isActive,
+												consumedAt: +new Date(),
+											},
+										})
+									),
+										router.push('/eatingWorry')
+								}}
+							/>
+						</>
+					)}
 				</HStack>
 			</PageWrapper>
 		</VStack>
