@@ -98,15 +98,19 @@ function WorryOptions() {
 
 				<HStack alignItems={'stretch'} justifyContent={'space-between'}>
 					<CircleIconButton
-						tag={'!feed'}
+						tag={'bag'}
+						color={'gray.500'}
 						handlePress={() => {
 							router.push('/')
 						}}
 						arealabel={'do not feed to monster'}
 						label={'save'}
+						size={'2xl'}
 					/>
 					<CircleIconButton
-						tag='feed'
+						tag='knifeFork'
+						size={'xl'}
+						color={'gray.500'}
 						arealabel='eat worry'
 						label='Gobble'
 						handlePress={() => {

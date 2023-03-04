@@ -6,6 +6,7 @@ import { useWindowDimensions } from 'react-native'
 import { useSelector } from 'react-redux'
 import FullBlue from '~features/monster/FullBlue'
 import CircleIconButton from '~features/styledComponents/CircleIconButton'
+import ExitPage from '~features/styledComponents/ExitPage'
 import MonsterVoice from '~features/styledComponents/MonsterVoice'
 import PageWrapper from '~features/styledComponents/PageWrapper'
 import { selectAllActive } from '~features/worries/worrySlice'
@@ -15,6 +16,7 @@ export default function EatingWorry() {
 	const active = useSelector(selectAllActive)
 	return (
 		<PageWrapper>
+			<ExitPage />
 			<Center>
 				<MonsterVoice sizeVal={'5xl'}> YUMMMM!</MonsterVoice>
 				<MonsterVoice> That Was delicious!!</MonsterVoice>
@@ -25,29 +27,25 @@ export default function EatingWorry() {
 			<HStack justifyContent={'space-evenly'}>
 				{active.length > 0 && (
 					<CircleIconButton
+						color='#ffffff91'
+						size={'2xl'}
 						handlePress={() => {
 							router.push('current')
 						}}
-						tag='feed'
+						tag='knifeFork'
 						arealabel='feed worry to monster'
-						label='eat'
+						label='eat worry'
 					/>
 				)}
 				<CircleIconButton
+					color='#ffffff91'
 					arealabel='add worry'
 					handlePress={() => {
 						router.push('/addWorry')
 					}}
+					size={'xl'}
 					tag={'add'}
-					label={'add'}
-				/>
-				<CircleIconButton
-					arealabel='home'
-					handlePress={() => {
-						router.push('/')
-					}}
-					tag={'home'}
-					label={'go'}
+					label={'add worry'}
 				/>
 			</HStack>
 		</PageWrapper>
