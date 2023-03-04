@@ -1,11 +1,12 @@
 import { Entypo } from '@expo/vector-icons'
-import { Box, Icon, IconButton, VStack } from 'native-base'
+import { Box, Icon, VStack } from 'native-base'
 import { ComponentProps, FC, ReactElement } from 'react'
 import { TouchableOpacity } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import Animated, {
 	Extrapolation,
 	FadeOutUp,
+	Layout,
 	interpolate,
 	runOnUI,
 	useAnimatedRef,
@@ -65,10 +66,28 @@ const DragExpander: FC<DragExpanderProps> = ({
 	) // springy upUp
 	const snapUpUp = useDerivedValue(() => -deleteH.value) // y offset when expanded
 
-	const gesture = Gesture.Pan()
+	const tapGesture = Gesture.Tap().onStart(() => {
+		// Toggle isUp (unless we're in delete mode, in which case hide delete)
+		isUp.value = isUpUp.value || !isUp.value
+
+		// Hide delete
+		isUpUp.value = false
+		upUp.value = 0
+
+		// Choose our snap target based on the updated value of isUp
+		const snapTo = isUp.value ? snapUp.value : snapDown.value
+		// Update our 0-to-1 "expanded" value
+		expanded.value = isUp.value ? 1 : 0
+		// Spring to our snap target!
+		offY.value = withSpring(snapTo)
+		startY.value = withSpring(snapTo)
+	})
+
+	const panGesture = Gesture.Pan()
 		.activeOffsetY([-5, 5])
 		.onBegin(() => {
 			isPressed.value = true
+			startY.value = offY.value
 		})
 		.onUpdate((e) => {
 			// update y offset based on how far the user has dragged since the start of the gesture
@@ -118,6 +137,8 @@ const DragExpander: FC<DragExpanderProps> = ({
 			isPressed.value = false
 		})
 
+	const gesture = Gesture.Race(tapGesture, panGesture)
+
 	// animStyle moves the whole component
 	const animStyle = useAnimatedStyle(() => {
 		return {
@@ -163,7 +184,8 @@ const DragExpander: FC<DragExpanderProps> = ({
 	return (
 		<GestureDetector gesture={gesture}>
 			<Animated.View
-				exiting={FadeOutUp}
+				exiting={FadeOutUp.duration(200)}
+				layout={Layout.delay(200).duration(300)}
 				style={[animStyle, { display: 'flex', alignItems: 'stretch' }]}
 			>
 				<VStack

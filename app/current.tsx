@@ -39,7 +39,14 @@ function Current() {
 					handlePress={handleClose}
 				/>
 			</HStack>
-			<VStack position={'absolute'} top={-100} left={0} right={0} zIndex={2}>
+			<VStack
+				position={'absolute'}
+				top={-100}
+				left={0}
+				right={0}
+				zIndex={2}
+				pointerEvents='none'
+			>
 				<Image resizeMode='contain' source={top} alt={'teeth'} />
 			</VStack>
 			<SafeAreaView style={{ flex: 1 }}>
@@ -69,6 +76,7 @@ function Current() {
 				position={'absolute'}
 				bottom={-70}
 				zIndex={2}
+				pointerEvents='none'
 			>
 				<Image
 					opacity={90}

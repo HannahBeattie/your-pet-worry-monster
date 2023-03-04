@@ -1,24 +1,18 @@
 import { useRouter } from 'expo-router'
-import { Center, Divider, Image, ScrollView, Text, VStack } from 'native-base'
-import React, { useState } from 'react'
+import { Center, Text, VStack } from 'native-base'
+import React from 'react'
 import { useWindowDimensions } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import { monsterNameSelector } from '~features/monster/monsterSlice'
 import SwipeableButton from '~features/styledComponents/SwipableButton'
 import { useFormatDate } from '~features/worries/useFormatDate'
-import { selectAllActive, updateWorry, Worry } from '~features/worries/worrySlice'
+import { Worry, selectAllActive, updateWorry } from '~features/worries/worrySlice'
 
 export default function CurrentContent() {
 	const allActive: Worry[] = [...useSelector(selectAllActive)].reverse()
 	const dispatch = useDispatch()
-	const name = useSelector(monsterNameSelector)
 	const router = useRouter()
 
-	const [isLoading, setIsLoading] = useState(false)
-	const [text, setText] = useState(`Slide to feed ${name}`)
-
 	const handleSwipe = (worryId: number) => {
-		setIsLoading(true)
 		dispatch(
 			updateWorry({
 				id: worryId,
@@ -30,20 +24,15 @@ export default function CurrentContent() {
 		)
 		router.push('eatingWorry')
 		console.log('ate worry: ', worryId)
-		setIsLoading(false)
 	}
 
-	const { width, height } = useWindowDimensions()
+	const { width } = useWindowDimensions()
 	const w = width - 60
 	return (
 		<>
 			{allActive.map((worry) => (
 				<VStack key={worry.id} py={2}>
-					<SwipeableButton
-						text={text}
-						onSwipe={() => handleSwipe(worry.id)}
-						isLoading={isLoading}
-					>
+					<SwipeableButton onSwipe={() => handleSwipe(worry.id)}>
 						<VStack pt={3} z-zIndex={0}>
 							<Center
 								z-zIndex={-3}
