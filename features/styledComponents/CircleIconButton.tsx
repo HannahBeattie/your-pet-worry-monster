@@ -52,6 +52,7 @@ const CircleIconButton: React.FC<Props> = ({
 
 	return (
 		<VStack
+			zIndex={3}
 			alignItems={'stretch'}
 			justifyContent={'center'}
 			justifyItems={'center'}
@@ -59,11 +60,13 @@ const CircleIconButton: React.FC<Props> = ({
 		>
 			<Center>
 				<IconButton
+					zIndex={8}
 					onPress={handlePress}
 					backgroundColor={checkBg}
 					borderRadius={'200'}
 					icon={
 						<Icon
+							zIndex={7}
 							size={checkSize}
 							color={checkColor}
 							as={IconComponent}
