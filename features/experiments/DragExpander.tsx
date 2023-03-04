@@ -1,13 +1,13 @@
 import { Entypo } from '@expo/vector-icons'
-import { Box, Icon, IconButton, VStack } from 'native-base'
+import { Box, Icon, VStack } from 'native-base'
 import { ComponentProps, FC, ReactElement } from 'react'
 import { TouchableOpacity } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import Animated, {
 	Extrapolation,
 	FadeOutUp,
-	interpolate,
 	Layout,
+	interpolate,
 	runOnUI,
 	useAnimatedRef,
 	useAnimatedStyle,

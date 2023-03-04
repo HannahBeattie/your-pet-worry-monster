@@ -2,6 +2,7 @@ import { Image, VStack } from 'native-base'
 import { useState } from 'react'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import Animated, {
+	runOnJS,
 	runOnUI,
 	useAnimatedStyle,
 	useDerivedValue,
@@ -40,6 +41,7 @@ export default function Puppet({ numWorries }: PuppetProps) {
 
 	const layout = useSharedValue({ x: 0, y: 0, width: 1, height: 1 })
 
+	const skipUpdate = useSharedValue(-1)
 	const gesture = Gesture.Pan()
 		.onBegin((evt) => {
 			isPressed.value = true
@@ -48,6 +50,11 @@ export default function Puppet({ numWorries }: PuppetProps) {
 			originY.value = evt.translationY * baseGain + start.value.y
 		})
 		.onUpdate((evt) => {
+			skipUpdate.value = (skipUpdate.value + 1) % 4
+			if (skipUpdate.value > 0) {
+				// try to improve performance by only processing every fourth event
+				return
+			}
 			press.value = { x: evt.x, y: evt.y }
 			originX.value = evt.translationX * baseGain + start.value.x
 			originY.value = evt.translationY * baseGain + start.value.y
