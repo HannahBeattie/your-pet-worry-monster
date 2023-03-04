@@ -1,5 +1,5 @@
 import { Image, VStack } from 'native-base'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import Animated, {
 	runOnJS,
@@ -15,6 +15,23 @@ const aspect = 1.0 / 1.406 // width-to-height ratio for the full puppet
 
 const baseGain = 0.33
 
+const minOffX = -130
+const maxOffX = 130
+const minOffY = -170
+const maxOffY = 130
+function clamp(val: number, min: number, max: number) {
+	'worklet'
+	return Math.min(max, Math.max(min, val))
+}
+function clampOffX(val: number) {
+	'worklet'
+	return clamp(val, minOffX, maxOffX)
+}
+function clampOffY(val: number) {
+	'worklet'
+	return clamp(val, minOffY, maxOffY)
+}
+
 function log(...args: any[]) {
 	console.log(...args)
 }
@@ -27,9 +44,20 @@ export default function Puppet({ numWorries }: PuppetProps) {
 	const [didLayout, setDidLayout] = useState(false)
 	const [imgsLoaded, setImgsLoaded] = useState(0)
 
+	// Start from off-screen (either left, top, right, or bottom)
+	const enterRand = Math.random()
+	const [enterX, enterY] =
+		enterRand > 0.75
+			? [0, -1300]
+			: enterRand > 0.5
+			? [0, 1000]
+			: enterRand > 0.25
+			? [350, 0]
+			: [-350, 0]
+
 	const start = useSharedValue({ x: 0, y: 0 })
-	const originX = useSharedValue(0)
-	const originY = useSharedValue(0)
+	const originX = useSharedValue(enterX)
+	const originY = useSharedValue(enterY)
 	const isPressed = useSharedValue(false)
 	const press = useSharedValue({ x: 0, y: 0 })
 	const originSpringX = useDerivedValue(() =>
@@ -56,14 +84,23 @@ export default function Puppet({ numWorries }: PuppetProps) {
 				return
 			}
 			press.value = { x: evt.x, y: evt.y }
-			originX.value = evt.translationX * baseGain + start.value.x
-			originY.value = evt.translationY * baseGain + start.value.y
+			originX.value = clampOffX(evt.translationX * baseGain + start.value.x)
+			originY.value = clampOffY(evt.translationY * baseGain + start.value.y)
 		})
-		.onEnd((evt) => {
+		.onEnd(() => {
 			isPressed.value = false
 			originX.value = 0
 			originY.value = 0
 		})
+
+	useEffect(() => {
+		if (imgsLoaded === partNames.length) {
+			runOnUI(() => {
+				originX.value = 0
+				originY.value = 0
+			})()
+		}
+	}, [imgsLoaded])
 
 	const animStyles: Partial<Record<PartName, AnimStyleForPart>> = {}
 	for (const partName of partNames) {
@@ -97,7 +134,7 @@ export default function Puppet({ numWorries }: PuppetProps) {
 						imgLayout.height = ll.width / aspect
 						imgLayout.y = (ll.height - imgLayout.height) / 2
 					}
-					setDidLayout(true)
+					setTimeout(() => setDidLayout(true), 100)
 					runOnUI((layoutVals) => {
 						'worklet'
 						layout.value = layoutVals
