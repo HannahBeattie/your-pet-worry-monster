@@ -1,5 +1,6 @@
-import { Heading } from 'native-base'
+import { Center, Heading } from 'native-base'
 import React from 'react'
+import MonsterVoice from '~features/styledComponents/MonsterVoice'
 import PageWrapper from '~features/styledComponents/PageWrapper'
 
 // fade in from black, center screen
@@ -37,9 +38,11 @@ import PageWrapper from '~features/styledComponents/PageWrapper'
 
 function intro() {
 	return (
-		<PageWrapper>
-			<Heading>intro goes here!</Heading>
-		</PageWrapper>
+		<Center flex={1} bg={'black'}>
+			<MonsterVoice sizeVal={'8xl'} color='blueGray.200'>
+				GRRRR!
+			</MonsterVoice>
+		</Center>
 	)
 }
 
