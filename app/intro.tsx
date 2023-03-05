@@ -1,16 +1,20 @@
-import { Center } from 'native-base'
+import { Center, VStack } from 'native-base'
 import React, { useEffect, useState } from 'react'
+import { SafeAreaView } from 'react-native'
 import { useDispatch } from 'react-redux'
 import { setIntroPlayed } from '~features/intro/introSlice'
+import Blue from '~features/monster/Blue'
+import Gregory from '~features/monster/Gregory'
 import MonsterVoice from '~features/styledComponents/MonsterVoice'
+import NameLabel from '~features/styledComponents/NameLabel'
 
-// !!STATE1 &&
-// fade in from black, center screen
+// !!STATE1 && ---- viewtype one
+// fade in from black, center screen ------vibrate phone
 //'GRRR!', 'ROAR', 'GROWLLLLL!', 'I am the dreaded....'
 
 // layout changes ----- //text appears at top of page //
 
-//"WORRY MONSTER!!"
+//"WORRY MONSTER!!" ---- viewtype two
 
 // Gregory blue appears, smiling
 
@@ -35,7 +39,7 @@ import MonsterVoice from '~features/styledComponents/MonsterVoice'
 
 // text sequence continues above gregory:
 
-// "*GURGLE GURLGE*"
+// "*GURGLE GURLGE*" ----vibrate phone?
 // "I am hungry!"
 // "Do you have any worries for me to eat?"
 
@@ -59,11 +63,25 @@ function intro() {
 	const introPlayed = () => dispatch(setIntroPlayed(true))
 
 	return (
-		<Center flex={1} bg={'black'}>
-			<MonsterVoice sizeVal={'8xl'} color='blueGray.200'>
-				GRRRR!
-			</MonsterVoice>
-		</Center>
+		<>
+			{/* view type one: */}
+			<Center flex={1} bg={'black'}>
+				<MonsterVoice sizeVal={'8xl'} color='blueGray.200'>
+					GRRRR!
+				</MonsterVoice>
+			</Center>
+			{/* view type two: */}
+			{/* <VStack flex={'1'} backgroundColor={'black'}>
+				<SafeAreaView style={{ flex: 1 }}>
+					<VStack flex={1}>
+						<Center pt={12} px={8}>
+							<MonsterVoice>I like to eat worries!</MonsterVoice>
+						</Center>
+						<Blue />
+					</VStack>
+				</SafeAreaView>
+			</VStack> */}
+		</>
 	)
 }
 
