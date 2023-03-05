@@ -4,15 +4,18 @@ import { useDispatch } from 'react-redux'
 import { setIntroPlayed } from '~features/intro/introSlice'
 import MonsterVoice from '~features/styledComponents/MonsterVoice'
 
+// !!STATE1 &&
 // fade in from black, center screen
 //'GRRR!', 'ROAR', 'GROWLLLLL!', 'I am the dreaded....'
 
-//text appears at top of page
+// layout changes ----- //text appears at top of page //
+
 //"WORRY MONSTER!!"
 
 // Gregory blue appears, smiling
 
 //text sequence continues above him :
+
 // "I like to eat worries!"
 // "Delicious!"
 // "My name is..."
@@ -20,12 +23,15 @@ import MonsterVoice from '~features/styledComponents/MonsterVoice'
 
 // Gregory looks sad/confused
 
+//text sequence continues above him :
+
 // "I don't have a name!"
 // "I can't be a fearsome worry monster without a name!"
 
+//SET STATE : ONE PLAYED
 //link to '/name' which is followed by '/confirm name'
 
-////----SEPPERATE COMPONENT?-----////
+// STATEONE & !!STATE2 &&  :
 
 // text sequence continues above gregory:
 
@@ -37,18 +43,18 @@ import MonsterVoice from '~features/styledComponents/MonsterVoice'
 // ADD WORRY ---- '/addWorry'  === intro played
 // MAYBE LATER --- '/' === intro played
 
+// ELSE REG HOME SCREEN
+
 function intro() {
 	const dispatch = useDispatch()
 	const [state1, setState1] = useState(false)
 	const [state2, setState2] = useState(false)
-	const [state3, setState3] = useState(false)
 
 	useEffect(() => {
 		// Do something when any of the state values change
 		console.log('state1:', state1)
 		console.log('state2:', state2)
-		console.log('state3:', state3)
-	}, [state1, state2, state3])
+	}, [state1, state2])
 
 	const introPlayed = () => dispatch(setIntroPlayed(true))
 
