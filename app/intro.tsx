@@ -23,6 +23,8 @@ import PageWrapper from '~features/styledComponents/PageWrapper'
 
 //link to '/name' which is followed by '/confirm name'
 
+////----SEPPERATE COMPONENT?-----////
+
 // text sequence continues above gregory:
 
 // "*GURGLE GURLGE*"
