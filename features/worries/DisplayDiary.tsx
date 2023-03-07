@@ -7,7 +7,6 @@ const spatter = require('../../assets/spatter01.png')
 const spatter2 = require('../../assets/spatter02.png')
 const spatter3 = require('../../assets/spatter03.png')
 function DisplayDiary() {
-	const imageArray = [spatter, spatter2, spatter3, spatter, spatter2, spatter3]
 	return (
 		<PageWrapper py={-2} px={-1}>
 			<WorryFeature />
