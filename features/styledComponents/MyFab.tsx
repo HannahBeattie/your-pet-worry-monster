@@ -62,7 +62,7 @@ function MyFab({ props, position }: any) {
 	return (
 		<FloatingAction
 			overlayColor='none'
-			color={active ? '#3e7583b6' : '#2d2b3470'}
+			color={active ? '#2d2b3470' : '#3e7583b6'}
 			actions={items}
 			position={position ? position : 'left'}
 			distanceToEdge={{ horizontal: 0, vertical: 0 }}
