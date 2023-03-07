@@ -7,11 +7,7 @@ const spatter = require('../../assets/spatter01.png')
 const spatter2 = require('../../assets/spatter02.png')
 const spatter3 = require('../../assets/spatter03.png')
 function DisplayDiary() {
-	return (
-		<PageWrapper py={-2} px={-1}>
-			<WorryFeature />
-		</PageWrapper>
-	)
+	return <WorryFeature />
 }
 
 export default DisplayDiary

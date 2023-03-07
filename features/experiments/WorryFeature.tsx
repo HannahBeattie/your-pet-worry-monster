@@ -1,6 +1,7 @@
-import { HStack, ScrollView, Text, VStack } from 'native-base'
+import { Heading, HStack, ScrollView, Spacer, Text, VStack } from 'native-base'
 import React, { useEffect, useState } from 'react'
 import { ImageBackground, useWindowDimensions } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import { useDispatch, useSelector } from 'react-redux'
 import { monsterNameSelector } from '~features/monster/monsterSlice'
 import ExitPage from '~features/styledComponents/ExitPage'
@@ -30,6 +31,7 @@ function WorryFeature() {
 		<ImageBackground
 			source={bg}
 			style={{
+				backgroundColor: '#151515',
 				flex: 1,
 				overflow: 'visible',
 				minWidth: width,
@@ -38,8 +40,15 @@ function WorryFeature() {
 			}}
 			resizeMode={'repeat'}
 		>
-			<VStack flex={1} backgroundColor={'#000111c8'}>
-				<ExitPage />
+			<SafeAreaView style={{ flex: 1, backgroundColor: '#000111c8' }}>
+				<HStack>
+					<Text p={2} px={4} opacity={40} color={'blue.300'}>
+						{name}'s Food diary
+					</Text>
+					<Spacer />
+					<ExitPage />
+				</HStack>
+
 				<ScrollView
 					horizontal={true}
 					scrollEnabled
@@ -53,7 +62,7 @@ function WorryFeature() {
 						}}
 						resizeMode={'contain'}
 					>
-						<VStack flex={1} justifyItems={'center'} justifyContent={'center'} mb={200}>
+						<VStack flex={1} justifyItems={'center'} justifyContent={'center'} pb={100}>
 							<HStack
 								flex={1}
 								space={4}
@@ -120,7 +129,7 @@ function WorryFeature() {
 						</VStack>
 					</ImageBackground>
 				</ScrollView>
-			</VStack>
+			</SafeAreaView>
 		</ImageBackground>
 	)
 }
