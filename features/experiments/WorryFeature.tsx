@@ -38,7 +38,7 @@ function WorryFeature() {
 			}}
 			resizeMode={'repeat'}
 		>
-			<VStack flex={1} backgroundColor={'#000111ce'}>
+			<VStack flex={1} backgroundColor={'#000111c8'}>
 				<ExitPage />
 				<ScrollView
 					horizontal={true}
@@ -50,9 +50,8 @@ function WorryFeature() {
 						source={fg}
 						style={{
 							flex: 1,
-							minWidth: width,
 						}}
-						resizeMode={'repeat'}
+						resizeMode={'contain'}
 					>
 						<VStack flex={1} justifyItems={'center'} justifyContent={'center'} mb={200}>
 							<HStack
