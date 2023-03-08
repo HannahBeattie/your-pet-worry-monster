@@ -27,12 +27,13 @@ export default function CurrentContent() {
 	}
 
 	const handleTrash = (worryId: number) => {
+		if (allActive.length < 2) {
+			router.push('/')
+		}
 		dispatch(deleteWorry(worryId))
-		console.log('deleted worry: ', worryId)
 	}
-
 	const { width } = useWindowDimensions()
-	const w = width - 60
+
 	return (
 		<>
 			{allActive.map((worry) => (

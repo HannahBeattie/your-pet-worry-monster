@@ -62,7 +62,7 @@ function Current() {
 								{hasWorries ? `Current Worries` : ` `}
 							</Heading>
 							<Text fontSize={'sm'} opacity={70} textAlign={'center'} px={10} pb={4}>
-								Swipe worry right to feed {monsterName}
+								Swipe right to feed {monsterName}
 							</Text>
 							<CurrentContent />
 						</VStack>
