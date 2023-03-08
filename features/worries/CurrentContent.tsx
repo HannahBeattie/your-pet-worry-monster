@@ -35,7 +35,7 @@ export default function CurrentContent() {
 					<SwipeableButton onSwipe={() => handleSwipe(worry.id)}>
 						<VStack pt={3}>
 							<Center
-								backgroundColor={'#29292930'}
+								backgroundColor={'#0e0e0e'}
 								justifyItems={'center'}
 								justifyContent={'center'}
 								borderColor={'#ffffff14'}
