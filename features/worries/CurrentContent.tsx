@@ -12,7 +12,7 @@ export default function CurrentContent() {
 	const allActive: Worry[] = [...useSelector(selectAllActive)].reverse()
 	const dispatch = useDispatch()
 	const router = useRouter()
-	const handleSwipe = (worryId: number) => {
+	const handleEat = (worryId: number) => {
 		dispatch(
 			updateWorry({
 				id: worryId,
@@ -38,7 +38,9 @@ export default function CurrentContent() {
 			{allActive.map((worry) => (
 				<VStack py={2} key={worry.id}>
 					<SwipeableButton
-						onSwipe={() => handleSwipe(worry.id)}
+						onSwipe={() => console.log('swiped!')}
+						onSwipeLeft={() => console.log('swiped!')}
+						onEat={() => handleEat(worry.id)}
 						onBin={() => handleTrash(worry.id)}
 					>
 						<VStack pt={3}>
