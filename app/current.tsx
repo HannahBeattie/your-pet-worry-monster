@@ -1,16 +1,13 @@
 import { useRouter } from 'expo-router'
 import { Heading, HStack, Image, ScrollView, Spacer, Text, VStack } from 'native-base'
-import { background } from 'native-base/lib/typescript/theme/styled-system'
 import React, { useEffect, useState } from 'react'
 import { ImageBackground, SafeAreaView, useWindowDimensions } from 'react-native'
 import { useSelector } from 'react-redux'
 import { monsterNameSelector } from '~features/monster/monsterSlice'
 import CircleIconButton from '~features/styledComponents/CircleIconButton'
-import ExitPage from '~features/styledComponents/ExitPage'
 import CurrentContent from '~features/worries/CurrentContent'
 import { selectAllActive } from '~features/worries/worrySlice'
 
-const arm = require('../assets/arm.png')
 const gummyBoo = require('../assets/gummyBoo.png')
 const top = require('../assets/top.png')
 const drk = require('../assets/drk.jpg')
@@ -59,7 +56,7 @@ function Current() {
 					showsVerticalScrollIndicator={false}
 					overflowY={'revert-layer'}
 				>
-					<VStack alignItems={'center'} pt={90} pb={100}>
+					<VStack alignItems={'center'} my={16}>
 						<VStack space={2}>
 							<Heading textAlign={'center'} fontFamily={'poppins'} opacity={80}>
 								{hasWorries ? `Current Worries` : ` `}
