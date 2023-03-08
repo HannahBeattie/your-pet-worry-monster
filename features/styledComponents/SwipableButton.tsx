@@ -1,5 +1,5 @@
 import { Entypo, MaterialCommunityIcons } from '@expo/vector-icons'
-import { Center, HStack, Icon, IconButton, Spacer, Text } from 'native-base'
+import { Center, HStack, Icon, IconButton, Spacer, Text, View } from 'native-base'
 import React, { ReactNode, useCallback } from 'react'
 import { Dimensions, StyleSheet } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
@@ -77,21 +77,13 @@ const SwipeableButton = ({
 		}),
 		swipeText: useAnimatedStyle(() => {
 			return {
-				transform: [
-					{
-						translateX: interpolate(
-							X.value,
-							[-SWIPE_RANGE, SWIPE_RANGE],
-							[-BUTTON_WIDTH / 4, BUTTON_WIDTH / 4],
-							Extrapolation.CLAMP
-						),
-					},
-				],
-			}
-		}),
-		deleteButton: useAnimatedStyle(() => {
-			return {
-				opacity: interpolate(X.value, [0, SWIPE_RANGE / 2], [0, 1], Extrapolation.CLAMP),
+				transform: [],
+				opacity: interpolate(
+					Math.abs(X.value),
+					[SWIPE_RANGE, 0],
+					[0.1, 1],
+					Extrapolation.CLAMP
+				),
 			}
 		}),
 	}
@@ -99,7 +91,7 @@ const SwipeableButton = ({
 	return (
 		<>
 			<Center alignItems={'center'} justifyItems={'center'} justifyContent={'center'}>
-				<Animated.View style={{ flex: 1, position: 'absolute' }}>
+				<View style={{ flex: 1, position: 'absolute' }}>
 					<Center
 						alignSelf={'center'}
 						justifyItems={'center'}
@@ -108,7 +100,7 @@ const SwipeableButton = ({
 					>
 						<HStack
 							width={BUTTON_WIDTH - 30}
-							backgroundColor={'#ffffff13'}
+							backgroundColor={'#000000b7'}
 							p={4}
 							borderRadius={20}
 							borderWidth={1}
@@ -149,7 +141,7 @@ const SwipeableButton = ({
 							</Center>
 						</HStack>
 					</Center>
-				</Animated.View>
+				</View>
 				<GestureDetector gesture={panGesture}>
 					<Animated.View
 						style={[styles.swipeButtonContainer, AnimatedStyles.swipeButton]}
