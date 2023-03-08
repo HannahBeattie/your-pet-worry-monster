@@ -1,11 +1,11 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { selectAllActive } from '../worries/worrySlice'
-import Puppet from './Puppet'
+import Puppet, { PuppetProps } from './Puppet'
 
-function Blue() {
+function Blue(props: PuppetProps) {
 	const currentWorries = useSelector(selectAllActive)
-	return <Puppet numWorries={currentWorries.length} />
+	return <Puppet {...props} numWorries={currentWorries.length} />
 }
 
 export default Blue

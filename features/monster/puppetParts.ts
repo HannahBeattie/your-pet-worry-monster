@@ -45,7 +45,7 @@ export const parts = {
 		pivot: { x: 0.4249, y: 0.73331 },
 		doubleSpring: true,
 		gain: { x: 0.8, y: 0.35 },
-		springOpts: { stiffness: 340, damping: 16 },
+		springOpts: { stiffness: 300, damping: 16 },
 		look: -0.015,
 	} as Part,
 	armL: {
@@ -176,6 +176,8 @@ export const partNames = [
 	'pupilR',
 ] as PartName[]
 
+const defaultGain: Pos = { x: 1, y: 1 }
+
 export function animStyleForPart({
 	layout,
 	part,
@@ -183,6 +185,7 @@ export function animStyleForPart({
 	originSpring,
 	isPressed,
 	press,
+	offScreen,
 }: {
 	layout: LayoutRectangle
 	part: Part
@@ -190,12 +193,13 @@ export function animStyleForPart({
 	originSpring: Pos
 	isPressed: boolean
 	press: Pos
+	offScreen: boolean
 }) {
 	'worklet'
 	const ll = layout
 	const { left, w, top, h, rot, doubleSpring, gain, look, springOpts } = part
 	const oo = doubleSpring ? originSpring : origin
-	const gg = gain ?? { x: 1, y: 1 }
+	const gg = offScreen ? defaultGain : gain ?? defaultGain
 	const baseOffset = { x: oo.x * gg.x, y: oo.y * gg.y }
 	const lookOffset = { x: 0, y: 0 }
 	if (look && isPressed) {

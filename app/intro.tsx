@@ -1,6 +1,21 @@
-import { Center, VStack } from 'native-base'
-import React, { useEffect, useState } from 'react'
-import { SafeAreaView } from 'react-native'
+import { Center, Pressable, VStack } from 'native-base'
+import React, { useCallback, useEffect, useState } from 'react'
+import { SafeAreaView, TouchableWithoutFeedback } from 'react-native'
+import Animated, {
+	Easing,
+	FadeInRight,
+	FadeOutLeft,
+	Layout,
+	interpolate,
+	runOnJS,
+	runOnUI,
+	useAnimatedStyle,
+	useSharedValue,
+	withRepeat,
+	withSequence,
+	withSpring,
+	withTiming,
+} from 'react-native-reanimated'
 import { useDispatch } from 'react-redux'
 import { setIntroPlayed } from '~features/intro/introSlice'
 import Blue from '~features/monster/Blue'
@@ -51,25 +66,112 @@ import NameLabel from '~features/styledComponents/NameLabel'
 
 function intro() {
 	const dispatch = useDispatch()
-	const [state1, setState1] = useState(false)
-	const [state2, setState2] = useState(false)
+	const [step, setStep] = useState(0)
 
 	useEffect(() => {
 		// Do something when any of the state values change
-		console.log('state1:', state1)
-		console.log('state2:', state2)
-	}, [state1, state2])
+		console.log('step:', step)
+	}, [step])
 
 	const introPlayed = () => dispatch(setIntroPlayed(true))
+
+	const nextStep = useCallback(() => setStep((prev) => (prev + 1) % 3), [])
+
+	const grrTx = useSharedValue(-1)
+	const grrRot = useSharedValue(0)
+	const doGrr = useCallback(() => {
+		grrTx.value = withSequence(
+			withTiming(1, { duration: 2000, easing: Easing.linear }),
+			withTiming(0)
+		)
+		grrRot.value = withSequence(
+			withTiming(-5, { duration: 50 }),
+			withRepeat(withTiming(0.1, { duration: 30 }), 4, true),
+			withRepeat(withTiming(0.2, { duration: 35 }), 4, true),
+			withRepeat(withTiming(0.3, { duration: 40 }), 2, true),
+			withRepeat(withTiming(0.5, { duration: 42 }), 2, true),
+			withRepeat(withTiming(0.6, { duration: 45 }), 2, true),
+			withRepeat(withTiming(0.6, { duration: 47 }), 2, true),
+			withRepeat(withTiming(0.55, { duration: 40 }), 10, true),
+			withRepeat(withTiming(0.5, { duration: 30 }), 10, true),
+			withTiming(0, { duration: 50 }, () => {
+				runOnJS(nextStep)()
+			}),
+			withTiming(0, { duration: 1000 }, () => {
+				runOnJS(nextStep)()
+			}),
+			withTiming(0, { duration: 500 }),
+			withTiming(-3, { duration: 50 }),
+			withRepeat(withTiming(3, { duration: 100 }), 4, true),
+			withTiming(0, { duration: 50 })
+		)
+	}, [grrRot])
+
+	useEffect(() => {
+		doGrr()
+	}, [doGrr])
+
+	const grrAnim = useAnimatedStyle(() => {
+		const tx = interpolate(grrTx.value, [-1, 1], [-60, 60])
+		return {
+			transform: [{ translateX: tx }, { rotate: `${grrRot.value}deg` }, { translateX: -tx }],
+		}
+	})
 
 	return (
 		<>
 			{/* view type one: */}
-			<Center flex={1} bg={'black'}>
-				<MonsterVoice sizeVal={'8xl'} color='blueGray.200'>
-					GRRRR!
-				</MonsterVoice>
-			</Center>
+			{/* <Center flex={1} bg={'black'}> */}
+			<VStack flex={1} bg={'black'} alignItems='stretch'>
+				<Pressable
+					onPress={() => {
+						switch (step) {
+							case 0: // we're back at the start
+								doGrr()
+							case 1: // grr finished, blue popping up, do nothing
+								return
+							case 2: // blue has popped up, go back to start
+								nextStep()
+						}
+					}}
+					alignSelf='center'
+					display='flex'
+					alignItems='center'
+					justifyContent='center'
+					mt={8}
+					h={32}
+					// mb={-16}
+				>
+					{step < 2 ? (
+						<Animated.View
+							key='grr'
+							style={[grrAnim]}
+							entering={FadeInRight.delay(300)}
+							exiting={FadeOutLeft}
+							layout={Layout}
+						>
+							<MonsterVoice sizeVal={'8xl'} color='blueGray.200'>
+								GRRRR!
+							</MonsterVoice>
+						</Animated.View>
+					) : (
+						<Animated.View
+							key='im-a-worry'
+							style={[grrAnim]}
+							entering={FadeInRight.delay(500)}
+							exiting={FadeOutLeft}
+							layout={Layout}
+						>
+							<MonsterVoice sizeVal={'4xl'} color='blueGray.200'>
+								I'm a worry monster!
+							</MonsterVoice>
+						</Animated.View>
+					)}
+				</Pressable>
+				<VStack alignItems='stretch' flex={1} mx={8}>
+					<Blue offScreen={step === 0} offScreenDir='bottom' numWorries={0} />
+				</VStack>
+			</VStack>
 			{/* view type two: */}
 			{/* <VStack flex={'1'} backgroundColor={'black'}>
 				<SafeAreaView style={{ flex: 1 }}>

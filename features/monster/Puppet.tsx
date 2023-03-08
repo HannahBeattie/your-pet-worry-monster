@@ -1,5 +1,5 @@
 import { Image, VStack } from 'native-base'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import Animated, {
 	runOnJS,
@@ -9,7 +9,7 @@ import Animated, {
 	useSharedValue,
 	withSpring,
 } from 'react-native-reanimated'
-import { AnimStyleForPart, PartName, animStyleForPart, partNames, parts } from './puppetParts'
+import { AnimStyleForPart, PartName, Pos, animStyleForPart, partNames, parts } from './puppetParts'
 
 const aspect = 1.0 / 1.406 // width-to-height ratio for the full puppet
 
@@ -32,24 +32,39 @@ function clampOffY(val: number) {
 	return clamp(val, minOffY, maxOffY)
 }
 
-type PuppetProps = {
+type OffScreenDir = 'left' | 'top' | 'right' | 'bottom'
+
+export type PuppetProps = {
 	numWorries?: number
+	offScreen?: boolean
+	offScreenDir?: OffScreenDir | 'random'
 }
 
-export default function Puppet({ numWorries }: PuppetProps) {
+const offScreenOffsets: Record<OffScreenDir, Pos> = {
+	left: { x: -400, y: 0 },
+	right: { x: 400, y: 0 },
+	top: { x: 0, y: -800 },
+	bottom: { x: 0, y: 650 },
+}
+
+export default function Puppet({ numWorries, offScreen, offScreenDir }: PuppetProps) {
 	const [didLayout, setDidLayout] = useState(false)
 	const [imgsLoaded, setImgsLoaded] = useState(0)
 
 	// Start from off-screen (either left, top, right, or bottom)
-	const enterRand = Math.random()
-	const [enterX, enterY] =
-		enterRand > 0.75
-			? [0, -1300]
-			: enterRand > 0.5
-			? [0, 1000]
-			: enterRand > 0.25
-			? [350, 0]
-			: [-350, 0]
+	const enterRand = useMemo(Math.random, [])
+	let offDir = offScreenDir ?? 'random'
+	if (offDir === 'random') {
+		offDir =
+			enterRand > 0.75
+				? 'left'
+				: enterRand > 0.5
+				? 'top'
+				: enterRand > 0.25
+				? 'right'
+				: 'bottom'
+	}
+	const { x: enterX, y: enterY } = offScreenOffsets[offDir]
 
 	const start = useSharedValue({ x: 0, y: 0 })
 	const originX = useSharedValue(enterX)
@@ -90,13 +105,14 @@ export default function Puppet({ numWorries }: PuppetProps) {
 		})
 
 	useEffect(() => {
-		if (imgsLoaded === partNames.length) {
-			runOnUI(() => {
-				originX.value = 0
-				originY.value = 0
-			})()
+		if (imgsLoaded < partNames.length) {
+			return
 		}
-	}, [imgsLoaded])
+		runOnUI(() => {
+			originX.value = offScreen ? enterX : 0
+			originY.value = offScreen ? enterY : 0
+		})()
+	}, [imgsLoaded, offScreen])
 
 	const animStyles: Partial<Record<PartName, AnimStyleForPart>> = {}
 	for (const partName of partNames) {
@@ -109,6 +125,7 @@ export default function Puppet({ numWorries }: PuppetProps) {
 				originSpring: { x: originSpringX.value, y: originSpringY.value },
 				isPressed: isPressed.value,
 				press: press.value,
+				offScreen: offScreen || imgsLoaded < partNames.length,
 			})
 		})
 	}
