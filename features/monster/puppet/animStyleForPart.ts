@@ -74,7 +74,20 @@ export function animStyleForPart({
 }) {
 	'worklet'
 	const ll = layout
-	const { left, w, top, h, pivot, doubleSpring, gain, look, springOpts, _isSubpart } = part
+	const {
+		left,
+		w,
+		top,
+		h,
+		pivot,
+		doubleSpring,
+		gain,
+		look,
+		springOpts,
+		_isSubpart,
+		_trueLeft,
+		_trueTop,
+	} = part
 	const oo = doubleSpring ? originSpring : origin
 	const gainOrDefault = gain ?? defaultGain
 	const isNoGain = gainOrDefault.x === 0 && gainOrDefault.y === 0
@@ -82,8 +95,8 @@ export function animStyleForPart({
 	const baseOffset = { x: oo.x * gg.x, y: oo.y * gg.y }
 	const lookOffset = { x: 0, y: 0 }
 	if (look && isPressed) {
-		const dx = press.x - (ll.x + baseOffset.x + ll.width * (left + w / 2))
-		const dy = press.y - (ll.y + baseOffset.y + ll.height * (top + h / 2))
+		const dx = press.x - (ll.x + baseOffset.x + ll.width * ((_trueLeft ?? left) + w / 2))
+		const dy = press.y - (ll.y + baseOffset.y + ll.height * ((_trueTop ?? top) + h / 2))
 		const distPress = Math.sqrt(dx * dx + dy * dy)
 		const dirX = dx / distPress
 		const dirY = dy / distPress

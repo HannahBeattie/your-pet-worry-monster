@@ -42,6 +42,8 @@ export type Part = {
 	_isSubpart?: boolean
 	moods?: Mood[]
 	exceptMoods?: Mood[]
+	_trueLeft?: number
+	_trueTop?: number
 }
 
 const noGain: Pos = { x: 0, y: 0 }
@@ -228,6 +230,8 @@ export const parts: Part[] = [
 // Update subpart positions/gains to adjust for parent values
 for (const part of parts) {
 	for (const sub of [...(part.subpartsUnder ?? []), ...(part.subparts ?? [])]) {
+		sub._trueLeft = sub.left
+		sub._trueTop = sub.top
 		sub.left -= part.left
 		sub.top -= part.top
 		sub.gain = noGain // leave it to the parent to respond to user pan gestures
