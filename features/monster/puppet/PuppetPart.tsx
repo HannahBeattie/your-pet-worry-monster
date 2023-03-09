@@ -46,14 +46,11 @@ export default function PuppetPart({ part, zIndex, ...props }: PuppetPartProps) 
 		})
 	})
 
-	const hasSubparts = subparts?.length ?? 0 > 0
-	const allSubparts = subparts?.map((part) => (
-		<PuppetPart key={`puppet-part-${part.name}`} part={part} {...props} />
-	))
-
 	return (
 		<Animated.View key={`part-${partName}`} style={[animStyle, { position: 'absolute' }]}>
-			{hasSubparts && subpartsUnder && allSubparts}
+			{subpartsUnder?.map((part) => (
+				<PuppetPart key={`puppet-part-${part.name}`} part={part} {...props} />
+			))}
 			<Image
 				key={`img-part-${partName}`}
 				alt={`Blue's ${partName}`}
@@ -63,7 +60,9 @@ export default function PuppetPart({ part, zIndex, ...props }: PuppetPartProps) 
 				onLoad={onLoad}
 				opacity={opacity}
 			/>
-			{hasSubparts && !subpartsUnder && allSubparts}
+			{subparts?.map((part) => (
+				<PuppetPart key={`puppet-part-${part.name}`} part={part} {...props} />
+			))}
 		</Animated.View>
 	)
 }

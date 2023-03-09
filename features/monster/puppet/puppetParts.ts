@@ -31,17 +31,19 @@ export type Part = {
 	springOpts?: WithSpringConfig
 	minWorries?: number
 	subparts?: Part[]
-	subpartsUnder?: boolean
+	subpartsUnder?: Part[]
 	_isSubpart?: boolean
 }
 
 const noGain: Pos = { x: 0, y: 0 }
 const headGain = { x: 1.1, y: 1.1 } as Pos
 
+const pathAssetsParts = '../../../assets/monsterParts'
+
 export const parts: Part[] = [
 	{
 		name: 'legL',
-		src: require('../../../assets/monsterParts/leg-left.png'),
+		src: require(`${pathAssetsParts}/leg-left.png`),
 		left: 0.53461,
 		w: 0.27582,
 		top: 0.48885,
@@ -54,7 +56,7 @@ export const parts: Part[] = [
 	},
 	{
 		name: 'legR',
-		src: require('../../../assets/monsterParts/leg-right.png'),
+		src: require(`${pathAssetsParts}/leg-right.png`),
 		left: 0.31125,
 		w: 0.23033,
 		top: 0.50014,
@@ -67,7 +69,7 @@ export const parts: Part[] = [
 	},
 	{
 		name: 'armL',
-		src: require('../../../assets/monsterParts/arm-left.png'),
+		src: require(`${pathAssetsParts}/arm-left.png`),
 		left: 0.445,
 		w: 0.48,
 		top: 0.4,
@@ -77,11 +79,10 @@ export const parts: Part[] = [
 		doubleSpring: true,
 		springOpts: { stiffness: 300, damping: 18 },
 		look: -0.017,
-		subpartsUnder: true,
-		subparts: [
+		subpartsUnder: [
 			{
 				name: 'worriesL',
-				src: require('../../../assets/monsterParts/worries-left.png'),
+				src: require(`${pathAssetsParts}/worries-left.png`),
 				left: 0.69918,
 				w: 0.23566,
 				top: 0.54156,
@@ -92,7 +93,7 @@ export const parts: Part[] = [
 	},
 	{
 		name: 'armR',
-		src: require('../../../assets/monsterParts/arm-right.png'),
+		src: require(`${pathAssetsParts}/arm-right.png`),
 		left: 0.02344,
 		w: 0.54057,
 		top: 0.37353,
@@ -103,11 +104,10 @@ export const parts: Part[] = [
 		doubleSpring: true,
 		springOpts: { stiffness: 150, damping: 12 },
 		look: -0.014,
-		subpartsUnder: true,
-		subparts: [
+		subpartsUnder: [
 			{
 				name: 'worriesR',
-				src: require('../../../assets/monsterParts/worries-right.png'),
+				src: require(`${pathAssetsParts}/worries-right.png`),
 				left: 0.02959,
 				w: 0.35328,
 				top: 0.53752,
@@ -118,7 +118,7 @@ export const parts: Part[] = [
 	},
 	{
 		name: 'neck',
-		src: require('../../../assets/monsterParts/neck.png'),
+		src: require(`${pathAssetsParts}/neck.png`),
 		left: 0.4473,
 		w: 0.11034,
 		top: 0.22805,
@@ -126,7 +126,7 @@ export const parts: Part[] = [
 	},
 	{
 		name: 'body',
-		src: require('../../../assets/monsterParts/body.png'),
+		src: require(`${pathAssetsParts}/body.png`),
 		left: 0.30117,
 		w: 0.42247,
 		top: 0.27734,
@@ -136,7 +136,7 @@ export const parts: Part[] = [
 	},
 	{
 		name: 'head',
-		src: require('../../../assets/monsterParts/head-blank.png'),
+		src: require(`${pathAssetsParts}/head-blank.png`),
 		left: 0.20873,
 		w: 0.56611,
 		top: 0.04022,
@@ -152,7 +152,7 @@ export const parts: Part[] = [
 		subparts: [
 			{
 				name: 'mouth',
-				src: require('../../../assets/monsterParts/mouth-pleased.png'),
+				src: require(`${pathAssetsParts}/mouth-pleased.png`),
 				left: 0.32051,
 				w: 0.38061,
 				top: 0.27618,
@@ -160,7 +160,7 @@ export const parts: Part[] = [
 			},
 			{
 				name: 'eyes',
-				src: require('../../../assets/monsterParts/eyes-blank.png'),
+				src: require(`${pathAssetsParts}/eyes-blank.png`),
 				left: 0.26482,
 				w: 0.44311,
 				top: 0.14479,
@@ -168,7 +168,7 @@ export const parts: Part[] = [
 			},
 			{
 				name: 'pupilL',
-				src: require('../../../assets/monsterParts/pupil-left.png'),
+				src: require(`${pathAssetsParts}/pupil-left.png`),
 				left: 0.59736,
 				w: 0.05689,
 				top: 0.19125,
@@ -177,7 +177,7 @@ export const parts: Part[] = [
 			},
 			{
 				name: 'pupilR',
-				src: require('../../../assets/monsterParts/pupil-right.png'),
+				src: require(`${pathAssetsParts}/pupil-right.png`),
 				left: 0.33854,
 				w: 0.0625,
 				top: 0.20607,
@@ -190,7 +190,7 @@ export const parts: Part[] = [
 
 // Update subpart positions/gains to adjust for parent values
 for (const part of parts) {
-	for (const sub of part.subparts ?? []) {
+	for (const sub of [...(part.subpartsUnder ?? []), ...(part.subparts ?? [])]) {
 		sub.left -= part.left
 		sub.top -= part.top
 		sub.gain = noGain // leave it to the parent to respond to user pan gestures
@@ -199,11 +199,16 @@ for (const part of parts) {
 }
 
 export const partNames = parts
-	.map((part) => [part.name, ...(part.subparts?.map((pp) => pp.name) ?? [])])
+	.map((part) => [
+		...(part.subpartsUnder?.map((pp) => pp.name) ?? []),
+		part.name,
+		...(part.subparts?.map((pp) => pp.name) ?? []),
+	])
 	.flat()
 export const numParts = partNames.length
 // console.log(`${numParts} parts:`, partNames)
 
+// // Print out shell commands to resize the parts
 // const WW = 1080
 // const HH = WW * 1.406 // width-to-height ratio for the full puppet
 // let mogrify = ''
@@ -212,6 +217,6 @@ export const numParts = partNames.length
 // 	const newW = Math.ceil(w * WW)
 // 	const newH = Math.ceil(h * HH)
 // 	const newWH = `${newW}x${newH}`
-// 	mogrify += `mogrify -scale ${newWH} ${src.replace(/..\/..\/assets\/monsterParts\//, '')}\n`
+// 	mogrify += `mogrify -scale ${newWH} ${src.replace(/..\/..\/..\/assets\/monsterParts\//, '')}\n`
 // }
 // console.log(mogrify)

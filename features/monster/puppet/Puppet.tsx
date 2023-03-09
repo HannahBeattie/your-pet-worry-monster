@@ -1,7 +1,15 @@
 import { VStack } from 'native-base'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
-import { runOnUI, useDerivedValue, useSharedValue, withSpring } from 'react-native-reanimated'
+import {
+	runOnUI,
+	useDerivedValue,
+	useSharedValue,
+	withDelay,
+	withSequence,
+	withSpring,
+	withTiming,
+} from 'react-native-reanimated'
 import PuppetPart from './PuppetPart'
 import { Pos, numParts, parts } from './puppetParts'
 
@@ -41,6 +49,8 @@ const offScreenOffsets: Record<OffScreenDir, Pos> = {
 	bottom: { x: 0, y: 650 },
 }
 
+type RecursiveFn = (fn: RecursiveFn) => void
+
 export default function Puppet({ numWorries, offScreen, offScreenDir }: PuppetProps) {
 	const [didLayout, setDidLayout] = useState(false)
 	const [imgsLoaded, setImgsLoaded] = useState(0)
@@ -65,7 +75,12 @@ export default function Puppet({ numWorries, offScreen, offScreenDir }: PuppetPr
 	const start = useSharedValue({ x: 0, y: 0 })
 	const originX = useSharedValue(enterX)
 	const originY = useSharedValue(enterY)
-	const isPressed = useSharedValue(false)
+	const isUserPressed = useSharedValue(false)
+	const isAutoPressed = useSharedValue(0)
+	const isPressed = useDerivedValue(() => {
+		const auto = isAutoPressed.value > 0
+		return auto || isUserPressed.value
+	})
 	const press = useSharedValue({ x: 0, y: 0 })
 	const originSpringX = useDerivedValue(() =>
 		withSpring(originX.value, { stiffness: 300, damping: 20 })
@@ -79,7 +94,7 @@ export default function Puppet({ numWorries, offScreen, offScreenDir }: PuppetPr
 	const skipUpdate = useSharedValue(-1)
 	const gesture = Gesture.Pan()
 		.onBegin((evt) => {
-			isPressed.value = true
+			isUserPressed.value = true
 			press.value = { x: evt.x, y: evt.y }
 			originX.value = evt.translationX * baseGain + start.value.x
 			originY.value = evt.translationY * baseGain + start.value.y
@@ -96,10 +111,46 @@ export default function Puppet({ numWorries, offScreen, offScreenDir }: PuppetPr
 			originY.value = clampOffY(evt.translationY * baseGain + start.value.y)
 		})
 		.onEnd(() => {
-			isPressed.value = false
+			isUserPressed.value = false
+			isAutoPressed.value = 0
 			originX.value = 0
 			originY.value = 0
 		})
+
+	// Do random pretend presses to make Blue look around when they're bored
+	const lookAround = useCallback(
+		(fn: RecursiveFn) => {
+			'worklet'
+			const randX = Math.random() * layout.value.width
+			const randY = Math.random() * layout.value.height
+			const delayMin = 5000
+			const delayMax = 12000
+			const delayVal = Math.random() * (delayMax - delayMin) + delayMin
+			const delayMin2 = 1500
+			const delayMax2 = 4000
+			const delayVal2 = Math.random() * (delayMax2 - delayMin2) + delayMin2
+			isAutoPressed.value = withSequence(
+				withDelay(
+					delayVal,
+					withTiming(1, { duration: 0 }, () => {
+						if (!isUserPressed.value) {
+							press.value = { x: randX, y: randY }
+						}
+					})
+				),
+				withDelay(
+					delayVal2,
+					withTiming(0, { duration: 0 }, () => {
+						fn(fn)
+					})
+				)
+			)
+		},
+		[isPressed, press, layout]
+	)
+	useEffect(() => {
+		runOnUI(lookAround)(lookAround)
+	}, [lookAround])
 
 	useEffect(() => {
 		// jump in/out of view based on load state and offScreen prop
