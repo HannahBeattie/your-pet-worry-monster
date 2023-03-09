@@ -2,6 +2,7 @@ import { VStack } from 'native-base'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import {
+	runOnJS,
 	runOnUI,
 	useDerivedValue,
 	useSharedValue,
@@ -11,7 +12,7 @@ import {
 	withTiming,
 } from 'react-native-reanimated'
 import PuppetPart from './PuppetPart'
-import { Pos, numParts, parts } from './puppetParts'
+import { Mood, Pos, numParts, parts, pickRandomMood } from './puppetParts'
 
 const aspect = 1.0 / 1.406 // width-to-height ratio for the full puppet
 
@@ -40,6 +41,7 @@ export type PuppetProps = {
 	numWorries?: number
 	offScreen?: boolean
 	offScreenDir?: OffScreenDir | 'random'
+	mood?: Mood
 }
 
 const offScreenOffsets: Record<OffScreenDir, Pos> = {
@@ -51,9 +53,15 @@ const offScreenOffsets: Record<OffScreenDir, Pos> = {
 
 type RecursiveFn = (fn: RecursiveFn) => void
 
-export default function Puppet({ numWorries, offScreen, offScreenDir }: PuppetProps) {
+export default function Puppet({
+	numWorries,
+	offScreen,
+	offScreenDir,
+	mood: moodProp,
+}: PuppetProps) {
 	const [didLayout, setDidLayout] = useState(false)
 	const [imgsLoaded, setImgsLoaded] = useState(0)
+	const [mood, setMood] = useState(moodProp ?? 'happy')
 
 	const allLoaded = useMemo(() => imgsLoaded >= numParts, [imgsLoaded])
 
@@ -91,6 +99,14 @@ export default function Puppet({ numWorries, offScreen, offScreenDir }: PuppetPr
 
 	const layout = useSharedValue({ x: 0, y: 0, width: 1, height: 1 })
 
+	const setRandomMood = useCallback(() => {
+		const randMood = pickRandomMood()
+		setMood(randMood)
+	}, [])
+	const setDefaultMood = useCallback(() => {
+		setMood(moodProp ?? 'happy')
+	}, [moodProp])
+
 	const skipUpdate = useSharedValue(-1)
 	const gesture = Gesture.Pan()
 		.onBegin((evt) => {
@@ -98,6 +114,7 @@ export default function Puppet({ numWorries, offScreen, offScreenDir }: PuppetPr
 			press.value = { x: evt.x, y: evt.y }
 			originX.value = evt.translationX * baseGain + start.value.x
 			originY.value = evt.translationY * baseGain + start.value.y
+			runOnJS(setRandomMood)()
 		})
 		.onUpdate((evt) => {
 			// try to improve performance by only processing every tenth event
@@ -115,6 +132,7 @@ export default function Puppet({ numWorries, offScreen, offScreenDir }: PuppetPr
 			isAutoPressed.value = 0
 			originX.value = 0
 			originY.value = 0
+			runOnJS(setDefaultMood)()
 		})
 
 	// Do random pretend presses to make Blue look around when they're bored
@@ -132,21 +150,27 @@ export default function Puppet({ numWorries, offScreen, offScreenDir }: PuppetPr
 			isAutoPressed.value = withSequence(
 				withDelay(
 					delayVal,
-					withTiming(1, { duration: 0 }, () => {
-						if (!isUserPressed.value) {
-							press.value = { x: randX, y: randY }
+					withTiming(1, { duration: 0 }, (finished) => {
+						if (finished) {
+							if (!isUserPressed.value) {
+								press.value = { x: randX, y: randY }
+							}
+							runOnJS(setRandomMood)()
 						}
 					})
 				),
 				withDelay(
 					delayVal2,
-					withTiming(0, { duration: 0 }, () => {
+					withTiming(0, { duration: 0 }, (finished) => {
+						if (finished) {
+							runOnJS(setDefaultMood)()
+						}
 						fn(fn)
 					})
 				)
 			)
 		},
-		[isPressed, press, layout]
+		[isUserPressed, isAutoPressed, press, layout]
 	)
 	useEffect(() => {
 		runOnUI(lookAround)(lookAround)
@@ -210,6 +234,7 @@ export default function Puppet({ numWorries, offScreen, offScreenDir }: PuppetPr
 								{...{ part, allLoaded, numWorries, offScreen }}
 								animProps={animProps}
 								onLoad={onPartLoad}
+								mood={mood}
 							/>
 						)
 					})}

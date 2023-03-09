@@ -19,33 +19,14 @@ const imageSources = {
 	wantMore: require('../../assets/fullBlue/wantMore.png'),
 	want: require('../../assets/fullBlue/want.png'),
 }
+
+export type MonsterMood = keyof typeof imageSources
+
 type FullBlueProps = {
-	monsterMood:
-		| 'sneak'
-		| 'want'
-		| 'excited'
-		| 'happy'
-		| 'sad'
-		| 'sleepy'
-		| 'upset'
-		| 'verySad'
-		| 'yummy'
-		| 'fuzzle'
-		| 'hmmm'
-		| 'hungry'
-		| 'idea'
-		| 'yayay'
-		| 'great'
-		| 'wantMore'
-}
-
-type MonsterMood = keyof typeof imageSources
-
-interface Props {
 	monsterMood: MonsterMood
 }
 
-const FullBlue: React.FC<Props> = ({ monsterMood }: FullBlueProps) => {
+const FullBlue: React.FC<FullBlueProps> = ({ monsterMood }: FullBlueProps) => {
 	const src: number = imageSources[monsterMood] || imageSources['happy']
 
 	return <Image alt={'blue the monster'} source={src} flex={1} resizeMode='contain' />

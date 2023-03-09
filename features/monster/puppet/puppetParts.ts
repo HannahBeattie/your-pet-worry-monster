@@ -15,6 +15,13 @@ type WobbleOpts = {
 	timingOpts?: { minDuration: number; maxDuration: number }
 }
 
+export type Mood = 'happy' | 'excited' | 'surprised' | 'talking'
+const moods: Mood[] = ['happy', 'excited', 'surprised', 'talking']
+export function pickRandomMood() {
+	const idx = Math.floor(Math.random() * moods.length)
+	return moods[idx]
+}
+
 export type Part = {
 	name: PartName
 	src: any
@@ -33,6 +40,8 @@ export type Part = {
 	subparts?: Part[]
 	subpartsUnder?: Part[]
 	_isSubpart?: boolean
+	moods?: Mood[]
+	exceptMoods?: Mood[]
 }
 
 const noGain: Pos = { x: 0, y: 0 }
@@ -152,11 +161,39 @@ export const parts: Part[] = [
 		subparts: [
 			{
 				name: 'mouth',
-				src: require(`${pathAssetsParts}/mouth-pleased.png`),
+				src: require(`${pathAssetsParts}/mouth-happy.png`),
 				left: 0.32051,
 				w: 0.38061,
 				top: 0.27618,
 				h: 0.10289,
+				exceptMoods: ['excited', 'surprised', 'talking'],
+			},
+			{
+				name: 'mouth-excited',
+				src: require(`${pathAssetsParts}/mouth-excited.png`),
+				left: 0.3168,
+				w: 0.38934,
+				top: 0.2817,
+				h: 0.10455,
+				moods: ['excited'],
+			},
+			{
+				name: 'mouth-surprised',
+				src: require(`${pathAssetsParts}/mouth-surprised.png`),
+				left: 0.46148,
+				w: 0.09549,
+				top: 0.29482,
+				h: 0.05445,
+				moods: ['surprised'],
+			},
+			{
+				name: 'mouth-talking',
+				src: require(`${pathAssetsParts}/mouth-talking.png`),
+				left: 0.43852,
+				w: 0.1418,
+				top: 0.29192,
+				h: 0.06024,
+				moods: ['talking'],
 			},
 			{
 				name: 'eyes',

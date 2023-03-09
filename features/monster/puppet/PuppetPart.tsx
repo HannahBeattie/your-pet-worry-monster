@@ -1,7 +1,7 @@
 import { Image } from 'native-base'
 import { LayoutRectangle } from 'react-native'
 import Animated, { SharedValue, useAnimatedStyle } from 'react-native-reanimated'
-import { Part, Pos } from './puppetParts'
+import { Mood, Part, Pos } from './puppetParts'
 import { animStyleForPart, useAnimatedPartProps } from './animStyleForPart'
 
 type AnimProps = {
@@ -22,13 +22,15 @@ type PuppetPartProps = {
 	offScreen?: boolean
 	animProps: AnimProps
 	onLoad: () => void
+	mood: Mood
 }
 
 export default function PuppetPart({ part, zIndex, ...props }: PuppetPartProps) {
-	const { allLoaded, numWorries, offScreen, animProps, onLoad } = props
-	const { name: partName, src, minWorries, subparts, subpartsUnder } = part
+	const { allLoaded, numWorries, offScreen, animProps, onLoad, mood } = props
+	const { name: partName, src, minWorries, subparts, subpartsUnder, moods, exceptMoods } = part
 	const hasEnoughWorries = (numWorries ?? 0) >= (minWorries ?? 0)
-	const opacity = allLoaded && hasEnoughWorries ? 1 : 0
+	const moodMatch = moods?.includes(mood) ?? !exceptMoods?.includes(mood)
+	const opacity = allLoaded && hasEnoughWorries && moodMatch ? 1 : 0
 
 	const { rotate } = useAnimatedPartProps({ part })
 	const animStyle = useAnimatedStyle(() => {
