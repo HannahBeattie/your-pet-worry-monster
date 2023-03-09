@@ -5,7 +5,12 @@ import Animated, {
 	Easing,
 	FadeInRight,
 	FadeOutLeft,
+	FadeOutRight,
 	Layout,
+	SlideInRight,
+	SlideInUp,
+	SlideOutLeft,
+	SlideOutRight,
 	interpolate,
 	runOnJS,
 	runOnUI,
@@ -75,7 +80,7 @@ function intro() {
 
 	const introPlayed = () => dispatch(setIntroPlayed(true))
 
-	const nextStep = useCallback(() => setStep((prev) => (prev + 1) % 3), [])
+	// const nextStep = useCallback(() => setStep((prev) => (prev + 1) % 4), [])
 
 	const grrTx = useSharedValue(-1)
 	const grrRot = useSharedValue(0)
@@ -95,10 +100,13 @@ function intro() {
 			withRepeat(withTiming(0.55, { duration: 40 }), 10, true),
 			withRepeat(withTiming(0.5, { duration: 30 }), 10, true),
 			withTiming(0, { duration: 50 }, () => {
-				runOnJS(nextStep)()
+				runOnJS(setStep)(1)
 			}),
 			withTiming(0, { duration: 1000 }, () => {
-				runOnJS(nextStep)()
+				runOnJS(setStep)(2)
+			}),
+			withTiming(0, { duration: 1000 }, () => {
+				runOnJS(setStep)(3)
 			}),
 			withTiming(0, { duration: 500 }),
 			withTiming(-3, { duration: 50 }),
@@ -112,7 +120,7 @@ function intro() {
 	}, [doGrr])
 
 	const grrAnim = useAnimatedStyle(() => {
-		const tx = interpolate(grrTx.value, [-1, 1], [-60, 60])
+		const tx = interpolate(grrTx.value, [-1, 1], [-200, 200])
 		return {
 			transform: [{ translateX: tx }, { rotate: `${grrRot.value}deg` }, { translateX: -tx }],
 		}
@@ -128,39 +136,42 @@ function intro() {
 						switch (step) {
 							case 0: // we're back at the start
 								doGrr()
-							case 1: // grr finished, blue popping up, do nothing
+							case 3: // sequence finished, go back to start
+								setStep(0)
+							default:
 								return
-							case 2: // blue has popped up, go back to start
-								nextStep()
 						}
 					}}
 					alignSelf='center'
 					display='flex'
 					alignItems='center'
 					justifyContent='center'
-					mt={8}
-					h={32}
+					flexDir='column'
+					// mt={8}
+					// h={32}
 					// mb={-16}
+					flex={1}
 				>
-					{step < 2 ? (
+					{step < 2 && (
 						<Animated.View
 							key='grr'
 							style={[grrAnim]}
-							entering={FadeInRight.delay(300)}
-							exiting={FadeOutLeft}
-							layout={Layout}
+							entering={SlideInRight.delay(300)}
+							exiting={SlideOutLeft}
+							// layout={Layout}
 						>
 							<MonsterVoice sizeVal={'8xl'} color='blueGray.200'>
 								GRRRR!
 							</MonsterVoice>
 						</Animated.View>
-					) : (
+					)}
+					{step === 3 && (
 						<Animated.View
 							key='im-a-worry'
 							style={[grrAnim]}
-							entering={FadeInRight.delay(500)}
-							exiting={FadeOutLeft}
-							layout={Layout}
+							entering={SlideInRight.delay(500)}
+							exiting={SlideOutLeft}
+							// layout={Layout}
 						>
 							<MonsterVoice sizeVal={'4xl'} color='blueGray.200'>
 								I'm a worry monster!
@@ -168,7 +179,7 @@ function intro() {
 						</Animated.View>
 					)}
 				</Pressable>
-				<VStack alignItems='stretch' flex={1} mx={8}>
+				<VStack alignItems='stretch' flex={2} mx={8}>
 					<Blue offScreen={step === 0} offScreenDir='bottom' numWorries={0} />
 				</VStack>
 			</VStack>

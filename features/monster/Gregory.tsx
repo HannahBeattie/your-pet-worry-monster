@@ -9,7 +9,9 @@ function Gregory() {
 	return (
 		<VStack alignItems={'stretch'} flex={'1'} pt={4}>
 			<NameLabel />
-			<Blue />
+			<VStack alignItems={'stretch'} flex={1}>
+				<Blue />
+			</VStack>
 			<FloatingButton />
 		</VStack>
 	)

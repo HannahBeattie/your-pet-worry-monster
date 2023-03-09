@@ -1,15 +1,9 @@
-import { Image, VStack } from 'native-base'
-import { useEffect, useMemo, useState } from 'react'
+import { VStack } from 'native-base'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
-import Animated, {
-	runOnJS,
-	runOnUI,
-	useAnimatedStyle,
-	useDerivedValue,
-	useSharedValue,
-	withSpring,
-} from 'react-native-reanimated'
-import { AnimStyleForPart, PartName, Pos, animStyleForPart, partNames, parts } from './puppetParts'
+import { runOnUI, useDerivedValue, useSharedValue, withSpring } from 'react-native-reanimated'
+import PuppetPart from './PuppetPart'
+import { Pos, numParts, parts } from './puppetParts'
 
 const aspect = 1.0 / 1.406 // width-to-height ratio for the full puppet
 
@@ -51,6 +45,11 @@ export default function Puppet({ numWorries, offScreen, offScreenDir }: PuppetPr
 	const [didLayout, setDidLayout] = useState(false)
 	const [imgsLoaded, setImgsLoaded] = useState(0)
 
+	const allLoaded = useMemo(() => imgsLoaded >= numParts, [imgsLoaded])
+	useEffect(() => {
+		console.log(`${imgsLoaded} of ${numParts}: ${allLoaded}`)
+	}, [imgsLoaded, allLoaded])
+
 	// Start from off-screen (either left, top, right, or bottom)
 	const enterRand = useMemo(Math.random, [])
 	let offDir = offScreenDir ?? 'random'
@@ -89,11 +88,12 @@ export default function Puppet({ numWorries, offScreen, offScreenDir }: PuppetPr
 			originY.value = evt.translationY * baseGain + start.value.y
 		})
 		.onUpdate((evt) => {
-			skipUpdate.value = (skipUpdate.value + 1) % 4
+			// try to improve performance by only processing every tenth event
+			skipUpdate.value = (skipUpdate.value + 1) % 10
 			if (skipUpdate.value > 0) {
-				// try to improve performance by only processing every fourth event
 				return
 			}
+			// update wasn't skipped, handle changes
 			press.value = { x: evt.x, y: evt.y }
 			originX.value = clampOffX(evt.translationX * baseGain + start.value.x)
 			originY.value = clampOffY(evt.translationY * baseGain + start.value.y)
@@ -105,30 +105,30 @@ export default function Puppet({ numWorries, offScreen, offScreenDir }: PuppetPr
 		})
 
 	useEffect(() => {
-		if (imgsLoaded < partNames.length) {
+		// jump in/out of view based on load state and offScreen prop
+		if (!allLoaded) {
 			return
 		}
 		runOnUI(() => {
 			originX.value = offScreen ? enterX : 0
 			originY.value = offScreen ? enterY : 0
 		})()
-	}, [imgsLoaded, offScreen])
+	}, [allLoaded, offScreen])
 
-	const animStyles: Partial<Record<PartName, AnimStyleForPart>> = {}
-	for (const partName of partNames) {
-		const part = parts[partName]
-		animStyles[partName] = useAnimatedStyle(() => {
-			return animStyleForPart({
-				layout: layout.value,
-				part,
-				origin: { x: originX.value, y: originY.value },
-				originSpring: { x: originSpringX.value, y: originSpringY.value },
-				isPressed: isPressed.value,
-				press: press.value,
-				offScreen: offScreen || imgsLoaded < partNames.length,
-			})
-		})
-	}
+	const animProps = useMemo(
+		() => ({
+			layout,
+			originX,
+			originY,
+			originSpringX,
+			originSpringY,
+			isPressed,
+			press,
+		}),
+		[layout, originX, originY, originSpringX, originSpringY, isPressed, press]
+	)
+
+	const onPartLoad = useCallback(() => setImgsLoaded((prev) => prev + 1), [])
 
 	return (
 		<GestureDetector gesture={gesture}>
@@ -155,26 +155,14 @@ export default function Puppet({ numWorries, offScreen, offScreenDir }: PuppetPr
 				}}
 			>
 				{didLayout && // don't render parts until initial layout is done
-					partNames.map((partName) => {
-						const { src, minWorries } = parts[partName]
-						const allLoaded = imgsLoaded >= partNames.length ? 1 : 0
-						const hasEnoughWorries = (numWorries ?? 0) >= (minWorries ?? 0)
-						const opacity = allLoaded * (hasEnoughWorries ? 1 : 0)
+					parts.map((part) => {
 						return (
-							<Animated.View
-								key={`part-${partName}`}
-								style={[animStyles[partName], { position: 'absolute' }]}
-							>
-								<Image
-									key={`img-part-${partName}`}
-									alt={`blue's ${partName}`}
-									source={src}
-									flex={1}
-									resizeMode='contain'
-									onLoad={() => setImgsLoaded((prev) => prev + 1)}
-									opacity={opacity}
-								/>
-							</Animated.View>
+							<PuppetPart
+								key={`puppet-part-${part.name}`}
+								{...{ part, allLoaded, numWorries, offScreen }}
+								animProps={animProps}
+								onLoad={onPartLoad}
+							/>
 						)
 					})}
 			</VStack>
