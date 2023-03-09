@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { selectAllActive } from '../worries/worrySlice'
-import Puppet, { PuppetProps } from './Puppet'
+import Puppet, { PuppetProps } from './puppet/Puppet'
 
 function Blue(props: PuppetProps) {
 	const currentWorries = useSelector(selectAllActive)

@@ -1,5 +1,10 @@
-import { LayoutRectangle } from 'react-native'
-import { WithSpringConfig, withSpring } from 'react-native-reanimated'
+import {
+	WithSpringConfig,
+	WithTimingConfig,
+	withRepeat,
+	withSequence,
+	withTiming,
+} from 'react-native-reanimated'
 
 export type Pos = {
 	x: number
@@ -7,6 +12,13 @@ export type Pos = {
 }
 
 export type PartName = string
+
+type WobbleOpts = {
+	min: number
+	max: number
+	springOpts?: WithSpringConfig
+	timingOpts?: { minDuration: number; maxDuration: number }
+}
 
 export type Part = {
 	name: PartName
@@ -16,6 +28,7 @@ export type Part = {
 	top: number
 	h: number
 	rot?: number
+	rotWobble?: WobbleOpts
 	pivot?: Pos
 	doubleSpring?: boolean
 	gain?: Pos
@@ -27,14 +40,13 @@ export type Part = {
 	_isSubpart?: boolean
 }
 
-const defaultGain: Pos = { x: 1, y: 1 }
 const noGain: Pos = { x: 0, y: 0 }
 const headGain = { x: 1.1, y: 1.1 } as Pos
 
 export const parts: Part[] = [
 	{
 		name: 'legL',
-		src: require('../../assets/monsterParts/leg-left.png'),
+		src: require('../../../assets/monsterParts/leg-left.png'),
 		left: 0.53461,
 		w: 0.27582,
 		top: 0.48885,
@@ -47,7 +59,7 @@ export const parts: Part[] = [
 	},
 	{
 		name: 'legR',
-		src: require('../../assets/monsterParts/leg-right.png'),
+		src: require('../../../assets/monsterParts/leg-right.png'),
 		left: 0.31125,
 		w: 0.23033,
 		top: 0.50014,
@@ -60,12 +72,13 @@ export const parts: Part[] = [
 	},
 	{
 		name: 'armL',
-		src: require('../../assets/monsterParts/arm-left.png'),
+		src: require('../../../assets/monsterParts/arm-left.png'),
 		left: 0.445,
 		w: 0.48,
 		top: 0.4,
 		h: 0.22262,
-		pivot: { x: 0.6146, y: 0.40139 },
+		pivot: { x: 0.35, y: 0.1 },
+		rotWobble: { min: -8, max: 2, springOpts: { stiffness: 10, damping: 1.1 } },
 		doubleSpring: true,
 		springOpts: { stiffness: 300, damping: 18 },
 		look: -0.017,
@@ -73,7 +86,7 @@ export const parts: Part[] = [
 		subparts: [
 			{
 				name: 'worriesL',
-				src: require('../../assets/monsterParts/worries-left.png'),
+				src: require('../../../assets/monsterParts/worries-left.png'),
 				left: 0.69918,
 				w: 0.23566,
 				top: 0.54156,
@@ -84,12 +97,14 @@ export const parts: Part[] = [
 	},
 	{
 		name: 'armR',
-		src: require('../../assets/monsterParts/arm-right.png'),
+		src: require('../../../assets/monsterParts/arm-right.png'),
 		left: 0.02344,
 		w: 0.54057,
 		top: 0.37353,
 		h: 0.26859,
-		pivot: { x: 0.39478, y: 0.3985 },
+		pivot: { x: 0.75, y: 0.15 },
+		rot: 10,
+		rotWobble: { min: -8, max: 8, springOpts: { stiffness: 9, damping: 1.1 } },
 		doubleSpring: true,
 		springOpts: { stiffness: 150, damping: 12 },
 		look: -0.014,
@@ -97,7 +112,7 @@ export const parts: Part[] = [
 		subparts: [
 			{
 				name: 'worriesR',
-				src: require('../../assets/monsterParts/worries-right.png'),
+				src: require('../../../assets/monsterParts/worries-right.png'),
 				left: 0.02959,
 				w: 0.35328,
 				top: 0.53752,
@@ -108,7 +123,7 @@ export const parts: Part[] = [
 	},
 	{
 		name: 'neck',
-		src: require('../../assets/monsterParts/neck.png'),
+		src: require('../../../assets/monsterParts/neck.png'),
 		left: 0.4473,
 		w: 0.11034,
 		top: 0.22805,
@@ -116,7 +131,7 @@ export const parts: Part[] = [
 	},
 	{
 		name: 'body',
-		src: require('../../assets/monsterParts/body.png'),
+		src: require('../../../assets/monsterParts/body.png'),
 		left: 0.30117,
 		w: 0.42247,
 		top: 0.27734,
@@ -126,17 +141,18 @@ export const parts: Part[] = [
 	},
 	{
 		name: 'head',
-		src: require('../../assets/monsterParts/head-blank.png'),
+		src: require('../../../assets/monsterParts/head-blank.png'),
 		left: 0.20873,
 		w: 0.56611,
 		top: 0.04022,
 		h: 0.35408,
-		rot: 0,
+		pivot: { x: 0.5, y: 0.7 },
+		rotWobble: { min: -4, max: 4, springOpts: { stiffness: 20, damping: 6 } },
 		gain: headGain,
 		subparts: [
 			{
 				name: 'mouth',
-				src: require('../../assets/monsterParts/mouth-pleased.png'),
+				src: require('../../../assets/monsterParts/mouth-pleased.png'),
 				left: 0.32051,
 				w: 0.38061,
 				top: 0.27618,
@@ -144,7 +160,7 @@ export const parts: Part[] = [
 			},
 			{
 				name: 'eyes',
-				src: require('../../assets/monsterParts/eyes-blank.png'),
+				src: require('../../../assets/monsterParts/eyes-blank.png'),
 				left: 0.26482,
 				w: 0.44311,
 				top: 0.14479,
@@ -152,7 +168,7 @@ export const parts: Part[] = [
 			},
 			{
 				name: 'pupilL',
-				src: require('../../assets/monsterParts/pupil-left.png'),
+				src: require('../../../assets/monsterParts/pupil-left.png'),
 				left: 0.59736,
 				w: 0.05689,
 				top: 0.19125,
@@ -161,7 +177,7 @@ export const parts: Part[] = [
 			},
 			{
 				name: 'pupilR',
-				src: require('../../assets/monsterParts/pupil-right.png'),
+				src: require('../../../assets/monsterParts/pupil-right.png'),
 				left: 0.33854,
 				w: 0.0625,
 				top: 0.20607,
@@ -173,80 +189,20 @@ export const parts: Part[] = [
 ]
 
 // Update subpart positions/gains to adjust for parent values
-const headPart = parts.find((part) => part.name === 'head')!
-// const weirdSubpartTopOffset = headPart.top - headPart.top / headPart.h // I don't know why we need this, but it seems to fix weird stuff
 for (const part of parts) {
 	for (const sub of part.subparts ?? []) {
 		sub.left -= part.left
-		// sub.top -= part.top - weirdSubpartTopOffset
 		sub.top -= part.top
-		sub.gain = noGain
+		sub.gain = noGain // leave it to the parent to respond to user pan gestures
 		sub._isSubpart = true
 	}
 }
 
-export const partNames = parts.flatMap((part) => [
-	part.name,
-	...(part.subparts?.map((pp) => pp.name) ?? []),
-])
+export const partNames = parts
+	.map((part) => [part.name, ...(part.subparts?.map((pp) => pp.name) ?? [])])
+	.flat()
 export const numParts = partNames.length
 console.log(`${numParts} parts:`, partNames)
-
-export function animStyleForPart({
-	layout,
-	part,
-	origin,
-	originSpring,
-	isPressed,
-	press,
-	offScreen,
-}: {
-	layout: LayoutRectangle
-	part: Part
-	origin: Pos
-	originSpring: Pos
-	isPressed: boolean
-	press: Pos
-	offScreen: boolean
-}) {
-	'worklet'
-	const ll = layout
-	const { left, w, top, h, rot, doubleSpring, gain, look, springOpts, _isSubpart } = part
-	const oo = doubleSpring ? originSpring : origin
-	const gainOrDefault = gain ?? defaultGain
-	const isNoGain = gainOrDefault.x === 0 && gainOrDefault.y === 0
-	const gg = offScreen && !isNoGain ? defaultGain : gainOrDefault
-	const baseOffset = { x: oo.x * gg.x, y: oo.y * gg.y }
-	const lookOffset = { x: 0, y: 0 }
-	if (look && isPressed) {
-		const dx = press.x - (ll.x + baseOffset.x + ll.width * (left + w / 2))
-		const dy = press.y - (ll.y + baseOffset.y + ll.height * (top + h / 2))
-		const distPress = Math.sqrt(dx * dx + dy * dy)
-		const dirX = dx / distPress
-		const dirY = dy / distPress
-		lookOffset.x = look * dirX
-		lookOffset.y = look * dirY
-	}
-	const finalOffset = {
-		x: baseOffset.x + lookOffset.x * ll.width,
-		y: baseOffset.y + lookOffset.y * ll.height,
-	}
-	const lx = _isSubpart ? 0 : ll.x // layout offset -- zero for subparts because
-	const ly = _isSubpart ? 0 : ll.y // they get their offset from their parent
-	return {
-		transform: [
-			{ translateX: withSpring(finalOffset.x, springOpts) },
-			{ translateY: withSpring(finalOffset.y, springOpts) },
-			{ rotate: `${rot ?? 0}deg` },
-		],
-		left: lx + ll.width * left,
-		width: ll.width * w,
-		top: ly + ll.height * top,
-		height: ll.height * h,
-	}
-}
-
-export type AnimStyleForPart = ReturnType<typeof animStyleForPart>
 
 // const WW = 1080
 // const HH = WW * 1.406 // width-to-height ratio for the full puppet

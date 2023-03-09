@@ -1,8 +1,8 @@
 import { Image } from 'native-base'
 import { LayoutRectangle } from 'react-native'
 import Animated, { SharedValue, useAnimatedStyle } from 'react-native-reanimated'
-import { Part, Pos, animStyleForPart } from './puppetParts'
-import { useEffect, useMemo } from 'react'
+import { Part, Pos } from './puppetParts'
+import { animStyleForPart, useAnimatedPartProps } from './animStyleForPart'
 
 type AnimProps = {
 	layout: SharedValue<LayoutRectangle>
@@ -30,6 +30,7 @@ export default function PuppetPart({ part, zIndex, ...props }: PuppetPartProps) 
 	const hasEnoughWorries = (numWorries ?? 0) >= (minWorries ?? 0)
 	const opacity = allLoaded && hasEnoughWorries ? 1 : 0
 
+	const { rotate } = useAnimatedPartProps({ part })
 	const animStyle = useAnimatedStyle(() => {
 		const { layout, originX, originY, originSpringX, originSpringY, isPressed, press } =
 			animProps
@@ -41,6 +42,7 @@ export default function PuppetPart({ part, zIndex, ...props }: PuppetPartProps) 
 			isPressed: isPressed.value,
 			press: press.value,
 			offScreen: offScreen || !allLoaded,
+			rotate: rotate.value,
 		})
 	})
 
