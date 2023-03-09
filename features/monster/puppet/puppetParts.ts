@@ -10,6 +10,7 @@ export type PartName = string
 type WobbleOpts = {
 	min: number
 	max: number
+	delay?: { min: number; max: number }
 	springOpts?: WithSpringConfig
 	timingOpts?: { minDuration: number; maxDuration: number }
 }
@@ -141,7 +142,12 @@ export const parts: Part[] = [
 		top: 0.04022,
 		h: 0.35408,
 		pivot: { x: 0.5, y: 0.7 },
-		rotWobble: { min: -4, max: 4, springOpts: { stiffness: 20, damping: 6 } },
+		rotWobble: {
+			min: -4,
+			max: 4,
+			delay: { min: 0, max: 500 },
+			springOpts: { stiffness: 20, damping: 3 },
+		},
 		gain: headGain,
 		subparts: [
 			{

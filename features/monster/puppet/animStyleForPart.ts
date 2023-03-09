@@ -20,14 +20,17 @@ export function useAnimatedPartProps({ part }: { part: Part }) {
 		if (!part.rotWobble) {
 			return
 		}
-		const { min, max, springOpts, timingOpts } = part.rotWobble
+		const { min, max, delay, springOpts, timingOpts } = part.rotWobble
 		const range = max - min
 		const wobbleTo = Math.random() * range + min
-		const delay = Math.random() * 2000
+
+		const delayMin = delay?.min ?? 0
+		const delayMax = delay?.max ?? 2000
+		const delayVal = Math.random() * (delayMax - delayMin) + delayMin
 
 		if (springOpts) {
 			rotate.value = withDelay(
-				delay,
+				delayVal,
 				withSpring(wobbleTo, springOpts, () => runOnJS(wobble)())
 			)
 		} else {
@@ -37,7 +40,7 @@ export function useAnimatedPartProps({ part }: { part: Part }) {
 			}
 			const duration = Math.random() * (maxDuration ?? 2000) + (minDuration ?? 500)
 			rotate.value = withDelay(
-				delay,
+				delayVal,
 				withTiming(wobbleTo, { duration }, () => runOnJS(wobble)())
 			)
 		}
