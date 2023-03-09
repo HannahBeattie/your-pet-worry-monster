@@ -1,10 +1,4 @@
-import {
-	WithSpringConfig,
-	WithTimingConfig,
-	withRepeat,
-	withSequence,
-	withTiming,
-} from 'react-native-reanimated'
+import { WithSpringConfig } from 'react-native-reanimated'
 
 export type Pos = {
 	x: number
@@ -104,7 +98,7 @@ export const parts: Part[] = [
 		h: 0.26859,
 		pivot: { x: 0.75, y: 0.15 },
 		rot: 10,
-		rotWobble: { min: -8, max: 8, springOpts: { stiffness: 9, damping: 1.1 } },
+		rotWobble: { min: -2, max: 8, springOpts: { stiffness: 9, damping: 1.1 } },
 		doubleSpring: true,
 		springOpts: { stiffness: 150, damping: 12 },
 		look: -0.014,
@@ -202,7 +196,7 @@ export const partNames = parts
 	.map((part) => [part.name, ...(part.subparts?.map((pp) => pp.name) ?? [])])
 	.flat()
 export const numParts = partNames.length
-console.log(`${numParts} parts:`, partNames)
+// console.log(`${numParts} parts:`, partNames)
 
 // const WW = 1080
 // const HH = WW * 1.406 // width-to-height ratio for the full puppet

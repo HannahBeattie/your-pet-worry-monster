@@ -46,9 +46,6 @@ export default function Puppet({ numWorries, offScreen, offScreenDir }: PuppetPr
 	const [imgsLoaded, setImgsLoaded] = useState(0)
 
 	const allLoaded = useMemo(() => imgsLoaded >= numParts, [imgsLoaded])
-	useEffect(() => {
-		console.log(`${imgsLoaded} of ${numParts}: ${allLoaded}`)
-	}, [imgsLoaded, allLoaded])
 
 	// Start from off-screen (either left, top, right, or bottom)
 	const enterRand = useMemo(Math.random, [])

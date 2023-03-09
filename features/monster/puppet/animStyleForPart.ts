@@ -3,6 +3,7 @@ import {
 	AnimatedTransform,
 	runOnJS,
 	useSharedValue,
+	withDelay,
 	withSpring,
 	withTiming,
 } from 'react-native-reanimated'
@@ -13,9 +14,8 @@ const defaultGain: Pos = { x: 1, y: 1 }
 
 export function useAnimatedPartProps({ part }: { part: Part }) {
 	const rotate = useSharedValue(part.rot ?? 0)
-	if (part.rotWobble) {
-		console.log(`${part.name} rotWobble:`, part.rotWobble)
-	}
+
+	// Add some wobble if the part has defined the "rotWobble" prop
 	const wobble = useCallback(() => {
 		if (!part.rotWobble) {
 			return
@@ -23,20 +23,30 @@ export function useAnimatedPartProps({ part }: { part: Part }) {
 		const { min, max, springOpts, timingOpts } = part.rotWobble
 		const range = max - min
 		const wobbleTo = Math.random() * range + min
+		const delay = Math.random() * 2000
+
 		if (springOpts) {
-			rotate.value = withSpring(wobbleTo, springOpts, () => runOnJS(wobble)())
+			rotate.value = withDelay(
+				delay,
+				withSpring(wobbleTo, springOpts, () => runOnJS(wobble)())
+			)
 		} else {
 			const { minDuration, maxDuration } = timingOpts ?? {
 				minDuration: 500,
 				maxDuration: 2000,
 			}
 			const duration = Math.random() * (maxDuration ?? 2000) + (minDuration ?? 500)
-			rotate.value = withTiming(wobbleTo, { duration }, () => runOnJS(wobble)())
+			rotate.value = withDelay(
+				delay,
+				withTiming(wobbleTo, { duration }, () => runOnJS(wobble)())
+			)
 		}
 	}, [rotate])
+
 	useEffect(() => {
 		wobble()
 	}, [])
+
 	return { rotate }
 }
 
