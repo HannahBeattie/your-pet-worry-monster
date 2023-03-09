@@ -107,6 +107,20 @@ export default function Puppet({
 		setMood(moodProp ?? 'happy')
 	}, [moodProp])
 
+	const finalizeAfter = useCallback((delay: number) => {
+		setTimeout(() => {
+			if (!isUserPressed.value) {
+				return
+			}
+			setDefaultMood()
+			runOnUI(() => {
+				press.value = { x: 0, y: 0 }
+				isUserPressed.value = false
+				isAutoPressed.value = 0
+			})()
+		}, delay)
+	}, [])
+
 	const skipUpdate = useSharedValue(-1)
 	const gesture = Gesture.Pan()
 		.onBegin((evt) => {
@@ -128,11 +142,12 @@ export default function Puppet({
 			originY.value = clampOffY(evt.translationY * baseGain + start.value.y)
 		})
 		.onEnd(() => {
-			isUserPressed.value = false
-			isAutoPressed.value = 0
 			originX.value = 0
 			originY.value = 0
-			runOnJS(setDefaultMood)()
+			runOnJS(finalizeAfter)(0)
+		})
+		.onFinalize(() => {
+			runOnJS(finalizeAfter)(Math.random() * 9000 + 3000)
 		})
 
 	// Do random pretend presses to make Blue look around when they're bored
