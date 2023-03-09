@@ -23,9 +23,7 @@ export default function ConfirmMyName() {
 	return (
 		<PageWrapper>
 			<Center px={4}>
-				<MonsterVoice sizeVal={50} props={{ textAlign: 'start' }}>
-					{name}? I...I...Love it!
-				</MonsterVoice>
+				<MonsterVoice props={{ textAlign: 'start' }}>{name}? I...I...Love it!</MonsterVoice>
 			</Center>
 			<FullBlue monsterMood='great' />
 

@@ -13,7 +13,7 @@ interface Props {
 // #dc91f7
 
 const MonsterVoice: React.FC<Props> = ({ children, props, reg, light, sizeVal, color }) => {
-	const colorPropsOr = color ? color : '#aebdf5'
+	const colorPropsOr = color ? color : '#fdfdfdce'
 	const sizePropsOr = sizeVal ? sizeVal : '3xl'
 	const weightPropsOr = reg ? 'monsterFont' : light ? 'monsterLight' : 'monsterBold'
 	return (

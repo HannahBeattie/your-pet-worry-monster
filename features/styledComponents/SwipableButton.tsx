@@ -1,8 +1,9 @@
-import React, { ReactNode } from 'react'
+import { Entypo, MaterialCommunityIcons } from '@expo/vector-icons'
+import { Center, HStack, Icon, IconButton, Spacer, Text, View } from 'native-base'
+import React, { ReactNode, useCallback } from 'react'
 import { Dimensions, StyleSheet } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import Animated, {
-	Extrapolate,
 	Extrapolation,
 	interpolate,
 	runOnJS,
@@ -15,26 +16,47 @@ const BUTTON_WIDTH = Dimensions.get('screen').width - 48
 const SWIPE_RANGE = BUTTON_WIDTH - 74
 
 type SwipeButtonPropsType = {
-	onSwipe: () => void
+	onSwipe?: () => void
+	onSwipeLeft?: () => void
+	onBin?: () => void
+	onEat?: () => void
 	children?: ReactNode
 }
 
-const SwipeableButton = ({ onSwipe, children }: SwipeButtonPropsType) => {
+const SwipeableButton = ({
+	onSwipe,
+	onSwipeLeft,
+	onBin,
+	children,
+	onEat,
+}: SwipeButtonPropsType) => {
 	const X = useSharedValue(0)
+
+	const _onSwipe = useCallback(() => onSwipe!(), [onSwipe])
+	const _onSwipeLeft = useCallback(() => onSwipeLeft && onSwipeLeft(), [onSwipeLeft])
 
 	const panGesture = Gesture.Pan()
 		.activeOffsetX([-10, 10])
 		.onUpdate((evt) => {
 			const newValue = evt.translationX
-			if (newValue >= 0 && newValue <= SWIPE_RANGE) {
-				X.value = newValue
+			if (newValue > 0) {
+				// right swipe
+				const limitedValue = Math.min(newValue, 4 * 34)
+				X.value = limitedValue
+			} else {
+				// left swipe
+				const limitedValue = Math.max(newValue, -4 * 34)
+				X.value = limitedValue
 			}
 		})
+
 		.onEnd(() => {
-			if (X.value < SWIPE_RANGE - 40) {
-				X.value = withSpring(0)
+			if (X.value > SWIPE_RANGE / 2) {
+				runOnJS(_onSwipe)()
+			} else if (X.value < -SWIPE_RANGE / 2) {
+				// runOnJS(onSwipeLeft)()
 			} else {
-				runOnJS(onSwipe)()
+				X.value = withSpring(0)
 			}
 		})
 
@@ -45,8 +67,8 @@ const SwipeableButton = ({ onSwipe, children }: SwipeButtonPropsType) => {
 					{
 						translateX: interpolate(
 							X.value,
-							[20, BUTTON_WIDTH],
-							[0, BUTTON_WIDTH],
+							[-BUTTON_WIDTH, BUTTON_WIDTH],
+							[-BUTTON_WIDTH, BUTTON_WIDTH],
 							Extrapolation.CLAMP
 						),
 					},
@@ -55,27 +77,80 @@ const SwipeableButton = ({ onSwipe, children }: SwipeButtonPropsType) => {
 		}),
 		swipeText: useAnimatedStyle(() => {
 			return {
-				opacity: interpolate(X.value, [10, BUTTON_WIDTH / 2], [1, 0], Extrapolate.CLAMP),
-				transform: [
-					{
-						translateX: interpolate(
-							X.value,
-							[20, SWIPE_RANGE],
-							[0, BUTTON_WIDTH / 4],
-							Extrapolate.CLAMP
-						),
-					},
-				],
+				transform: [],
+				opacity: interpolate(
+					Math.abs(X.value),
+					[SWIPE_RANGE, 0],
+					[0.1, 1],
+					Extrapolation.CLAMP
+				),
 			}
 		}),
 	}
 
 	return (
-		<GestureDetector gesture={panGesture}>
-			<Animated.View style={[styles.swipeButtonContainer, AnimatedStyles.swipeButton]}>
-				<Animated.Text style={AnimatedStyles.swipeText}>{children}</Animated.Text>
-			</Animated.View>
-		</GestureDetector>
+		<>
+			<Center alignItems={'center'} justifyItems={'center'} justifyContent={'center'}>
+				<View style={{ flex: 1, position: 'absolute' }}>
+					<Center
+						alignSelf={'center'}
+						justifyItems={'center'}
+						justifyContent={'center'}
+						alignContent={'center'}
+					>
+						<HStack
+							width={BUTTON_WIDTH - 30}
+							backgroundColor={'#000000b7'}
+							p={4}
+							borderRadius={20}
+							borderWidth={1}
+							borderColor={'gray.700'}
+						>
+							<Center>
+								<IconButton
+									colorScheme={'white'}
+									icon={
+										<Icon
+											as={MaterialCommunityIcons}
+											color={'gray.400'}
+											name='silverware-fork-knife'
+										/>
+									}
+									w={20}
+									h={10}
+									borderRadius={200}
+									onPress={onEat}
+								/>
+								<Text opacity={40} fontSize={'xs'}>
+									Feed Worry
+								</Text>
+							</Center>
+							<Spacer />
+							<Center>
+								<IconButton
+									colorScheme={'white'}
+									icon={<Icon as={Entypo} color={'gray.400'} name='trash' />}
+									w={20}
+									h={10}
+									borderRadius={200}
+									onPress={onBin}
+								/>
+								<Text opacity={40} fontSize={'xs'}>
+									Delete Worry
+								</Text>
+							</Center>
+						</HStack>
+					</Center>
+				</View>
+				<GestureDetector gesture={panGesture}>
+					<Animated.View
+						style={[styles.swipeButtonContainer, AnimatedStyles.swipeButton]}
+					>
+						<Animated.Text style={AnimatedStyles.swipeText}>{children}</Animated.Text>
+					</Animated.View>
+				</GestureDetector>
+			</Center>
+		</>
 	)
 }
 
@@ -84,6 +159,10 @@ const styles = StyleSheet.create({
 		alignContent: 'center',
 		alignSelf: 'center',
 		width: BUTTON_WIDTH,
+		backgroundColor: '#101010',
+		borderRadius: 20,
+		borderColor: '#ffffff14',
+		borderWidth: 1,
 	},
 	swipeButton: {
 		position: 'absolute',
