@@ -43,13 +43,14 @@ export default function Play() {
 				<SafeAreaView style={{ flex: 1, backgroundColor: '#000000c9' }}>
 					<ScrollView horizontal={true}>
 						<VStack flex={1} width={'full'}>
-							<View
+							{/* <View
 								style={{
 									flexDirection: 'row',
 									flex: 1,
 									alignItems: 'stretch',
 								}}
-							>
+							> */}
+							<HStack alignItems='stretch' flex={1} position='relative' left='500'>
 								{imgChunks[0].map((image, imageIndex) => (
 									<ParallaxScroll
 										key={imageIndex}
@@ -57,11 +58,12 @@ export default function Play() {
 										order={imageIndex + 1}
 									/>
 								))}
-							</View>
+							</HStack>
 							<View style={{ flex: 1 }}>
 								<MapWorry worryData={worryData} />
 							</View>
-							<View style={{ flexDirection: 'row', flex: 1, mt: 100 }}>
+							{/* <View style={{ flexDirection: 'row', flex: 1, marginTop: 100 }}> */}
+							<HStack alignItems='stretch' flex={1}>
 								{imgChunks[1].map((image, imageIndex) => (
 									<ParallaxScroll
 										key={imageIndex + imgChunks[0].length}
@@ -69,7 +71,8 @@ export default function Play() {
 										order={imageIndex + 2}
 									/>
 								))}
-							</View>
+							</HStack>
+							{/* </View> */}
 						</VStack>
 					</ScrollView>
 				</SafeAreaView>
