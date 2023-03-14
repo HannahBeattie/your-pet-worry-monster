@@ -4,6 +4,7 @@ import { useWindowDimensions } from 'react-native'
 import Animated, {
 	interpolate,
 	SensorType,
+	SharedValue,
 	useAnimatedSensor,
 	useAnimatedStyle,
 	withTiming,
@@ -12,12 +13,18 @@ import Animated, {
 const PI = Math.PI
 const HALF_PI = PI / 2
 
-export default function ParallaxScroll({ image, order }: any) {
+type Props = {
+	image: any
+	order: number
+	scrollOffset: SharedValue<number>
+}
+
+export default function ParallaxScroll({ image, order, scrollOffset }: Props) {
 	const IMAGE_OFFSET = 100
 	const sensVal = useAnimatedSensor(SensorType.ROTATION)
 	const sensor = sensVal.sensor
 	const { width, height } = useWindowDimensions()
-	const [scale] = useState(Math.random() + 0.5)
+	const [scale] = useState(Math.random() + 1)
 
 	const randomDirection = Math.random() > 0.5 ? 1 : -1 // Generate a random direction for the image to move
 	const imageStyle = useAnimatedStyle(() => {
@@ -43,6 +50,8 @@ export default function ParallaxScroll({ image, order }: any) {
 					duration: 100,
 				}
 			),
+
+			transform: [{ translateX: scrollOffset.value / 1.5 }],
 		}
 	})
 	return (
@@ -52,7 +61,9 @@ export default function ParallaxScroll({ image, order }: any) {
 					imageStyle,
 					{
 						height: (scale * height) / 3,
-						width,
+						width: scale * width,
+						top: -200,
+						position: 'relative',
 					},
 				]}
 			>

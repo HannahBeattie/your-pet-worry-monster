@@ -1,6 +1,7 @@
 import { Center, Heading, HStack, Image, ScrollView, View, VStack } from 'native-base'
 import React from 'react'
 import { ImageBackground, SafeAreaView, useWindowDimensions } from 'react-native'
+import Animated, { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated'
 import typescript from 'react-native-svg'
 import { useSelector } from 'react-redux'
 import MapWorry from '~features/experiments/MapWorry'
@@ -24,6 +25,12 @@ export default function Play() {
 	const imgChunks = Array.from({ length: chunks }, (_, i) => {
 		return img
 	})
+	const scrollOffset = useSharedValue(0)
+	const scrollHandler = useAnimatedScrollHandler({
+		onScroll: (evt) => {
+			scrollOffset.value = evt.contentOffset.x
+		},
+	})
 
 	return (
 		<>
@@ -41,40 +48,39 @@ export default function Play() {
 				resizeMode={'repeat'}
 			>
 				<SafeAreaView style={{ flex: 1, backgroundColor: '#000000c9' }}>
-					<ScrollView horizontal={true}>
+					{/* <ScrollView horizontal={true}> */}
+					<Animated.ScrollView
+						horizontal
+						onScroll={scrollHandler}
+						scrollEventThrottle={16}
+					>
 						<VStack flex={1} width={'full'}>
-							{/* <View
-								style={{
-									flexDirection: 'row',
-									flex: 1,
-									alignItems: 'stretch',
-								}}
-							> */}
 							<HStack alignItems='stretch' flex={1} position='relative' left='500'>
 								{imgChunks[0].map((image, imageIndex) => (
 									<ParallaxScroll
 										key={imageIndex}
 										image={image}
 										order={imageIndex + 1}
+										scrollOffset={scrollOffset}
 									/>
 								))}
 							</HStack>
 							<View style={{ flex: 1 }}>
 								<MapWorry worryData={worryData} />
 							</View>
-							{/* <View style={{ flexDirection: 'row', flex: 1, marginTop: 100 }}> */}
 							<HStack alignItems='stretch' flex={1}>
 								{imgChunks[1].map((image, imageIndex) => (
 									<ParallaxScroll
 										key={imageIndex + imgChunks[0].length}
 										image={image}
 										order={imageIndex + 2}
+										scrollOffset={scrollOffset}
 									/>
 								))}
 							</HStack>
-							{/* </View> */}
 						</VStack>
-					</ScrollView>
+					</Animated.ScrollView>
+					{/* </ScrollView> */}
 				</SafeAreaView>
 			</ImageBackground>
 		</>
