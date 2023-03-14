@@ -25,12 +25,12 @@ export default function ParallaxScroll({ image, order }: any) {
 		console.log(yaw.toFixed(1), pitch.toFixed(1), roll.toFixed(1))
 		return {
 			top: withTiming(
-				interpolate(pitch, [-HALF_PI, HALF_PI], [(-IMAGE_OFFSET * 4) / order, 0]),
+				interpolate(pitch, [-HALF_PI, HALF_PI], [(-IMAGE_OFFSET * 2) / order, 0]),
 				{
 					duration: 100,
 				}
 			),
-			left: withTiming(interpolate(roll, [-PI, PI], [(-IMAGE_OFFSET * 4) / order, 0]), {
+			left: withTiming(interpolate(roll, [-PI, PI], [(-IMAGE_OFFSET * 2) / order, 0]), {
 				duration: 100,
 			}),
 		}
@@ -42,7 +42,7 @@ export default function ParallaxScroll({ image, order }: any) {
 				style={[
 					{
 						flex: 1,
-						height: height + 2 + IMAGE_OFFSET,
+						height: height + IMAGE_OFFSET,
 						width: width + 2 + IMAGE_OFFSET,
 					},
 					imageStyle,
@@ -50,7 +50,7 @@ export default function ParallaxScroll({ image, order }: any) {
 			>
 				<Image
 					position='absolute'
-					height={height + 2 - IMAGE_OFFSET}
+					height={height + IMAGE_OFFSET}
 					width={width + 2 + IMAGE_OFFSET}
 					source={image}
 					alt={'spatter'}
