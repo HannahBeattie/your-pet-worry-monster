@@ -61,7 +61,7 @@ export default function Play() {
 							<View style={{ flex: 1 }}>
 								<MapWorry worryData={worryData} />
 							</View>
-							<View style={{ flexDirection: 'row', flex: 1 }}>
+							<View style={{ flexDirection: 'row', flex: 1, mt: 100 }}>
 								{imgChunks[1].map((image, imageIndex) => (
 									<ParallaxScroll
 										key={imageIndex + imgChunks[0].length}
