@@ -1,11 +1,10 @@
-import { Center, Heading, HStack, Image, ScrollView, View, VStack } from 'native-base'
+import { HStack, VStack } from 'native-base'
 import React from 'react'
 import { ImageBackground, SafeAreaView, useWindowDimensions } from 'react-native'
 import Animated, { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated'
-import typescript from 'react-native-svg'
 import { useSelector } from 'react-redux'
 import MapWorry from '~features/experiments/MapWorry'
-import ParallaxScroll from '~features/styledComponents/animation/ParallaxScroll'
+import ParalaxGyro from '~features/styledComponents/animation/ParalaxGyro'
 import ExitPage from '~features/styledComponents/ExitPage'
 import { selectAllInactive } from '~features/worries/worrySlice'
 // @ts-ignore.
@@ -18,7 +17,7 @@ import spatter3 from '../assets/spatter03.png'
 
 const bg = require('../assets/bg/tum.png')
 
-export default function Play() {
+export default function Sec() {
 	const img = [spatter, spatter2, spatter3, spatter2, spatter3, spatter]
 	const { width, height } = useWindowDimensions()
 	const worryData = useSelector(selectAllInactive)
@@ -50,7 +49,6 @@ export default function Play() {
 			>
 				<SafeAreaView style={{ flex: 1, backgroundColor: '#000000c9' }}>
 					<ExitPage />
-					{/* <ScrollView horizontal={true}> */}
 					<Animated.ScrollView
 						horizontal
 						onScroll={scrollHandler}
@@ -59,7 +57,7 @@ export default function Play() {
 						<VStack flex={1} width={'full'}>
 							<HStack alignItems='stretch' flex={1} position='relative' left='500'>
 								{imgChunks[0].map((image, imageIndex) => (
-									<ParallaxScroll
+									<ParalaxGyro
 										key={imageIndex}
 										image={image}
 										order={imageIndex + 1}
@@ -72,7 +70,7 @@ export default function Play() {
 							</HStack>
 							<HStack alignItems='stretch' flex={1}>
 								{imgChunks[1].map((image, imageIndex) => (
-									<ParallaxScroll
+									<ParalaxGyro
 										key={imageIndex + imgChunks[0].length}
 										image={image}
 										order={imageIndex + 2}
