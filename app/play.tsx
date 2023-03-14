@@ -20,7 +20,7 @@ export default function Play() {
 	const img = [spatter, spatter2, spatter3, spatter2, spatter3, spatter]
 	const { width, height } = useWindowDimensions()
 	const worryData = useSelector(selectAllInactive)
-	const chunks = Math.ceil(worryData.length / 3)
+	const chunks = Math.ceil(worryData.length / 1)
 	const imgChunks = Array.from({ length: chunks }, (_, i) => {
 		return img
 	})
@@ -43,7 +43,13 @@ export default function Play() {
 				<SafeAreaView style={{ flex: 1, backgroundColor: '#000000c9' }}>
 					<ScrollView horizontal={true}>
 						<VStack flex={1} width={'full'}>
-							<View style={{ flexDirection: 'row', flex: 1, alignItems: 'stretch' }}>
+							<View
+								style={{
+									flexDirection: 'row',
+									flex: 1,
+									alignItems: 'stretch',
+								}}
+							>
 								{imgChunks[0].map((image, imageIndex) => (
 									<ParallaxScroll
 										key={imageIndex}
@@ -55,12 +61,12 @@ export default function Play() {
 							<View style={{ flex: 1 }}>
 								<MapWorry worryData={worryData} />
 							</View>
-							<View style={{ flexDirection: 'row', flex: 1, alignItems: 'stretch' }}>
+							<View style={{ flexDirection: 'row', flex: 1 }}>
 								{imgChunks[1].map((image, imageIndex) => (
 									<ParallaxScroll
 										key={imageIndex + imgChunks[0].length}
 										image={image}
-										order={imageIndex + 1}
+										order={imageIndex + 2}
 									/>
 								))}
 							</View>
