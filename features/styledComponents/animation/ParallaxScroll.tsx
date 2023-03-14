@@ -6,6 +6,7 @@ import Animated, {
 	SensorType,
 	useAnimatedSensor,
 	useAnimatedStyle,
+	withSpring,
 	withTiming,
 } from 'react-native-reanimated'
 
@@ -20,16 +21,22 @@ export default function ParallaxScroll({ image, order }: any) {
 
 	const imageStyle = useAnimatedStyle(() => {
 		const { yaw, pitch, roll } = sensor.value
+		const tilt = interpolate(roll, [-PI, PI], [-2, 2]) // Define the tilt angle based on the roll sensor value
+		const direction = roll > 0 ? -2 : 2 // Determine the direction of movement based on the sign of the roll sensor value
 		return {
 			top: withTiming(
 				interpolate(yaw, [-HALF_PI, HALF_PI], [-IMAGE_OFFSET, order + IMAGE_OFFSET], 0),
 				{
-					duration: 100,
+					duration: 200,
 				}
 			),
-			left: withTiming(interpolate(roll, [-PI, PI], [-IMAGE_OFFSET * 2 * order, 0]), {
-				duration: 100,
+			right: withTiming(interpolate(roll, [-PI, PI], [-IMAGE_OFFSET * 2, order, 0]), {
+				duration: 200,
 			}),
+			transform: [
+				{ rotate: `${tilt}deg` },
+				{ translateX: withTiming(direction, { duration: 300 }) },
+			],
 		}
 	})
 	return (
