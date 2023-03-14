@@ -2,6 +2,7 @@ import { Image, View } from 'native-base'
 import React, { useState } from 'react'
 import { useWindowDimensions } from 'react-native'
 import Animated, {
+	Extrapolate,
 	interpolate,
 	SensorType,
 	SharedValue,
@@ -19,19 +20,25 @@ type Props = {
 	scrollOffset: SharedValue<number>
 }
 
+const IMAGE_OFFSET = 100
+const PARALLAX_GAIN = 0.7
+
 export default function ParallaxScroll({ image, order, scrollOffset }: Props) {
-	const IMAGE_OFFSET = 100
 	const sensVal = useAnimatedSensor(SensorType.ROTATION)
 	const sensor = sensVal.sensor
 	const { width, height } = useWindowDimensions()
 	const [scale] = useState(Math.random() + 1)
 
-	const randomDirection = Math.random() > 0.5 ? 1 : -1 // Generate a random direction for the image to move
 	const imageStyle = useAnimatedStyle(() => {
 		const { yaw, pitch, roll } = sensor.value
 		return {
 			top: withTiming(
-				interpolate(-pitch, [-HALF_PI, HALF_PI], [-IMAGE_OFFSET, order + IMAGE_OFFSET]),
+				interpolate(
+					-pitch,
+					[-HALF_PI, HALF_PI],
+					[-IMAGE_OFFSET, IMAGE_OFFSET],
+					Extrapolate.CLAMP
+				),
 				{
 					duration: 100,
 				}
@@ -40,18 +47,16 @@ export default function ParallaxScroll({ image, order, scrollOffset }: Props) {
 			left: withTiming(
 				interpolate(
 					-roll,
-					[-PI, PI],
-					[
-						-IMAGE_OFFSET * 2 * order,
-						0 + randomDirection * Math.abs(roll) * 0.1, // Modify the left offset to include a random direction
-					]
+					[-HALF_PI, HALF_PI],
+					[-IMAGE_OFFSET, IMAGE_OFFSET],
+					Extrapolate.CLAMP
 				),
 				{
 					duration: 100,
 				}
 			),
 
-			transform: [{ translateX: scrollOffset.value / 1.5 }],
+			transform: [{ translateX: PARALLAX_GAIN * scrollOffset.value }],
 		}
 	})
 	return (

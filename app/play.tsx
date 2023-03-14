@@ -65,9 +65,9 @@ export default function Play() {
 									/>
 								))}
 							</HStack>
-							<View style={{ flex: 1 }}>
+							<HStack flex={1} alignItems='center'>
 								<MapWorry worryData={worryData} />
-							</View>
+							</HStack>
 							<HStack alignItems='stretch' flex={1}>
 								{imgChunks[1].map((image, imageIndex) => (
 									<ParallaxScroll
