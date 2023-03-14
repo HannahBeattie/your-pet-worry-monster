@@ -43,51 +43,27 @@ export default function Play() {
 				<SafeAreaView style={{ flex: 1, backgroundColor: '#000000c9' }}>
 					<ScrollView horizontal={true}>
 						<VStack flex={1} width={'full'}>
-							<>
-								{imgChunks.map((chunk, chunkIndex) => (
-									<View
-										key={chunkIndex}
-										style={{
-											flexDirection: 'row',
-											flex: 1,
-											alignItems: 'stretch',
-											minWidth: width,
-										}}
-									>
-										{chunk.map((image, imageIndex) => (
-											<ParallaxScroll
-												key={imageIndex}
-												image={image}
-												order={imageIndex + 1}
-											/>
-										))}
-									</View>
+							<View style={{ flexDirection: 'row', flex: 1, alignItems: 'stretch' }}>
+								{imgChunks[0].map((image, imageIndex) => (
+									<ParallaxScroll
+										key={imageIndex}
+										image={image}
+										order={imageIndex + 1}
+									/>
 								))}
-							</>
-							<Center height={height} minW={width}>
+							</View>
+							<View style={{ flex: 1 }}>
 								<MapWorry worryData={worryData} />
-							</Center>
-							<>
-								{imgChunks.map((chunk, chunkIndex) => (
-									<View
-										key={chunkIndex}
-										style={{
-											flexDirection: 'row',
-											flex: 1,
-											alignItems: 'stretch',
-											minWidth: width,
-										}}
-									>
-										{chunk.map((image, imageIndex) => (
-											<ParallaxScroll
-												key={imageIndex + 1}
-												image={image}
-												order={imageIndex + 1}
-											/>
-										))}
-									</View>
+							</View>
+							<View style={{ flexDirection: 'row', flex: 1, alignItems: 'stretch' }}>
+								{imgChunks[1].map((image, imageIndex) => (
+									<ParallaxScroll
+										key={imageIndex + imgChunks[0].length}
+										image={image}
+										order={imageIndex + 1}
+									/>
 								))}
-							</>
+							</View>
 						</VStack>
 					</ScrollView>
 				</SafeAreaView>
