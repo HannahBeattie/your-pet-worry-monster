@@ -4,11 +4,14 @@ import { useWindowDimensions } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { monsterNameSelector } from '~features/monster/monsterSlice'
 import { useFormatDate } from '~features/worries/useFormatDate'
-import { deleteWorry, selectAllInactive } from '~features/worries/worrySlice'
+import { deleteWorry } from '~features/worries/worrySlice'
 import DragExpander from './DragExpander'
 
-function MapWorry() {
-	const worryData = useSelector(selectAllInactive)
+interface MapWorryProps {
+	worryData: Worry[]
+}
+
+function MapWorry({ worryData }: MapWorryProps) {
 	const name = useSelector(monsterNameSelector)
 	const { width, height } = useWindowDimensions()
 	const dispatch = useDispatch()
@@ -23,7 +26,7 @@ function MapWorry() {
 	}, [])
 
 	return (
-		<VStack flex={1} justifyItems={'center'} justifyContent={'center'} pb={100}>
+		<VStack flex={1} justifyItems={'center'} justifyContent={'center'}>
 			<HStack flex={1} space={4} alignItems='center' px={4} flexDir='row-reverse'>
 				{worryData.map((worry) => (
 					<DragExpander
